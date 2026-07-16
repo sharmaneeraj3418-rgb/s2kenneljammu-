@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Our Cats - S2 Kennel Jammu">
+    <title>Our Cats - S2 Kennel Jammu</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="site-header" id="siteHeader">
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <h1 class="brand-title">S2 Kennel Jammu</h1>
+                    <p class="brand-subtitle">🐕 Premium Dog Breeders • Vijaypur</p>
+                </div>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                    <span></span><span></span><span></span>
+                </button>
+                <nav class="navbar" id="navbar">
+                    <ul class="nav-menu">
+                        <li><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
+                        <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
+                        <li><a href="{% url 'core:cats' %}" class="nav-link active">Cats</a></li>
+                        <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
+                        <li><a href="{% url 'core:health_tips' %}" class="nav-link">Health Tips</a></li>
+                        <li><a href="{% url 'core:location' %}" class="nav-link">Location</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="nav-link">Contact</a></li>
+                        <li><a href="{% url 'admin:index' %}" class="nav-link admin-nav-link">⚙️ Admin</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="mainContent">
+        <section class="page-hero">
+            <div class="container">
+                <h1>Our Feline Companions</h1>
+                <p>Discover our wonderful collection of cats ready for loving homes.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <h2 class="section-title">Our Premium Cats</h2>
+
+                <div class="dogs-grid">
+                    {% for cat in cats %}
+                    <div class="dog-card premium-card">
+                        <div class="card-image">
+                            {% if cat.image %}
+                            <img src="{{ cat.image.url }}" alt="{{ cat.name }}">
+                            {% else %}
+                            <img src="{% static 'core/images/cat1.jpg' %}" alt="{{ cat.name }}">
+                            {% endif %}
+                            <span class="status-badge available">Available</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="dog-name">{{ cat.name }}</h3>
+                            {% if cat.breed %}<p class="dog-breed">{{ cat.breed }}</p>{% endif %}
+                            <div class="dog-details">
+                                {% if cat.age_range %}
+                                <span class="detail-item">
+                                    <span class="label">Age:</span>
+                                <span class="value">{{ cat.age_range }}</span>
+                                </span>
+                                {% endif %}
+                                {% if cat.size %}
+                                <span class="detail-item">
+                                    <span class="label">Size:</span>
+                                <span class="value">{{ cat.size }}</span>
+                                </span>
+                                {% endif %}
+                                <span class="detail-item">
+                                    <span class="label">Price:</span>
+                                <span class="value price">{{ cat.price_range }}</span>
+                                </span>
+                            </div>
+                            {% if cat.description %}<p class="dog-description">{{ cat.description }}</p>{% endif %}
+                            <a href="{% url 'core:contact' %}" class="btn btn-primary btn-block">Enquire Now</a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p style="grid-column: 1/-1; text-align:center; padding: 40px; color:#999;">No cats available at the moment. Please check back soon!</p>
+                    {% endfor %}
+                </div>
+
+                <div class="info-box" style="margin-top: 50px;">
+                    <h3>Why Adopt from S2 Kennel Jammu?</h3>
+                    <ul>
+                        <li>✓ Health checked and vaccinated</li>
+                        <li>✓ Well-socialized and friendly</li>
+                        <li>✓ Complete health records</li>
+                        <li>✓ Lifetime support and guidance</li>
+                        <li>✓ Ethical adoption practices</li>
+                        <li>✓ Premium breeds with certified lineage</li>
+                    </ul>
+                </div>
+
+                <p style="margin-top: 30px; text-align: center;">For more information about our available cats, please <a href="{% url 'core:contact' %}">contact us</a>.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" id="siteFooter">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>S2 Kennel Jammu</h4>
+                    <p>Premium Dog Breeders</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Management</h4>
+                    <p>Manager: Nikhil Sharma</p>
+                    <p>Coordinator: Neeraj Sharma</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="social-link">📷 Instagram</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. | Website created by Neeraj Sharma</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'core/js/script.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'core/css/admin-login.css' %}">
+{% endblock %}
+
+{% block title %}{% trans "S2 Kennel Admin Login" %}{% endblock %}
+
+{% block content %}
+<div class="admin-login-page">
+    <div class="admin-login-card">
+        <div class="admin-login-header">
+            <div class="admin-login-logo">S2</div>
+            <div>
+                <h1>S2 Kennel Jammu</h1>
+                <p>Admin Portal</p>
+            </div>
+        </div>
+
+        {% if form.non_field_errors %}
+        <div class="admin-login-error">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <form method="post" action="" novalidate>
+            {% csrf_token %}
+            {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+
+            <div class="admin-login-field">
+                <label for="id_username">{% trans "Username" %}</label>
+                {{ form.username }}
+            </div>
+
+            <div class="admin-login-field">
+                <label for="id_password">{% trans "Password" %}</label>
+                {{ form.password }}
+            </div>
+
+            <button type="submit" class="admin-login-submit">{% trans "Log in" %}</button>
+        </form>
+
+        <div class="admin-login-footer">
+            Website created by Neeraj Sharma
+        </div>
+    </div>
+</div>
+{% endblock %}

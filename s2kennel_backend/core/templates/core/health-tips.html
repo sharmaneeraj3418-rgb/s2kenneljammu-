@@ -1,0 +1,193 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Health Tips - S2 Kennel Jammu">
+    <title>Health Tips - S2 Kennel Jammu</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="site-header" id="siteHeader">
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <h1 class="brand-title">S2 Kennel Jammu</h1>
+                    <p class="brand-subtitle">🐕 Premium Dog Breeders • Vijaypur</p>
+                </div>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                    <span></span><span></span><span></span>
+                </button>
+                <nav class="navbar" id="navbar">
+                    <ul class="nav-menu">
+                        <li><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
+                        <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
+                        <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
+                        <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
+                        <li><a href="{% url 'core:health_tips' %}" class="nav-link active">Health Tips</a></li>
+                        <li><a href="{% url 'core:location' %}" class="nav-link">Location</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="nav-link">Contact</a></li>
+                        <li><a href="{% url 'admin:index' %}" class="nav-link admin-nav-link">⚙️ Admin</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="mainContent">
+        <section class="page-hero">
+            <div class="container">
+                <h1>Dog Health Tips</h1>
+                <p>Practical guidance for keeping your puppy healthy, happy, and well-adjusted through every stage of early development.</p>
+            </div>
+        </section>
+
+        <section class="health-tips-section">
+            <div class="container">
+                <div class="health-intro">
+                    <h2 class="section-title">Essential Puppy Care Guide</h2>
+                    <p class="health-intro-text">From nutrition to training, these practical tips help ensure your dog thrives with confidence and good health.</p>
+                </div>
+
+                <div class="health-tips-grid">
+                    <article class="health-card">
+                        <div class="health-card-header">
+                            <span class="health-icon">🥗</span>
+                            <h3 class="health-card-title">Proper Nutrition</h3>
+                        </div>
+                        <div class="health-card-body">
+                            <p>Choose high-quality, age-appropriate food and establish a consistent feeding schedule. Feed puppies 3-4 times daily until 6 months, then transition to twice daily.</p>
+                        </div>
+                    </article>
+
+                    <article class="health-card">
+                        <div class="health-card-header">
+                            <span class="health-icon">🩺</span>
+                            <h3 class="health-card-title">Regular Veterinary Care</h3>
+                        </div>
+                        <div class="health-card-body">
+                            <p>Schedule regular checkups, vaccinations, and deworming appointments. Preventive care keeps your dog healthy and helps catch issues early.</p>
+                        </div>
+                    </article>
+
+                    <article class="health-card">
+                        <div class="health-card-header">
+                            <span class="health-icon">🐾</span>
+                            <h3 class="health-card-title">Early Socialization</h3>
+                        </div>
+                        <div class="health-card-body">
+                            <p>Introduce your puppy to people, animals, and new environments during the early weeks. Positive social experiences build a calm, confident adult dog.</p>
+                        </div>
+                    </article>
+
+                    <article class="health-card">
+                        <div class="health-card-header">
+                            <span class="health-icon">🎓</span>
+                            <h3 class="health-card-title">Training and Exercise</h3>
+                        </div>
+                        <div class="health-card-body">
+                            <p>Use positive reinforcement and short, frequent training sessions. Match exercise to your dog's age and breed, and avoid overexertion in young puppies.</p>
+                        </div>
+                    </article>
+
+                    <article class="health-card">
+                        <div class="health-card-header">
+                            <span class="health-icon">🛁</span>
+                            <h3 class="health-card-title">Grooming and Hygiene</h3>
+                        </div>
+                        <div class="health-card-body">
+                            <p>Maintain coat care, dental hygiene, and nail trimming. Regular grooming helps prevent infections and keeps your dog comfortable.</p>
+                        </div>
+                    </article>
+
+                    <article class="health-card">
+                        <div class="health-card-header">
+                            <span class="health-icon">💊</span>
+                            <h3 class="health-card-title">Preventive Healthcare</h3>
+                        </div>
+                        <div class="health-card-body">
+                            <p>Keep vaccinations, flea and tick prevention, and heartworm protection up to date. Prevention is far more reliable than reactive treatment.</p>
+                        </div>
+                    </article>
+
+                    <article class="health-card">
+                        <div class="health-card-header">
+                            <span class="health-icon">🦷</span>
+                            <h3 class="health-card-title">Dental Care</h3>
+                        </div>
+                        <div class="health-card-body">
+                            <p>Brush your dog’s teeth regularly and ask your vet about professional cleanings. Good dental health supports overall wellness.</p>
+                        </div>
+                    </article>
+
+                    <article class="health-card">
+                        <div class="health-card-header">
+                            <span class="health-icon">⚖️</span>
+                            <h3 class="health-card-title">Weight Management</h3>
+                        </div>
+                        <div class="health-card-body">
+                            <p>Maintain a healthy weight with balanced portions and quality food. Obesity increases the risk of joint issues, diabetes, and other conditions.</p>
+                        </div>
+                    </article>
+
+                    <article class="health-card">
+                        <div class="health-card-header">
+                            <span class="health-icon">🧠</span>
+                            <h3 class="health-card-title">Mental Stimulation</h3>
+                        </div>
+                        <div class="health-card-body">
+                            <p>Use puzzle toys, training games, and enrichment activities to keep your dog engaged. Mental exercise prevents boredom and reduces unwanted behaviors.</p>
+                        </div>
+                    </article>
+
+                    <article class="health-card">
+                        <div class="health-card-header">
+                            <span class="health-icon">🔒</span>
+                            <h3 class="health-card-title">Safe Environment</h3>
+                        </div>
+                        <div class="health-card-body">
+                            <p>Keep your home and yard free of hazards, toxic plants, and loose wires. Provide a quiet, comfortable place for your dog to rest safely.</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="info-box" style="margin-top: 40px;">
+                    <h3>Emergency Preparedness</h3>
+                    <p>Always keep an emergency vet contact ready and recognize early signs of poisoning, injury, or distress. Quick response can make all the difference.</p>
+                    <p style="margin-top: 15px;">For personalized health guidance, please visit our <a href="{% url 'core:contact' %}">contact page</a> or speak with your veterinarian.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" id="siteFooter">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>S2 Kennel Jammu</h4>
+                    <p>Premium Dog Breeders</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Management</h4>
+                    <p>Manager: Nikhil Sharma</p>
+                    <p>Coordinator: Neeraj Sharma</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="social-link">📷 Instagram</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. | Website created by Neeraj Sharma</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'core/js/script.js' %}"></script>
+</body>
+
+</html>

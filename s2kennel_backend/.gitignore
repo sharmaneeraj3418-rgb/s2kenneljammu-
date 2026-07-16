@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+db.sqlite3
+/media/
+.venv/
+venv/
+*.log
+.env
+.env.local
+.DS_Store
+*.egg-info/
+dist/
+build/
+.idea/
+.vscode/
+backend/static/  # Collected static files
+backend/db.sqlite3
+*.pot
+

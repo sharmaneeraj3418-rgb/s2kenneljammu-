@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Location - S2 Kennel Jammu">
+    <title>Location - S2 Kennel Jammu</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="site-header" id="siteHeader">
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <h1 class="brand-title">S2 Kennel Jammu</h1>
+                    <p class="brand-subtitle">🐕 Premium Dog Breeders • Vijaypur</p>
+                </div>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                    <span></span><span></span><span></span>
+                </button>
+                <nav class="navbar" id="navbar">
+                    <ul class="nav-menu">
+                        <li><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
+                        <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
+                        <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
+                        <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
+                        <li><a href="{% url 'core:health_tips' %}" class="nav-link">Health Tips</a></li>
+                        <li><a href="{% url 'core:location' %}" class="nav-link active">Location</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="nav-link">Contact</a></li>
+                        <li><a href="{% url 'admin:index' %}" class="nav-link admin-nav-link">⚙️ Admin</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="mainContent">
+        <section class="page-hero">
+            <div class="container">
+                <h1>📍 Our Location</h1>
+                <p>Visit us at our kennel in beautiful Vijaypur, Jammu & Kashmir.</p>
+            </div>
+        </section>
+
+        <section class="location-section">
+            <div class="container">
+                <div class="location-content">
+                    <div class="location-info">
+                        <h2 class="section-title">Visit Information</h2>
+                        <div class="info-grid">
+                            <div class="info-box">
+                                <h3>📍 Address</h3>
+                                <p><strong>S2 Kennel Jammu</strong></p>
+                                <p>Vijaypur, Jammu & Kashmir, India</p>
+                            </div>
+                            <div class="info-box">
+                                <h3>🚗 How to Reach Us</h3>
+                                <p>Our kennel is located in scenic Vijaypur and is easily accessible by road. We offer guided visits by appointment and plenty of visitor parking.</p>
+                            </div>
+                            <div class="info-box">
+                                <h3>⏰ Visit Hours</h3>
+                                <p><strong>Monday - Sunday:</strong> 9:00 AM - 6:00 PM</p>
+                                <p>Please call ahead to schedule your visit.</p>
+                            </div>
+                            <div class="info-box">
+                                <h3>📞 Contact</h3>
+                                <p><strong>WhatsApp:</strong> <a href="https://wa.me/919796120006" target="_blank">+91 9796120006</a></p>
+                                <p><strong>Manager:</strong> Nikhil Sharma</p>
+                                <p><strong>Coordinator:</strong> Neeraj Sharma</p>
+                            </div>
+                        </div>
+
+                        <div class="button-row">
+                            <a href="{% url 'core:contact' %}" class="btn btn-primary">Book a Visit</a>
+                            <a href="https://maps.google.com/maps?q=Vijaypur+Jammu+Kashmir&output=embed" target="_blank" class="btn btn-secondary">View on Google Maps</a>
+                        </div>
+                    </div>
+
+                    <div class="map-card">
+                        <iframe src="https://maps.google.com/maps?q=Vijaypur+Jammu+Kashmir&output=embed" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+
+                <div class="facilities-section">
+                    <h2 class="section-title">Our Facilities</h2>
+                    <div class="facilities-grid">
+                        <div class="facility-card">
+                            <span class="facility-icon">🏠</span>
+                            <h3>Comfortable Kennels</h3>
+                            <p>Modern, climate-controlled accommodations designed for canine comfort.</p>
+                        </div>
+                        <div class="facility-card">
+                            <span class="facility-icon">🎾</span>
+                            <h3>Play Areas</h3>
+                            <p>Large outdoor spaces for exercise, play, and socialization.</p>
+                        </div>
+                        <div class="facility-card">
+                            <span class="facility-icon">🏥</span>
+                            <h3>Health Support</h3>
+                            <p>On-site veterinary monitoring and wellness care for every dog.</p>
+                        </div>
+                        <div class="facility-card">
+                            <span class="facility-icon">🧘</span>
+                            <h3>Training Space</h3>
+                            <p>Dedicated areas for obedience training and behavioral development.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" id="siteFooter">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>S2 Kennel Jammu</h4>
+                    <p>Premium Dog Breeders</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Management</h4>
+                    <p>Manager: Nikhil Sharma</p>
+                    <p>Coordinator: Neeraj Sharma</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="social-link">📷 Instagram</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. | Website created by Neeraj Sharma</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'core/js/script.js' %}"></script>
+</body>
+
+</html>

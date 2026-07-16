@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About S2 Kennel Jammu - Premium Dog Breeders in Vijaypur, Jammu & Kashmir">
+    <title>About Us - S2 Kennel Jammu</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+</head>
+<body>
+    <!-- HEADER/NAVBAR -->
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <h1 class="brand-title">S2 Kennel Jammu</h1>
+                    <p class="brand-subtitle">🐕 Premium Dog Breeders • Vijaypur</p>
+                </div>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <nav class="navbar" id="navbar">
+                    <ul class="nav-menu">
+                        <li><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
+                        <li><a href="{% url 'core:about' %}" class="nav-link">About</a></li>
+                        <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
+                        <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
+                        <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
+                        <li><a href="{% url 'core:health_tips' %}" class="nav-link">Health Tips</a></li>
+                        <li><a href="{% url 'core:location' %}" class="nav-link">Location</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="nav-link">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- PAGE TITLE SECTION -->
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title">About S2 Kennel Jammu</h1>
+                <p class="page-subtitle">Learn about our premium dog breeding excellence</p>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2 class="section-title">About S2 Kennel</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Welcome to Our Kennel</h3>
+                        <p>At S2 Kennel Jammu, we are dedicated to breeding premium quality dogs with excellent health certifications and temperament. Our dogs are raised with love and care to ensure they become perfect companions for your family.</p>
+                        <p>We specialize in various dog breeds and provide complete guidance to our customers for proper dog care and training.</p>
+                    </div>
+                    <div class="management-section">
+                        <h3>Management Team</h3>
+                        <div class="management-card">
+                            <div class="management-role">
+                                <h4>👨‍💼 Manager</h4>
+                                <p class="management-name">Nikhil Sharma</p>
+                            </div>
+                        </div>
+                        <div class="management-card">
+                            <div class="management-role">
+                                <h4>👨‍💻 Website Coordinator</h4>
+                                <p class="management-name">Neeraj Sharma</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OWNER SECTION -->
+        <section class="honor-section">
+            <div class="container">
+                <h2 class="section-title">Our Founder & Owner</h2>
+                <div class="honor-content">
+                    <div class="honor-photo-wrapper">
+                        <img src="{% static 'core/images/owner.jpg' %}" alt="Harsh Sharma - Owner" class="honor-photo">
+                    </div>
+                    <div class="honor-info">
+                        <h3 class="honor-name">Harsh Sharma</h3>
+                        <p class="honor-title">Founder & Owner – S2 Kennel Jammu</p>
+                        <p class="honor-experience">10+ Years of Experience in Premium & Healthy Dog Breeding</p>
+                        <p class="honor-bio">Harsh Sharma is the founder and owner of S2 Kennel Jammu with over 10 years of experience in breeding premium quality dogs. Known for ethical breeding practices, rigorous health certification, and unwavering customer trust, Harsh has established S2 Kennel as the premier destination for premium dog breeding in Jammu & Kashmir. His commitment to excellence ensures every dog meets the highest standards before finding their forever home.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>S2 Kennel Jammu</h4>
+                    <p>Premium Dog Breeders</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Management</h4>
+                    <p>Manager: Nikhil Sharma</p>
+                    <p>Coordinator: Neeraj Sharma</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="social-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.5A4.5 4.5 0 1 0 16.5 13 4.5 4.5 0 0 0 12 8.5zm5-.75a1.25 1.25 0 1 1-1.25-1.25A1.25 1.25 0 0 1 17 7.75zM12 10.5A1.5 1.5 0 1 1 10.5 12 1.5 1.5 0 0 1 12 10.5z"/></svg>
+                        Instagram
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. | Location: Vijaypur, Jammu & Kashmir | Website created by Neeraj Sharma</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'core/js/script.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "S2 Kennel Admin" %}{% endblock %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'core/css/admin-login.css' %}">
+{% endblock %}
+
+{% block branding %}
+<div class="admin-branding">
+    <span class="admin-brand-logo">S2</span>
+    <div>
+        <h1>S2 Kennel Jammu</h1>
+        <p>Admin Portal</p>
+    </div>
+</div>
+{% endblock %}

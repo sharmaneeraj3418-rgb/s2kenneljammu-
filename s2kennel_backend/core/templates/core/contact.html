@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Us - S2 Kennel Jammu">
+    <title>Contact Us - S2 Kennel Jammu</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="site-header" id="siteHeader">
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <h1 class="brand-title">S2 Kennel Jammu</h1>
+                    <p class="brand-subtitle">🐕 Premium Dog Breeders • Vijaypur</p>
+                </div>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                    <span></span><span></span><span></span>
+                </button>
+                <nav class="navbar" id="navbar">
+                    <ul class="nav-menu">
+                        <li><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
+                        <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
+                        <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
+                        <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
+                        <li><a href="{% url 'core:health_tips' %}" class="nav-link">Health Tips</a></li>
+                        <li><a href="{% url 'core:location' %}" class="nav-link">Location</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="nav-link active">Contact</a></li>
+                        <li><a href="{% url 'admin:index' %}" class="nav-link admin-nav-link">⚙️ Admin</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="mainContent">
+        <section class="page-hero">
+            <div class="container">
+                <h1>💬 Contact Us</h1>
+                <p>Get in touch with S2 Kennel Jammu for any inquiries or to enquire about our dogs.</p>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h2 class="section-title">Get in Touch</h2>
+
+                        <div class="contact-detail">
+                            <h3>👨‍💼 Manager</h3>
+                            <p>Nikhil Sharma</p>
+                        </div>
+
+                        <div class="contact-detail">
+                            <h3>👨‍💻 Coordinator</h3>
+                            <p>Neeraj Sharma</p>
+                        </div>
+
+                        <div class="contact-detail">
+                            <h3>📍 Location</h3>
+                            <p>Vijaypur, Jammu & Kashmir</p>
+                        </div>
+
+                        <div class="contact-detail">
+                            <h3>� Phone</h3>
+                            <p>+91 9796120006</p>
+                        </div>
+
+                        <div class="contact-detail">
+                            <h3>📷 Follow Us on Instagram</h3>
+                            <p><a href="https://www.instagram.com/jammu_dogslover" class="btn btn-secondary" target="_blank">@jammu_dogslover</a></p>
+                        </div>
+
+                        <div class="contact-detail info-box">
+                            <h3>⏰ Working Hours</h3>
+                            <p><strong>Monday - Sunday:</strong> 9:00 AM - 6:00 PM</p>
+                            <p style="margin-top: 10px; color: #666;">Please call ahead to schedule a visit or consultation.</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-wrapper">
+                        <h2 class="section-title">Quick Enquiry Form</h2>
+                        <form id="enquiryForm" class="enquiry-form">
+                            <div class="form-group">
+                                <label for="dogBreed">Dog Breed (Optional)</label>
+                                <input type="text" id="dogBreed" placeholder="Which breed are you interested in?" name="dogBreed">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="custName">Your Name *</label>
+                                <input type="text" id="custName" placeholder="Your Full Name" required name="custName">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="custPhone">Phone Number *</label>
+                                <input type="tel" id="custPhone" placeholder="Your Contact Number" required name="custPhone">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="custMessage">Your Message or Questions *</label>
+                                <textarea id="custMessage" placeholder="Tell us what you're interested in..." rows="5" required name="custMessage"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Enquiry</button>
+                        </form>
+                        <p style="font-size: 12px; color: #666; margin-top: 15px;">* Required fields. Your enquiry will be stored in the admin panel and our team will contact you directly.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <h3>How do I purchase a dog from S2 Kennel Jammu?</h3>
+                    <p>Contact us via WhatsApp or the enquiry form. We'll discuss your requirements, answer all questions, and arrange a visit to meet our dogs in person.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Do you provide health certifications?</h3>
+                    <p>Yes, all our dogs come with complete health certifications and records. We conduct thorough health checks before delivery.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What breeds do you currently have available?</h3>
+                    <p>We specialize in Labradors, Beagles, and Pomeranians. For current availability, please contact us directly or check our Instagram.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Do you provide after-sales support?</h3>
+                    <p>Yes, we provide lifetime support and guidance. You can reach out to us anytime for advice on training, health, or any concerns.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I visit the kennel?</h3>
+                    <p>Absolutely! We welcome visits during our working hours. Please call ahead to schedule an appointment.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is your return policy?</h3>
+                    <p>We stand by our dogs completely. If for any reason you cannot keep your dog, we will take it back. We're committed to the wellbeing of all our dogs.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="siteFooter">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>S2 Kennel Jammu</h4>
+                    <p>Premium Dog Breeders</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Management</h4>
+                    <p>Manager: Nikhil Sharma</p>
+                    <p>Coordinator: Neeraj Sharma</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="social-link">📷 Instagram</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. | Website created by Neeraj Sharma</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'core/js/script.js' %}"></script>
+</body>
+
+</html>

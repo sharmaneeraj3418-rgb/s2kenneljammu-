@@ -1,0 +1,45 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'core/css/admin-login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="admin-login-custom">
+    <div class="login-panel">
+        <div class="login-brand">
+            <div class="brand-logo">S2</div>
+            <h1>S2 Kennel Jammu</h1>
+            <p>Secure admin login for S2 Kennel management</p>
+        </div>
+
+        {% if form.non_field_errors %}
+        <div class="login-error">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <form action="" method="post" id="login-form" novalidate>
+            {% csrf_token %}
+            {% if next %}
+                <input type="hidden" name="next" value="{{ next }}" />
+            {% endif %}
+
+            <div class="form-group">
+                <label for="id_username">{% trans "Username" %}</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="id_password">{% trans "Password" %}</label>
+                {{ form.password }}
+            </div>
+            <button type="submit" class="btn-login">{% trans "Log in" %}</button>
+        </form>
+
+        <div class="login-footer">
+            <p>Website created by Neeraj Sharma</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

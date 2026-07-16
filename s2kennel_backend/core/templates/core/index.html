@@ -1,0 +1,200 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="S2 Kennel Jammu - Premium Dog Breeders in Vijaypur, Jammu & Kashmir">
+    <title>S2 Kennel Jammu - Premium Dogs | Vijaypur</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- HEADER/NAVBAR -->
+    <header class="site-header" id="siteHeader">
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <h1 class="brand-title">S2 Kennel Jammu</h1>
+                    <p class="brand-subtitle">🐕 Premium Dog Breeders • Vijaypur</p>
+                </div>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                    <span></span><span></span><span></span>
+                </button>
+                <nav class="navbar" id="navbar">
+                    <ul class="nav-menu">
+                        <li><a href="{% url 'core:index' %}" class="nav-link active">Home</a></li>
+                        <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
+                        <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
+                        <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
+                        <li><a href="{% url 'core:health_tips' %}" class="nav-link">Health Tips</a></li>
+                        <li><a href="{% url 'core:location' %}" class="nav-link">Location</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="nav-link">Contact</a></li>
+                        <li><a href="{% url 'admin:index' %}" class="nav-link admin-nav-link">⚙️ Admin</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="mainContent">
+        <!-- HERO SECTION -->
+        <section id="home" class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h2 class="hero-title">WELCOME TO S2 KENNEL JAMMU</h2>
+                        <p class="hero-description">S2 Kennel Jammu is renowned for premium dog breeding with ethical practices, rigorous health certifications, and unwavering commitment to quality. Every dog is bred with meticulous care and complete transparency.</p>
+                        <div class="hero-buttons">
+                            <a href="{% url 'core:dogs' %}" class="btn btn-primary">View Our Dogs</a>
+                            <a href="{% url 'core:contact' %}" class="btn btn-secondary">Contact Us</a>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <img src="{% static 'core/images/dog1.jpg' %}" alt="Premium Dog" class="hero-img">
+                    </div>
+                </div>
+                <div class="owner-section">
+                    <div class="owner-photo-wrapper">
+                        <img src="{% static 'core/images/owner.jpg' %}" alt="Harsh Sharma - Owner" class="owner-photo">
+                    </div>
+                    <div class="owner-info">
+                        <h3 class="owner-name">Harsh Sharma</h3>
+                        <p class="owner-title">Founder & Owner – S2 Kennel Jammu</p>
+                        <p class="owner-experience">10+ Years Experience in Premium Dog Breeding</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURED DOGS SECTION -->
+        <section id="featured-dogs" class="featured-section">
+            <div class="container">
+                <h2 class="section-title">Featured Dogs</h2>
+                <div class="dogs-grid">
+                    <div class="dog-card">
+                        <div class="dog-image-wrapper">
+                            <img class="dog-image" src="{% static 'core/images/Labrador 1.jpeg' %}" alt="Labrador Retriever">
+                        </div>
+                        <h3>Labrador Retriever</h3>
+                        <p>Friendly, outgoing, and great with families.</p>
+                        <div class="card-actions">
+                            <a href="{% url 'core:dogs' %}" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="dog-card">
+                        <div class="dog-image-wrapper">
+                            <img class="dog-image" src="{% static 'core/images/dog2.jpg' %}" alt="Beagle">
+                        </div>
+                        <h3>Beagle</h3>
+                        <p>Curious and merry; loves exploring.</p>
+                        <div class="card-actions">
+                            <a href="{% url 'core:dogs' %}" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="dog-card">
+                        <div class="dog-image-wrapper">
+                            <img class="dog-image" src="{% static 'core/images/Toy Pom1.jpeg' %}" alt="Pomeranian">
+                        </div>
+                        <h3>Pomeranian</h3>
+                        <p>Small, lively companion.</p>
+                        <div class="card-actions">
+                            <a href="{% url 'core:dogs' %}" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-cta">
+                    <a href="{% url 'core:dogs' %}" class="btn btn-primary">View All Dogs</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about" class="honor-section">
+            <div class="container">
+                <h2 class="section-title">Our Honor / Owner</h2>
+                <div class="honor-content">
+                    <div class="honor-photo-wrapper">
+                        <img src="{% static 'core/images/owner.jpg' %}" alt="Harsh Sharma - Owner" class="honor-photo">
+                    </div>
+                    <div class="honor-info">
+                        <h3 class="honor-name">Harsh Sharma</h3>
+                        <p class="honor-title">Founder & Owner – S2 Kennel Jammu</p>
+                        <p class="honor-experience">10+ Years of Experience in Premium & Healthy Dog Breeding</p>
+                        <p class="honor-bio">With over a decade of dedication and passion, Harsh Sharma has established S2 Kennel Jammu as the premier destination for premium dog breeding. We maintain the highest ethical standards and ensure all dogs are healthy, well-socialized,
+                            and ready for their forever homes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUICK LINKS SECTION -->
+        <section class="quick-links-section">
+            <div class="container">
+                <h2 class="section-title">Explore More</h2>
+                <div class="links-grid">
+                    <a href="{% url 'core:dogs' %}" class="link-card">
+                        <span class="link-icon">🐕</span>
+                        <h3>Our Dogs</h3>
+                        <p>Browse our collection of premium breeds and find your perfect companion.</p>
+                    </a>
+                    <a href="{% url 'core:cats' %}" class="link-card">
+                        <span class="link-icon">🐱</span>
+                        <h3>Cats</h3>
+                        <p>Discover our feline companions with premium care and registration.</p>
+                    </a>
+                    <a href="{% url 'core:reviews' %}" class="link-card">
+                        <span class="link-icon">⭐</span>
+                        <h3>Reviews</h3>
+                        <p>Read customer feedback and check our trusted service history.</p>
+                    </a>
+                    <a href="{% url 'core:health_tips' %}" class="link-card">
+                        <span class="link-icon">💊</span>
+                        <h3>Health Tips</h3>
+                        <p>Get expert care advice for your puppy or adult dog.</p>
+                    </a>
+                    <a href="{% url 'core:location' %}" class="link-card">
+                        <span class="link-icon">📍</span>
+                        <h3>Location</h3>
+                        <p>Find our kennel in Vijaypur and plan your visit today.</p>
+                    </a>
+                    <a href="{% url 'core:contact' %}" class="link-card">
+                        <span class="link-icon">💬</span>
+                        <h3>Contact Us</h3>
+                        <p>Send a direct enquiry or request a callback from our team.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="siteFooter">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>S2 Kennel Jammu</h4>
+                    <p>Premium Dog Breeders</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Management</h4>
+                    <p>Manager: Nikhil Sharma</p>
+                    <p>Coordinator: Neeraj Sharma</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="social-link">📷 Instagram</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. | Website created by Neeraj Sharma</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'core/js/script.js' %}"></script>
+</body>
+
+</html>
