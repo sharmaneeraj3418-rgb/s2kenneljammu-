@@ -2,6 +2,38 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
+class BookDog(models.Model):
+    full_name = models.CharField(max_length=200)
+    phone = models.CharField(max_length=30)
+    email = models.EmailField(blank=True)
+    dog_breed = models.CharField(max_length=200, blank=True)
+    visit_date = models.DateField(blank=True, null=True)
+    message = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.full_name} - {self.dog_breed or 'No breed'}"
+
+
+class CustomerGallery(models.Model):
+    customer_name = models.CharField(max_length=200, blank=True)
+    dog_breed = models.CharField(max_length=200, blank=True)
+    photo = models.ImageField(upload_to="customer_gallery/photos/", blank=True, null=True)
+    video = models.FileField(upload_to="customer_gallery/videos/", blank=True, null=True)
+    caption = models.CharField(max_length=400, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        name = self.customer_name or 'Anonymous'
+        return f"{name} - {self.caption[:40]}"
+
+
 class Dog(models.Model):
     name = models.CharField(max_length=100, help_text="e.g. Labrador Retriever")
     breed = models.CharField(max_length=100, blank=True, help_text="Optional extra breed detail, e.g. Golden Lab")
@@ -73,7 +105,9 @@ class Review(models.Model):
 class Enquiry(models.Model):
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
+    email = models.EmailField(blank=True, help_text="Customer email address")
     breed = models.CharField(max_length=100, blank=True, help_text="Breed the customer is interested in")
+    visit_date = models.DateField(blank=True, null=True, help_text="Preferred visit date")
     message = models.TextField()
     contacted = models.BooleanField(default=False, help_text="Tick once you've followed up with the customer")
     created_at = models.DateTimeField(auto_now_add=True)

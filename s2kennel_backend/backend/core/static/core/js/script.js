@@ -352,7 +352,8 @@ function openEnquiryForm(breed) {
 function initEnquiryForm() {
     // Global submit listener for dynamic forms - capture phase for hard force
     document.addEventListener('submit', function(e) {
-        if (e.target.id === 'enquiryForm' || e.target.id === 'enquiryFormModal') {
+        const id = e.target && e.target.id;
+        if (id === 'enquiryForm' || id === 'enquiryFormModal' || id === 'bookDogForm') {
             e.preventDefault();
             e.stopImmediatePropagation();
             submitEnquiry(e.target);
@@ -362,16 +363,20 @@ function initEnquiryForm() {
 
 // Submit Enquiry to WhatsApp
 function submitEnquiry(form) {
-    // Select fields by name fragment to support both dog/cat forms
+    // Support contact and booking forms
     const breedField = form.querySelector('[id*="Breed"]');
-    const custNameField = form.querySelector('[id*="custName"]');
-    const custPhoneField = form.querySelector('[id*="custPhone"]');
-    const custMessageField = form.querySelector('[id*="custMessage"]');
+    const custNameField = form.querySelector('[id*="fullName"]') || form.querySelector('[id*="custName"]');
+    const custPhoneField = form.querySelector('[id*="phoneNumber"]') || form.querySelector('[id*="custPhone"]');
+    const custEmailField = form.querySelector('[id*="emailAddress"]');
+    const custMessageField = form.querySelector('[id*="bookingMessage"]') || form.querySelector('[id*="custMessage"]');
+    const visitDateField = form.querySelector('[id*="visitDate"]');
 
     const breed = breedField ? breedField.value : '';
     const custName = custNameField ? custNameField.value : '';
     const custPhone = custPhoneField ? custPhoneField.value : '';
+    const custEmail = custEmailField ? custEmailField.value : '';
     const custMessage = custMessageField ? custMessageField.value : '';
+    const visitDate = visitDateField ? visitDateField.value : '';
 
     // Validate form
     if (!custName || !custPhone || !custMessage) {
@@ -382,15 +387,42 @@ function submitEnquiry(form) {
     // Reset form immediately after validation
     form.reset();
 
-    // Send the enquiry to the server to store in admin panel
-    sendEnquiryToServer({ dogBreed: breed, custName, custPhone, custMessage })
-        .then(() => {
-            alert('Thank you! Your enquiry has been submitted and will appear in the admin panel.');
+    // Send the form data to the server to store in the admin panel
+    const payload = {
+        fullName: custName,
+        phoneNumber: custPhone,
+        emailAddress: custEmail,
+        dogBreed: breed,
+        visitDate: visitDate,
+        bookingMessage: custMessage
+    };
+
+    if (form.id === 'bookDogForm') {
+        sendBookDogToServer(payload)
+            .then(() => {
+                alert('Thank you! Your booking request has been submitted and will appear in the admin panel.');
+            })
+            .catch((err) => {
+                console.error('Failed to send booking request to server', err);
+                alert('Failed to submit your booking request. Please try again later.');
+            });
+    } else {
+        sendEnquiryToServer({
+            dogBreed: breed,
+            custName,
+            custPhone,
+            custEmail,
+            visitDate,
+            custMessage
         })
-        .catch((err) => {
-            console.error('Failed to send enquiry to server', err);
-            alert('Failed to submit your enquiry. Please try again later.');
-        });
+            .then(() => {
+                alert('Thank you! Your booking request has been submitted and will appear in the admin panel.');
+            })
+            .catch((err) => {
+                console.error('Failed to send booking request to server', err);
+                alert('Failed to submit your booking request. Please try again later.');
+            });
+    }
 
     // Close modal if it was opened
     const modal = document.getElementById('enquiryModal');
@@ -416,6 +448,26 @@ function sendEnquiryToServer(data) {
     })
     .catch(err => {
         console.error('Error saving enquiry to server:', err);
+        throw err;
+    });
+}
+
+function sendBookDogToServer(data) {
+    return fetch('/api/book_dog/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (!result.success) {
+            throw new Error(result.error || 'Server error');
+        }
+        console.log('Booking saved on server:', result);
+        return result;
+    })
+    .catch(err => {
+        console.error('Error saving booking to server:', err);
         throw err;
     });
 }

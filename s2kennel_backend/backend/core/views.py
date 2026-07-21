@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
-from .models import Dog, Cat, Review, Enquiry
+from .models import Dog, Cat, Review, Enquiry, BookDog, CustomerGallery
 
 
 def index(request):
@@ -24,6 +24,48 @@ def cats(request):
 
 def about(request):
     return render(request, "core/about.html")
+
+
+def gallery(request):
+    # Load customer-uploaded gallery items first; fall back to bundled static images
+    items = list(CustomerGallery.objects.all())
+    return render(request, "core/gallery.html", {"items": items})
+
+
+def book_dog(request):
+    return render(request, "core/book_dog.html")
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def api_book_dog(request):
+    """
+    Receives booking form submissions from the website and stores them in the database.
+    """
+    try:
+        data = json.loads(request.body.decode("utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        data = request.POST
+
+    name = (data.get("fullName") or data.get("custName") or "").strip()
+    phone = (data.get("phoneNumber") or data.get("custPhone") or "").strip()
+    email = (data.get("emailAddress") or data.get("custEmail") or "").strip()
+    breed = (data.get("dogBreed") or data.get("reviewBreed") or "").strip()
+    visit_date = (data.get("visitDate") or "").strip()
+    message = (data.get("bookingMessage") or data.get("custMessage") or "").strip()
+
+    if not name or not phone or not email or not breed:
+        return JsonResponse({"success": False, "error": "Missing required fields"}, status=400)
+
+    book = BookDog.objects.create(
+        full_name=name,
+        phone=phone,
+        email=email,
+        dog_breed=breed,
+        visit_date=visit_date or None,
+        message=message,
+    )
+    return JsonResponse({"success": True, "id": book.id})
 
 
 def reviews(request):
@@ -57,13 +99,22 @@ def api_enquiry(request):
 
     name = (data.get("custName") or "").strip()
     phone = (data.get("custPhone") or "").strip()
+    email = (data.get("custEmail") or "").strip()
     breed = (data.get("dogBreed") or "").strip()
+    visit_date = (data.get("visitDate") or "").strip()
     message = (data.get("custMessage") or "").strip()
 
     if not name or not phone or not message:
         return JsonResponse({"success": False, "error": "Missing required fields"}, status=400)
 
-    enquiry = Enquiry.objects.create(name=name, phone=phone, breed=breed, message=message)
+    enquiry = Enquiry.objects.create(
+        name=name,
+        phone=phone,
+        email=email,
+        breed=breed,
+        visit_date=visit_date or None,
+        message=message,
+    )
     return JsonResponse({"success": True, "id": enquiry.id})
 
 

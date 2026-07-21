@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Our Dogs - S2 Kennel Jammu Premium Dog Breeders">
-    <title>Our Dogs - S2 Kennel Jammu</title>
+    <meta name="description" content="Book a Dog - S2 Kennel Jammu">
+    <title>Book a Dog - S2 Kennel Jammu</title>
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 </head>
@@ -26,8 +26,8 @@
                     <ul class="nav-menu">
                         <li><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
                         <li><a href="{% url 'core:gallery' %}" class="nav-link">Gallery</a></li>
-                        <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
-                        <li><a href="{% url 'core:dogs' %}" class="nav-link active">Dogs</a></li>
+                        <li><a href="{% url 'core:book_dog' %}" class="nav-link active">Book a Dog</a></li>
+                        <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
                         <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
                         <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
                         <li><a href="{% url 'core:health_tips' %}" class="nav-link">Health Tips</a></li>
@@ -43,54 +43,54 @@
     <main id="mainContent">
         <section class="page-hero">
             <div class="container">
-                <h1>Our Premium Dogs</h1>
-                <p>Explore our collection of carefully bred dogs from premium lineages.</p>
+                <h1>Book a Dog</h1>
+                <p>Reserve a visit with our premium kennel team and select your ideal puppy or dog.</p>
             </div>
         </section>
 
-        <section class="dogs-section">
+        <section class="contact-section">
             <div class="container">
-                <h2 class="section-title">Our Premium Dogs</h2>
-
-                <div class="dogs-grid">
-                    {% for dog in dogs %}
-                    <div class="dog-card premium-card">
-                        <div class="card-image">
-                            {% if dog.image %}
-                            <img src="{{ dog.image.url }}" alt="{{ dog.name }}">
-                            {% else %}
-                            <img src="{% static 'core/images/dog1.jpg' %}" alt="{{ dog.name }}">
-                            {% endif %}
-                            <span class="status-badge available">Available</span>
-                        </div>
-                        <div class="card-content">
-                            <h3 class="dog-name">{{ dog.name }}</h3>
-                            {% if dog.breed %}<p class="dog-breed">{{ dog.breed }}</p>{% endif %}
-                            <div class="dog-details">
-                                {% if dog.age_range %}
-                                <span class="detail-item">
-                                    <span class="label">Age:</span>
-                                <span class="value">{{ dog.age_range }}</span>
-                                </span>
-                                {% endif %}
-                                {% if dog.size %}
-                                <span class="detail-item">
-                                    <span class="label">Size:</span>
-                                <span class="value">{{ dog.size }}</span>
-                                </span>
-                                {% endif %}
-                                <span class="detail-item">
-                                    <span class="label">Price:</span>
-                                <span class="value price">{{ dog.price_range }}</span>
-                                </span>
-                            </div>
-                            {% if dog.description %}<p class="dog-description">{{ dog.description }}</p>{% endif %}
-                            <a href="{% url 'core:contact' %}" class="btn btn-primary btn-block">Enquire Now</a>
-                        </div>
+                <div class="contact-content book-form-content">
+                    <div class="booking-info">
+                        <h2 class="section-title">Premium Booking Form</h2>
+                        <p class="section-text">Fill in your details and our team will contact you to confirm your preferred visit date and dog breed.</p>
                     </div>
-                    {% empty %}
-                    <p style="grid-column: 1/-1; text-align:center; padding: 40px; color:#999;">No dogs available at the moment. Please check back soon!</p>
-                    {% endfor %}
+
+                    <div class="contact-form-wrapper booking-form-wrapper">
+                        <form id="bookDogForm" class="enquiry-form">
+                            <div class="form-group">
+                                <label for="fullName">Full Name *</label>
+                                <input type="text" id="fullName" name="fullName" placeholder="Your Full Name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phoneNumber">Phone Number *</label>
+                                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Your Phone Number" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emailAddress">Email *</label>
+                                <input type="email" id="emailAddress" name="emailAddress" placeholder="Your Email Address" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dogBreed">Dog Breed *</label>
+                                <input type="text" id="dogBreed" name="dogBreed" placeholder="Preferred Dog Breed" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="visitDate">Preferred Visit Date *</label>
+                                <input type="date" id="visitDate" name="visitDate" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bookingMessage">Message</label>
+                                <textarea id="bookingMessage" name="bookingMessage" placeholder="Any special requests or notes..." rows="5"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block">Submit Booking Request</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
@@ -114,7 +114,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. | Website created by Neeraj Sharma</p>
+                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved.</p>
             </div>
         </div>
     </footer>

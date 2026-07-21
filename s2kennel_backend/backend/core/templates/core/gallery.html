@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Our Dogs - S2 Kennel Jammu Premium Dog Breeders">
-    <title>Our Dogs - S2 Kennel Jammu</title>
+    <meta name="description" content="Gallery - S2 Kennel Jammu">
+    <title>Gallery - S2 Kennel Jammu</title>
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 </head>
@@ -25,9 +25,9 @@
                 <nav class="navbar" id="navbar">
                     <ul class="nav-menu">
                         <li><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
-                        <li><a href="{% url 'core:gallery' %}" class="nav-link">Gallery</a></li>
+                        <li><a href="{% url 'core:gallery' %}" class="nav-link active">Gallery</a></li>
                         <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
-                        <li><a href="{% url 'core:dogs' %}" class="nav-link active">Dogs</a></li>
+                        <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
                         <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
                         <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
                         <li><a href="{% url 'core:health_tips' %}" class="nav-link">Health Tips</a></li>
@@ -43,54 +43,46 @@
     <main id="mainContent">
         <section class="page-hero">
             <div class="container">
-                <h1>Our Premium Dogs</h1>
-                <p>Explore our collection of carefully bred dogs from premium lineages.</p>
+                <h1>Gallery</h1>
+                <p>Discover high-quality photos of our kennel, puppies, dogs, and happy customers.</p>
             </div>
         </section>
 
-        <section class="dogs-section">
+        <section class="gallery-section">
             <div class="container">
-                <h2 class="section-title">Our Premium Dogs</h2>
-
-                <div class="dogs-grid">
-                    {% for dog in dogs %}
-                    <div class="dog-card premium-card">
-                        <div class="card-image">
-                            {% if dog.image %}
-                            <img src="{{ dog.image.url }}" alt="{{ dog.name }}">
-                            {% else %}
-                            <img src="{% static 'core/images/dog1.jpg' %}" alt="{{ dog.name }}">
-                            {% endif %}
-                            <span class="status-badge available">Available</span>
-                        </div>
-                        <div class="card-content">
-                            <h3 class="dog-name">{{ dog.name }}</h3>
-                            {% if dog.breed %}<p class="dog-breed">{{ dog.breed }}</p>{% endif %}
-                            <div class="dog-details">
-                                {% if dog.age_range %}
-                                <span class="detail-item">
-                                    <span class="label">Age:</span>
-                                <span class="value">{{ dog.age_range }}</span>
-                                </span>
-                                {% endif %}
-                                {% if dog.size %}
-                                <span class="detail-item">
-                                    <span class="label">Size:</span>
-                                <span class="value">{{ dog.size }}</span>
-                                </span>
-                                {% endif %}
-                                <span class="detail-item">
-                                    <span class="label">Price:</span>
-                                <span class="value price">{{ dog.price_range }}</span>
-                                </span>
+                <div class="gallery-grid">
+                    {% if items and items|length > 0 %}
+                        {% for item in items %}
+                            <div class="gallery-card">
+                                <div class="media-wrap">
+                                    {% if item.photo %}
+                                        <img class="gallery-media" src="{{ item.photo.url }}" alt="{{ item.caption|default:'Gallery photo' }}">
+                                    {% elif item.video %}
+                                        <video class="gallery-media" controls>
+                                            <source src="{{ item.video.url }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    {% else %}
+                                        <div class="gallery-placeholder">No media</div>
+                                    {% endif %}
+                                </div>
+                                <div class="gallery-meta">
+                                    <h3 class="customer-name">{{ item.customer_name|default:'Anonymous' }}</h3>
+                                    {% if item.dog_breed %}<p class="dog-breed">🐕 {{ item.dog_breed }}</p>{% endif %}
+                                    {% if item.caption %}<p class="caption">{{ item.caption }}</p>{% endif %}
+                                    <p class="upload-date">{{ item.created_at|date:'d M Y' }}</p>
+                                </div>
                             </div>
-                            {% if dog.description %}<p class="dog-description">{{ dog.description }}</p>{% endif %}
-                            <a href="{% url 'core:contact' %}" class="btn btn-primary btn-block">Enquire Now</a>
+                        {% endfor %}
+                    {% else %}
+                        {% for image in images %}
+                        <div class="gallery-card">
+                            <div class="media-wrap">
+                                <img class="gallery-media" src="{% static image %}" alt="Gallery photo {{ forloop.counter }}">
+                            </div>
                         </div>
-                    </div>
-                    {% empty %}
-                    <p style="grid-column: 1/-1; text-align:center; padding: 40px; color:#999;">No dogs available at the moment. Please check back soon!</p>
-                    {% endfor %}
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         </section>
@@ -114,7 +106,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. | Website created by Neeraj Sharma</p>
+                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
