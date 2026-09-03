@@ -1,18 +1,25 @@
 {% extends "admin/base.html" %}
 {% load i18n static %}
 
-{% block title %}{% trans "S2 Kennel Admin" %}{% endblock %}
+{% block title %}{% trans "S2 Kennel Jammu Admin" %}{% endblock %}
 
 {% block extrastyle %}
-<link rel="stylesheet" href="{% static 'core/css/admin-login.css' %}">
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'core/css/admin-theme.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block branding %}
 <div class="admin-branding">
-    <span class="admin-brand-logo">S2</span>
-    <div>
+    <div class="admin-brand-badge">S2</div>
+    <div class="admin-brand-info">
         <h1>S2 Kennel Jammu</h1>
-        <p>Admin Portal</p>
+        <p>🐕 Management & Operations Portal</p>
     </div>
 </div>
+{% endblock %}
+
+{% block userlinks %}
+<a href="{% url 'core:index' %}" target="_blank" class="view-site-link">🌐 View Website</a>
+{{ block.super }}
 {% endblock %}

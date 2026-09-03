@@ -1,15 +1,14 @@
 import json
-
-from django.http import JsonResponse
 from django.shortcuts import render
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
-
-from .models import Dog, Cat, Review, Enquiry, BookDog, CustomerGallery
+from .models import Dog, Cat, CustomerGallery, Review, Enquiry, BookDog
 
 
 def index(request):
-    return render(request, "core/index.html")
+    dogs = Dog.objects.filter(available=True)[:6]
+    return render(request, "core/index.html", {"dogs": dogs})
 
 
 def dogs(request):
@@ -26,51 +25,13 @@ def about(request):
     return render(request, "core/about.html")
 
 
-def gallery(request):
-    # Load customer-uploaded gallery items first; fall back to bundled static images
-    items = list(CustomerGallery.objects.all())
-    return render(request, "core/gallery.html", {"items": items})
-
-
 def book_dog(request):
     return render(request, "core/book_dog.html")
 
 
-@csrf_exempt
-@require_http_methods(["POST"])
-def api_book_dog(request):
-    """
-    Receives booking form submissions from the website and stores them in the database.
-    """
-    try:
-        data = json.loads(request.body.decode("utf-8"))
-    except (json.JSONDecodeError, UnicodeDecodeError):
-        data = request.POST
-
-    name = (data.get("fullName") or data.get("custName") or "").strip()
-    phone = (data.get("phoneNumber") or data.get("custPhone") or "").strip()
-    email = (data.get("emailAddress") or data.get("custEmail") or "").strip()
-    breed = (data.get("dogBreed") or data.get("reviewBreed") or "").strip()
-    visit_date = (data.get("visitDate") or "").strip()
-    message = (data.get("bookingMessage") or data.get("custMessage") or "").strip()
-
-    if not name or not phone or not email or not breed:
-        return JsonResponse({"success": False, "error": "Missing required fields"}, status=400)
-
-    book = BookDog.objects.create(
-        full_name=name,
-        phone=phone,
-        email=email,
-        dog_breed=breed,
-        visit_date=visit_date or None,
-        message=message,
-    )
-    return JsonResponse({"success": True, "id": book.id})
-
-
 def reviews(request):
-    reviews = Review.objects.filter(approved=True)
-    return render(request, "core/reviews.html", {"reviews": reviews})
+    reviews_list = Review.objects.filter(approved=True).order_by("-created_at")
+    return render(request, "core/reviews.html", {"reviews": reviews_list})
 
 
 def health_tips(request):
@@ -87,59 +48,136 @@ def contact(request):
 
 @csrf_exempt
 @require_http_methods(["POST"])
-def api_enquiry(request):
+def api_book_dog(request):
     """
-    Receives the enquiry form submission (sent via fetch() from js/script.js)
-    and stores it in the database so it shows up in the Django admin panel.
+    Receives booking form submissions from the website and stores them in the database.
+    Supports both JSON and form data payloads.
     """
     try:
-        data = json.loads(request.body.decode("utf-8"))
-    except (json.JSONDecodeError, UnicodeDecodeError):
+        if request.content_type == "application/json" or (request.body and request.body.startswith(b"{")):
+            data = json.loads(request.body.decode("utf-8"))
+        else:
+            data = request.POST
+    except Exception:
         data = request.POST
 
-    name = (data.get("custName") or "").strip()
-    phone = (data.get("custPhone") or "").strip()
-    email = (data.get("custEmail") or "").strip()
-    breed = (data.get("dogBreed") or "").strip()
-    visit_date = (data.get("visitDate") or "").strip()
-    message = (data.get("custMessage") or "").strip()
+    name = (data.get("name") or data.get("full_name") or data.get("fullName") or data.get("custName") or "").strip()
+    phone = (data.get("phone") or data.get("phoneNumber") or data.get("custPhone") or "").strip()
+    email = (data.get("email") or data.get("emailAddress") or data.get("custEmail") or "").strip()
+    breed = (data.get("breed") or data.get("dog_breed") or data.get("dogBreed") or "").strip()
+    visit_date = (data.get("booking_date") or data.get("visit_date") or data.get("visitDate") or "").strip()
+    message = (data.get("message") or data.get("bookingMessage") or data.get("custMessage") or "").strip()
+
+    if not name or not phone:
+        return JsonResponse({"status": "error", "success": False, "message": "Please provide your name and phone number."}, status=400)
+
+    try:
+        book = BookDog.objects.create(
+            full_name=name,
+            phone=phone,
+            email=email,
+            dog_breed=breed,
+            visit_date=visit_date or None,
+            message=message,
+            status="pending",
+        )
+        return JsonResponse({
+            "status": "success",
+            "success": True,
+            "message": "Dog Booking request submitted successfully!",
+            "id": book.id
+        })
+    except Exception as e:
+        return JsonResponse({"status": "error", "success": False, "message": str(e)}, status=500)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def api_enquiry(request):
+    """
+    Receives contact enquiry submissions and stores them in the database.
+    """
+    try:
+        if request.content_type == "application/json" or (request.body and request.body.startswith(b"{")):
+            data = json.loads(request.body.decode("utf-8"))
+        else:
+            data = request.POST
+    except Exception:
+        data = request.POST
+
+    name = (data.get("name") or data.get("custName") or data.get("fullName") or "").strip()
+    phone = (data.get("phone") or data.get("custPhone") or data.get("phoneNumber") or "").strip()
+    email = (data.get("email") or data.get("custEmail") or "").strip()
+    breed = (data.get("breed") or data.get("dogBreed") or "").strip()
+    visit_date = (data.get("visit_date") or data.get("visitDate") or "").strip()
+    message = (data.get("message") or data.get("custMessage") or "").strip()
 
     if not name or not phone or not message:
-        return JsonResponse({"success": False, "error": "Missing required fields"}, status=400)
+        return JsonResponse({"status": "error", "success": False, "message": "Please provide your name, phone number, and message."}, status=400)
 
-    enquiry = Enquiry.objects.create(
-        name=name,
-        phone=phone,
-        email=email,
-        breed=breed,
-        visit_date=visit_date or None,
-        message=message,
-    )
-    return JsonResponse({"success": True, "id": enquiry.id})
+    try:
+        enquiry = Enquiry.objects.create(
+            name=name,
+            phone=phone,
+            email=email,
+            breed=breed,
+            visit_date=visit_date or None,
+            message=message,
+            status="new",
+            contacted=False,
+        )
+        return JsonResponse({
+            "status": "success",
+            "success": True,
+            "message": "Thank you! Your enquiry has been received.",
+            "id": enquiry.id
+        })
+    except Exception as e:
+        return JsonResponse({"status": "error", "success": False, "message": str(e)}, status=500)
 
 
 @csrf_exempt
 @require_http_methods(["POST"])
 def api_review(request):
     """
-    Receives review submissions from the website and stores them in the database.
+    Receives customer reviews, stores them in the database, and publishes them live.
     """
     try:
-        data = json.loads(request.body.decode("utf-8"))
-    except (json.JSONDecodeError, UnicodeDecodeError):
+        if request.content_type == "application/json" or (request.body and request.body.startswith(b"{")):
+            data = json.loads(request.body.decode("utf-8"))
+        else:
+            data = request.POST
+    except Exception:
         data = request.POST
 
-    name = (data.get("reviewName") or data.get("name") or "").strip()
-    text = (data.get("reviewText") or data.get("text") or "").strip()
-    rating = data.get("reviewRating") or data.get("rating") or 5
+    name = (data.get("name") or data.get("reviewerName") or data.get("reviewName") or "").strip()
+    dog_breed = (data.get("dog_breed") or data.get("dogBreed") or data.get("breed") or "").strip()
+    text = (data.get("text") or data.get("reviewText") or data.get("message") or "").strip()
+    raw_rating = data.get("rating") or data.get("reviewRating") or 5
 
     try:
-        rating = int(rating)
+        rating = int(raw_rating)
+        if rating < 1 or rating > 5:
+            rating = 5
     except (TypeError, ValueError):
         rating = 5
 
     if not name or not text:
-        return JsonResponse({"success": False, "error": "Missing required fields"}, status=400)
+        return JsonResponse({"status": "error", "success": False, "message": "Please provide your name and review message."}, status=400)
 
-    review = Review.objects.create(name=name, text=text, rating=rating, approved=False)
-    return JsonResponse({"success": True, "id": review.id})
+    try:
+        review = Review.objects.create(
+            name=name,
+            dog_breed=dog_breed,
+            rating=rating,
+            text=text,
+            approved=True
+        )
+        return JsonResponse({
+            "status": "success",
+            "success": True,
+            "message": "Thank you for your review! It has been posted successfully.",
+            "id": review.id
+        })
+    except Exception as e:
+        return JsonResponse({"status": "error", "success": False, "message": str(e)}, status=500)

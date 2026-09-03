@@ -5,35 +5,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Contact Us - S2 Kennel Jammu">
-    <title>Contact Us - S2 Kennel Jammu</title>
+    <title>Contact Us - S2 Kennel Jammu | Enquiry & WhatsApp Support</title>
+    <meta name="description" content="Contact S2 Kennel Jammu in Vijaypur. Phone, WhatsApp, and instant enquiry form for puppies & kittens availability.">
+    <meta name="keywords" content="Contact S2 Kennel, Dog Breeder Contact Jammu, WhatsApp S2 Kennel">
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <!-- HEADER/NAVBAR -->
     <header class="site-header" id="siteHeader">
         <div class="container">
             <div class="header-content">
                 <div class="brand">
-                    <h1 class="brand-title">S2 Kennel Jammu</h1>
-                    <p class="brand-subtitle">🐕 Premium Dog Breeders • Vijaypur</p>
+                    <a href="{% url 'core:index' %}">
+                        <h1 class="brand-title">S2 Kennel Jammu</h1>
+                    </a>
+                    <p class="brand-subtitle">🐕 Premium Pet Breeders • Vijaypur</p>
                 </div>
-                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
                     <span></span><span></span><span></span>
                 </button>
                 <nav class="navbar" id="navbar">
                     <ul class="nav-menu">
                         <li><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
-                        <li><a href="{% url 'core:gallery' %}" class="nav-link">Gallery</a></li>
                         <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
                         <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
                         <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
                         <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
-                        <li><a href="{% url 'core:health_tips' %}" class="nav-link">Health Tips</a></li>
                         <li><a href="{% url 'core:location' %}" class="nav-link">Location</a></li>
                         <li><a href="{% url 'core:contact' %}" class="nav-link active">Contact</a></li>
-                        <li><a href="{% url 'admin:index' %}" class="nav-link admin-nav-link">⚙️ Admin</a></li>
+                        <li class="nav-dropdown">
+                            <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="moreDropdownBtn">More <span class="arrow-down">▾</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'core:health_tips' %}" class="dropdown-item">💊 Health Tips</a></li>
+                                <li><a href="{% url 'core:about' %}" class="dropdown-item">ℹ️ About Us</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -43,137 +53,150 @@
     <main id="mainContent">
         <section class="page-hero">
             <div class="container">
-                <h1>💬 Contact Us</h1>
-                <p>Get in touch with S2 Kennel Jammu for any inquiries or to enquire about our dogs.</p>
+                <h1>Contact S2 Kennel Jammu</h1>
+                <p>Have questions about puppy availability, adoption guidance, or kennel visits? We are here to help!</p>
             </div>
         </section>
 
         <section class="contact-section">
             <div class="container">
                 <div class="contact-content">
+                    <!-- CONTACT INFO -->
                     <div class="contact-info">
-                        <h2 class="section-title">Get in Touch</h2>
-
-                        <div class="contact-detail">
-                            <h3>👨‍💼 Manager</h3>
-                            <p>Nikhil Sharma</p>
+                        <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Get in Touch</h2>
+                        <div class="contact-details">
+                            <div class="detail-item">
+                                <span class="detail-label">📍 Kennel Location</span>
+                                <span class="detail-value">Vijaypur, Samba / Jammu, Jammu & Kashmir 184120</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">💬 WhatsApp</span>
+                                <span class="detail-value">
+                                    <a href="https://wa.me/919796120006" target="_blank" class="contact-link">+91 9796120006</a>
+                                </span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">📷 Instagram</span>
+                                <span class="detail-value">
+                                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="contact-link">@jammu_dogslover</a>
+                                </span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">👨‍💼 Manager</span>
+                                <span class="detail-value">Nikhil Sharma</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">👨‍💻 Coordinator</span>
+                                <span class="detail-value">Neeraj Sharma</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">⏰ Working Hours</span>
+                                <span class="detail-value">Monday – Sunday: 9:00 AM – 7:00 PM</span>
+                            </div>
                         </div>
 
-                        <div class="contact-detail">
-                            <h3>👨‍💻 Coordinator</h3>
-                            <p>Neeraj Sharma</p>
-                        </div>
-
-                        <div class="contact-detail">
-                            <h3>📍 Location</h3>
-                            <p>Vijaypur, Jammu & Kashmir</p>
-                        </div>
-
-                        <div class="contact-detail">
-                            <h3>� Phone</h3>
-                            <p>+91 9796120006</p>
-                        </div>
-
-                        <div class="contact-detail">
-                            <h3>📷 Follow Us on Instagram</h3>
-                            <p><a href="https://www.instagram.com/jammu_dogslover" class="btn btn-secondary" target="_blank">@jammu_dogslover</a></p>
-                        </div>
-
-                        <div class="contact-detail info-box">
-                            <h3>⏰ Working Hours</h3>
-                            <p><strong>Monday - Sunday:</strong> 9:00 AM - 6:00 PM</p>
-                            <p style="margin-top: 10px; color: #666;">Please call ahead to schedule a visit or consultation.</p>
+                        <div style="margin-top: 30px;">
+                            <a href="https://wa.me/919796120006?text=Hello%20S2%20Kennel,%20I%20have%20an%20enquiry%20regarding%20puppy%20availability." target="_blank" class="btn btn-whatsapp" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: auto; padding: 14px 28px;">
+                                💬 Chat Directly on WhatsApp
+                            </a>
                         </div>
                     </div>
 
+                    <!-- DIRECT ENQUIRY FORM -->
                     <div class="contact-form-wrapper">
-                        <h2 class="section-title">Quick Enquiry Form</h2>
+                        <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Send Us a Message</h2>
                         <form id="enquiryForm" class="enquiry-form">
+                            {% csrf_token %}
                             <div class="form-group">
-                                <label for="dogBreed">Dog Breed (Optional)</label>
-                                <input type="text" id="dogBreed" placeholder="Which breed are you interested in?" name="dogBreed">
+                                <label for="name" style="color: var(--primary); font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px;">Full Name *</label>
+                                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
                             </div>
-
                             <div class="form-group">
-                                <label for="custName">Your Name *</label>
-                                <input type="text" id="custName" placeholder="Your Full Name" required name="custName">
+                                <label for="phone" style="color: var(--primary); font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px;">Phone / WhatsApp *</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required>
                             </div>
-
                             <div class="form-group">
-                                <label for="custPhone">Phone Number *</label>
-                                <input type="tel" id="custPhone" placeholder="Your Contact Number" required name="custPhone">
+                                <label for="email" style="color: var(--primary); font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px;">Email Address</label>
+                                <input type="email" id="email" name="email" placeholder="youremail@example.com">
                             </div>
-
                             <div class="form-group">
-                                <label for="custMessage">Your Message or Questions *</label>
-                                <textarea id="custMessage" placeholder="Tell us what you're interested in..." rows="5" required name="custMessage"></textarea>
+                                <label for="message" style="color: var(--primary); font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px;">Message / Enquiry *</label>
+                                <textarea id="message" name="message" rows="4" placeholder="Which breed are you interested in? Any specific requirements?" required></textarea>
                             </div>
-
-                            <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Enquiry</button>
+                            <button type="submit" class="btn btn-primary" style="margin-top: 10px; width: 100%; padding: 14px;">Submit Enquiry</button>
                         </form>
-                        <p style="font-size: 12px; color: #666; margin-top: 15px;">* Required fields. Your enquiry will be stored in the admin panel and our team will contact you directly.</p>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="faq-section">
-            <div class="container">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-
-                <div class="faq-item">
-                    <h3>How do I purchase a dog from S2 Kennel Jammu?</h3>
-                    <p>Contact us via WhatsApp or the enquiry form. We'll discuss your requirements, answer all questions, and arrange a visit to meet our dogs in person.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Do you provide health certifications?</h3>
-                    <p>Yes, all our dogs come with complete health certifications and records. We conduct thorough health checks before delivery.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What breeds do you currently have available?</h3>
-                    <p>We specialize in Labradors, Beagles, and Pomeranians. For current availability, please contact us directly or check our Instagram.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Do you provide after-sales support?</h3>
-                    <p>Yes, we provide lifetime support and guidance. You can reach out to us anytime for advice on training, health, or any concerns.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>Can I visit the kennel?</h3>
-                    <p>Absolutely! We welcome visits during our working hours. Please call ahead to schedule an appointment.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3>What is your return policy?</h3>
-                    <p>We stand by our dogs completely. If for any reason you cannot keep your dog, we will take it back. We're committed to the wellbeing of all our dogs.</p>
                 </div>
             </div>
         </section>
     </main>
+
+    <!-- SUCCESS MODAL -->
+    <div id="successModal" class="modal" role="dialog" aria-hidden="true">
+        <div class="modal-content" style="text-align: center; max-width: 440px; padding: 35px 25px;">
+            <div style="font-size: 48px; margin-bottom: 12px;">✅</div>
+            <h3 style="color: var(--primary); margin-bottom: 10px;">Message Sent!</h3>
+            <p id="successMessage" style="color: #cbd5e1; font-size: 14px; line-height: 1.6; margin-bottom: 24px;">Thank you! Your enquiry has been received.</p>
+            <button id="successOkBtn" class="btn btn-primary" style="min-width: 140px;">OK</button>
+        </div>
+    </div>
+
+    <!-- FLOATING WHATSAPP BUTTON (Fixed 60x60px Corner Floating Button) -->
+    <a href="https://wa.me/919796120006?text=Hello%20S2%20Kennel%20Jammu,%20I%20have%20an%20enquiry." target="_blank" class="whatsapp-float" id="whatsappFloatingBtn" aria-label="Chat on WhatsApp" style="position:fixed !important;bottom:28px !important;right:28px !important;width:60px !important;height:60px !important;max-width:60px !important;max-height:60px !important;min-width:60px !important;min-height:60px !important;border-radius:50% !important;background:#25d366 !important;display:flex !important;align-items:center !important;justify-content:center !important;box-shadow:0 10px 30px rgba(37,211,102,0.45) !important;z-index:999 !important;text-decoration:none !important;overflow:hidden !important;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffffff" style="width:28px !important;height:28px !important;max-width:28px !important;max-height:28px !important;min-width:28px !important;min-height:28px !important;display:block !important;pointer-events:none !important;"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm5.8 14.16c-.24.67-1.39 1.27-1.92 1.36-.51.08-1.17.12-3.37-.79-2.33-.96-3.83-3.33-3.95-3.48-.12-.16-.96-1.28-.96-2.44 0-1.17.61-1.74.83-1.98.22-.24.48-.3.64-.3.16 0 .32 0 .46.01.15.01.35-.06.55.42.21.49.71 1.74.78 1.86.06.12.1.27.02.43-.08.16-.12.26-.24.4-.12.14-.26.31-.37.42-.12.12-.25.26-.11.5.14.24.63 1.04 1.36 1.68.93.83 1.72 1.09 1.96 1.21.24.12.38.1.52-.06.14-.16.6-.7.76-.94.16-.24.32-.2.54-.12.22.08 1.39.66 1.63.78.24.12.4.18.46.28.06.1.06.58-.18 1.25z"/></svg>
+    </a>
+
+    <!-- STICKY MOBILE ACTION BAR (< 768px) -->
+    <div class="mobile-action-bar">
+        <a href="tel:+919796120006" class="mobile-action-btn call-btn">
+            <span>📞 Call Us</span>
+        </a>
+        <a href="https://wa.me/919796120006?text=Hello%20S2%20Kennel,%20I%20have%20an%20enquiry." target="_blank" class="mobile-action-btn wa-btn">
+            <span>💬 WhatsApp</span>
+        </a>
+    </div>
 
     <!-- FOOTER -->
     <footer class="footer" id="siteFooter">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>S2 Kennel Jammu</h4>
-                    <p>Premium Dog Breeders</p>
+                    <h4>🐕 S2 Kennel Jammu</h4>
+                    <p>Premier ethical dog & cat breeding center located in Vijaypur, Jammu & Kashmir.</p>
+                    <p style="color: #cbd5e1; font-size: 13px; margin-top: 10px;">📍 Vijaypur, Samba / Jammu, J&K</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Management</h4>
-                    <p>Manager: Nikhil Sharma</p>
-                    <p>Coordinator: Neeraj Sharma</p>
+                    <h4>Quick Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'core:index' %}">Home</a></li>
+                        <li><a href="{% url 'core:dogs' %}">Our Dogs</a></li>
+                        <li><a href="{% url 'core:cats' %}">Our Cats</a></li>
+                        <li><a href="{% url 'core:book_dog' %}">Book a Dog</a></li>
+                        <li><a href="{% url 'core:reviews' %}">Customer Reviews</a></li>
+                        <li><a href="{% url 'core:location' %}">Kennel Location</a></li>
+                        <li><a href="{% url 'core:contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'core:health_tips' %}">Pet Health Tips</a></li>
+                    </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Follow Us</h4>
-                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="social-link">📷 Instagram</a>
+                    <h4>Management & Staff</h4>
+                    <p>Manager: <strong>Nikhil Sharma</strong></p>
+                    <p>Coordinator: <strong>Neeraj Sharma</strong></p>
+                    <div style="margin-top: 14px;">
+                        <a href="{% url 'admin:index' %}" class="staff-admin-btn">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            Staff Admin Portal
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="social-link">📷 Instagram @jammu_dogslover</a>
+                    <a href="https://wa.me/919796120006" target="_blank" class="social-link" style="margin-top: 8px; display: inline-block;">💬 WhatsApp +91 9796120006</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. | Website created by Neeraj Sharma</p>
+                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. • Created by <strong>Neeraj Sharma</strong></p>
             </div>
         </div>
     </footer>
