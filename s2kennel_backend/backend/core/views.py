@@ -6,17 +6,29 @@ from django.views.decorators.http import require_http_methods
 from .models import Dog, Cat, CustomerGallery, Review, Enquiry, BookDog
 
 
+def ensure_database_seeded():
+    try:
+        if not Dog.objects.exists():
+            from core.management.commands.seed_data import run_seed
+            run_seed()
+    except Exception as e:
+        print(f"Auto-seed exception: {e}")
+
+
 def index(request):
+    ensure_database_seeded()
     dogs = Dog.objects.filter(available=True)[:6]
     return render(request, "core/index.html", {"dogs": dogs})
 
 
 def dogs(request):
+    ensure_database_seeded()
     dogs = Dog.objects.filter(available=True)
     return render(request, "core/dogs.html", {"dogs": dogs})
 
 
 def cats(request):
+    ensure_database_seeded()
     cats = Cat.objects.filter(available=True)
     return render(request, "core/cats.html", {"cats": cats})
 
@@ -30,6 +42,7 @@ def book_dog(request):
 
 
 def reviews(request):
+    ensure_database_seeded()
     reviews_list = Review.objects.filter(approved=True).order_by("-created_at")
     return render(request, "core/reviews.html", {"reviews": reviews_list})
 
