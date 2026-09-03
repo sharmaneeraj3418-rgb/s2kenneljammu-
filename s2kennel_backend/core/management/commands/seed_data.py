@@ -1,17 +1,31 @@
+import os
+from django.contrib.auth import get_user_model
 from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.conf import settings
 
 from core.models import Dog, Cat, Review
 
-STATIC_IMAGES = settings.BASE_DIR / "core" / "static" / "core" / "images"
+
+def get_image_path(filename):
+    if not filename:
+        return None
+    candidates = [
+        settings.BASE_DIR / "core" / "static" / "core" / "images" / filename,
+        settings.BASE_DIR / "static" / "images" / filename,
+        settings.BASE_DIR.parent / "core" / "static" / "core" / "images" / filename,
+        settings.BASE_DIR.parent / "backend" / "core" / "static" / "core" / "images" / filename,
+        settings.BASE_DIR.parent / "frontend" / "assets" / "images" / filename,
+    ]
+    for c in candidates:
+        if c.exists():
+            return c
+    return None
 
 
 def attach_image(instance, filename, field_name="image"):
-    if not filename:
-        return
-    path = STATIC_IMAGES / filename
-    if path.exists():
+    path = get_image_path(filename)
+    if path and path.exists():
         with open(path, "rb") as f:
             getattr(instance, field_name).save(filename, File(f), save=False)
 
@@ -20,6 +34,15 @@ class Command(BaseCommand):
     help = "Seed the database with the full original dogs, cats and reviews from the frontend."
 
     def handle(self, *args, **options):
+        # Auto create superuser if none exists
+        User = get_user_model()
+        if not User.objects.filter(is_superuser=True).exists():
+            admin_user = os.environ.get("DJANGO_SUPERUSER_USERNAME", "admin")
+            admin_pass = os.environ.get("DJANGO_SUPERUSER_PASSWORD", "admin123")
+            admin_email = os.environ.get("DJANGO_SUPERUSER_EMAIL", "admin@s2kennel.com")
+            User.objects.create_superuser(username=admin_user, email=admin_email, password=admin_pass)
+            self.stdout.write(self.style.SUCCESS(f"Superuser '{admin_user}' created successfully."))
+
         if Dog.objects.exists() or Cat.objects.exists() or Review.objects.exists():
             self.stdout.write(self.style.WARNING(
                 "Data already exists. Skipping seed (delete existing records first if you want to reseed)."

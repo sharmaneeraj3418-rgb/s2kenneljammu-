@@ -10,7 +10,9 @@ fi
 if [ -f manage.py ]; then
     python manage.py collectstatic --no-input
     python manage.py migrate
+    python manage.py seed_data
 elif [ -f backend/manage.py ]; then
     python backend/manage.py collectstatic --no-input
     python backend/manage.py migrate
+    python backend/manage.py seed_data
 fi
