@@ -96,11 +96,16 @@ def run_seed():
     # 1. Superuser
     try:
         User = get_user_model()
-        if not User.objects.filter(is_superuser=True).exists():
-            admin_user = os.environ.get("DJANGO_SUPERUSER_USERNAME", "admin")
-            admin_pass = os.environ.get("DJANGO_SUPERUSER_PASSWORD", "admin123")
-            admin_email = os.environ.get("DJANGO_SUPERUSER_EMAIL", "admin@s2kennel.com")
-            User.objects.create_superuser(username=admin_user, email=admin_email, password=admin_pass)
+        admin_user = os.environ.get("DJANGO_SUPERUSER_USERNAME", "admin")
+        admin_pass = os.environ.get("DJANGO_SUPERUSER_PASSWORD", "admin123")
+        admin_email = os.environ.get("DJANGO_SUPERUSER_EMAIL", "admin@s2kennel.com")
+        
+        user, _ = User.objects.get_or_create(username=admin_user, defaults={"email": admin_email})
+        user.is_staff = True
+        user.is_superuser = True
+        user.email = admin_email
+        user.set_password(admin_pass)
+        user.save()
     except Exception as e:
         print(f"Superuser creation notice: {e}")
 

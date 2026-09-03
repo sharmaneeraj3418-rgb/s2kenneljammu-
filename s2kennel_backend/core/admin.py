@@ -157,9 +157,26 @@ admin.site.index_title = "Kennel Operations & Management Dashboard"
 
 # Enhance Admin Index with Live Analytics Context
 _orig_index = admin.site.index
+_orig_login = admin.site.login
+
+def _enhanced_admin_login(request, extra_context=None):
+    try:
+        from core.management.commands.seed_data import run_seed
+        run_seed()
+    except Exception:
+        pass
+    return _orig_login(request, extra_context=extra_context)
+
+admin.site.login = _enhanced_admin_login
+
 
 def _enhanced_admin_index(request, extra_context=None):
     extra_context = extra_context or {}
+    try:
+        from core.management.commands.seed_data import run_seed
+        run_seed()
+    except Exception:
+        pass
     try:
         extra_context["stats"] = {
             "dogs_count": Dog.objects.count(),
