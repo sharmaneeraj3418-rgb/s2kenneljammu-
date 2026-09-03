@@ -31,17 +31,17 @@
                 <nav class="navbar" id="navbar">
                     <ul class="nav-menu">
                         <li><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
-                        <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
+                        <li><a href="{% url 'core:about' %}" class="nav-link active">About</a></li>
                         <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
                         <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
+                        <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
                         <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
                         <li><a href="{% url 'core:location' %}" class="nav-link">Location</a></li>
                         <li><a href="{% url 'core:contact' %}" class="nav-link">Contact</a></li>
                         <li class="nav-dropdown">
-                            <a href="javascript:void(0);" class="nav-link dropdown-toggle active" id="moreDropdownBtn">More <span class="arrow-down">▾</span></a>
+                            <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="moreDropdownBtn">More <span class="arrow-down">▾</span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'core:health_tips' %}" class="dropdown-item">💊 Health Tips</a></li>
-                                <li><a href="{% url 'core:about' %}" class="dropdown-item active" style="color: var(--primary);">ℹ️ About Us</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -55,7 +55,7 @@
         <section class="page-hero">
             <div class="container">
                 <h1>About S2 Kennel Jammu</h1>
-                <p>Learn about our 10+ year commitment to ethical breeding, puppy socialization, and health excellence in Vijaypur.</p>
+                <p>10+ Years of Dedication to Ethical Breeding, Certified Lineages, and Pure Pet Companionship in Vijaypur, Jammu & Kashmir.</p>
             </div>
         </section>
 
@@ -65,21 +65,25 @@
                 <h2 class="section-title">Who We Are</h2>
                 <div class="about-content" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 30px;">
                     <div class="about-text info-box" style="padding: 35px;">
-                        <h3 style="color: var(--primary); font-size: 22px; margin-bottom: 14px;">Ethical Breeding Excellence</h3>
-                        <p style="color: #cbd5e1; line-height: 1.8; margin-bottom: 14px;">At S2 Kennel Jammu, we are dedicated to breeding healthy, purebred dogs and kittens with complete transparency, verified pedigree records, and comprehensive veterinary care.</p>
-                        <p style="color: #cbd5e1; line-height: 1.8;">Our animals are raised in spacious, climate-controlled environments with plenty of natural sunlight, socialization, and balanced nutrition.</p>
+                        <h3 style="color: var(--primary); font-size: 22px; margin-bottom: 14px;">Ethical Breeding & Health Standards</h3>
+                        <p style="color: #cbd5e1; line-height: 1.8; margin-bottom: 14px;">At <strong>S2 Kennel Jammu</strong>, our mission is to raise healthy, happy, purebred puppies and kittens with transparent lineage certificates, complete veterinarian health screening, and compassionate early socialization.</p>
+                        <p style="color: #cbd5e1; line-height: 1.8; margin-bottom: 14px;">Located in peaceful Vijaypur along the Jammu highway, our breeding facility provides spacious suites, open outdoor play yards, and temperature-moderated living areas.</p>
+                        <div style="margin-top: 24px;">
+                            <a href="{% url 'core:book_dog' %}" class="btn btn-primary">Book a Puppy Online</a>
+                            <a href="{% url 'core:location' %}" class="btn btn-secondary" style="margin-left: 10px;">Visit Our Kennel</a>
+                        </div>
                     </div>
 
                     <div class="management-section" style="display: flex; flex-direction: column; gap: 20px;">
                         <div class="info-box" style="padding: 24px;">
                             <h4 style="color: var(--primary); font-size: 18px; margin-bottom: 6px;">👨‍💼 Kennel Manager</h4>
                             <p style="color: #ffffff; font-size: 17px; font-weight: 700; margin-bottom: 4px;">Nikhil Sharma</p>
-                            <p style="color: #94a3b8; font-size: 13px;">Supervises daily operations, nutrition plans, and customer visits.</p>
+                            <p style="color: #94a3b8; font-size: 13px;">Supervises daily operations, nutrition plans, vet visits, and customer tours.</p>
                         </div>
                         <div class="info-box" style="padding: 24px;">
                             <h4 style="color: var(--primary); font-size: 18px; margin-bottom: 6px;">👨‍💻 Website & Operations Coordinator</h4>
                             <p style="color: #ffffff; font-size: 17px; font-weight: 700; margin-bottom: 4px;">Neeraj Sharma</p>
-                            <p style="color: #94a3b8; font-size: 13px;">Manages digital portal, enquiries, customer support, and bookings.</p>
+                            <p style="color: #94a3b8; font-size: 13px;">Manages the digital booking portal, customer inquiries, logistics, and verification records.</p>
                         </div>
                     </div>
                 </div>
@@ -98,7 +102,36 @@
                         <h3 class="honor-name" style="color: var(--primary); font-size: 28px; margin-bottom: 6px;">Harsh Sharma</h3>
                         <p class="honor-title" style="color: #f1f5f9; font-size: 16px; font-weight: 600; margin-bottom: 6px;">Founder & Owner – S2 Kennel Jammu</p>
                         <p class="honor-experience" style="color: #cbd5e1; font-size: 14px; margin-bottom: 16px;">10+ Years of Dedication to Healthy & Ethical Pet Breeding</p>
-                        <p class="honor-bio" style="color: #94a3b8; line-height: 1.8; font-size: 14.5px;">Harsh Sharma is the founder of S2 Kennel Jammu with over a decade of hands-on experience in raising champion-lineage dog breeds and purebred cats. Known for unwavering customer trust, authentic vaccination certifications, and ethical standards, Harsh has established S2 Kennel as the most trusted pet breeding destination in Jammu & Kashmir.</p>
+                        <p class="honor-bio" style="color: #94a3b8; line-height: 1.8; font-size: 14.5px;">Harsh Sharma founded S2 Kennel Jammu with a vision to deliver genuine purebred companion dogs and cats with full health verification and lifetime breeder support. Under his guidance, hundreds of families across Jammu, Samba, Srinagar, and North India have welcomed lifelong furry family members.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KENNEL FACILITIES -->
+        <section class="facilities-section" style="padding: 60px 0 80px;">
+            <div class="container">
+                <h2 class="section-title">Our Kennel Facilities</h2>
+                <div class="facilities-grid">
+                    <div class="facility-card">
+                        <span class="facility-icon">🏠</span>
+                        <h3>Climate-Controlled Kennels</h3>
+                        <p>Spacious, clean, and temperature-moderated suites designed for optimal puppy health and comfort.</p>
+                    </div>
+                    <div class="facility-card">
+                        <span class="facility-icon">🎾</span>
+                        <h3>Open Grass Exercise Yards</h3>
+                        <p>Daily exercise, agility training, and socialization areas ensuring playful, confident pets.</p>
+                    </div>
+                    <div class="facility-card">
+                        <span class="facility-icon">🩺</span>
+                        <h3>Dedicated Vet Care</h3>
+                        <p>Regular on-site veterinary checkups, strict vaccination protocols, and certified health logs.</p>
+                    </div>
+                    <div class="facility-card">
+                        <span class="facility-icon">🥗</span>
+                        <h3>Customized Nutrition</h3>
+                        <p>Tailored dietary plans using premium puppy formulas and natural supplements for robust growth.</p>
                     </div>
                 </div>
             </div>
@@ -133,6 +166,7 @@
                     <h4>Quick Navigation</h4>
                     <ul class="footer-links">
                         <li><a href="{% url 'core:index' %}">Home</a></li>
+                        <li><a href="{% url 'core:about' %}" class="nav-link">About Us</a></li>
                         <li><a href="{% url 'core:dogs' %}">Our Dogs</a></li>
                         <li><a href="{% url 'core:cats' %}">Our Cats</a></li>
                         <li><a href="{% url 'core:book_dog' %}">Book a Dog</a></li>

@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Cats - S2 Kennel Jammu | Persian & Exotic Cats Vijaypur</title>
-    <meta name="description" content="Explore healthy, litter-trained Persian and exotic kittens available at S2 Kennel Jammu in Vijaypur. Vaccinated and socialized pets with complete health cards.">
-    <meta name="keywords" content="Persian Cat Jammu, Buy Kitten Vijaypur, Persian Doll Face Cat Jammu, Cat Adoption Jammu, S2 Kennel Cats">
+    <title>Our Cats - S2 Kennel Jammu | Persian & Purebred Cats Vijaypur</title>
+    <meta name="description" content="Browse available Persian and purebred kittens & cats at S2 Kennel Jammu in Vijaypur. Complete vaccination records and healthy bloodlines.">
+    <meta name="keywords" content="Persian Cat Jammu, Buy Kitten Vijaypur, Purebred Cats Jammu, S2 Kennel Cats">
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,9 +31,10 @@
                 <nav class="navbar" id="navbar">
                     <ul class="nav-menu">
                         <li><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
-                        <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
+                        <li><a href="{% url 'core:about' %}" class="nav-link">About</a></li>
                         <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
                         <li><a href="{% url 'core:cats' %}" class="nav-link active">Cats</a></li>
+                        <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
                         <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
                         <li><a href="{% url 'core:location' %}" class="nav-link">Location</a></li>
                         <li><a href="{% url 'core:contact' %}" class="nav-link">Contact</a></li>
@@ -41,7 +42,6 @@
                             <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="moreDropdownBtn">More <span class="arrow-down">▾</span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'core:health_tips' %}" class="dropdown-item">💊 Health Tips</a></li>
-                                <li><a href="{% url 'core:about' %}" class="dropdown-item">ℹ️ About Us</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -78,9 +78,9 @@
                     <div class="dog-card premium-card" data-size="{{ cat.size }}">
                         <div class="card-image">
                             {% if cat.image %}
-                            <img src="{{ cat.image.url }}" alt="{{ cat.name }}" loading="lazy" decoding="async">
+                            <img src="{{ cat.image.url }}" alt="{{ cat.name }}" class="primary-photo" loading="lazy" decoding="async">
                             {% else %}
-                            <img src="{% static 'core/images/cat1.jpg' %}" alt="{{ cat.name }}" loading="lazy" decoding="async">
+                            <img src="{% static 'core/images/cat1.jpg' %}" alt="{{ cat.name }}" class="primary-photo" loading="lazy" decoding="async">
                             {% endif %}
                             <span class="status-badge available">Available</span>
                         </div>
@@ -100,13 +100,13 @@
                                 </span>
                             </div>
                             {% if cat.description %}<p class="dog-description">{{ cat.description }}</p>{% endif %}
-                            <a href="{% url 'core:contact' %}" class="btn btn-primary btn-block">Enquire Now</a>
+                            <a href="{% url 'core:book_dog' %}" class="btn btn-primary btn-block" style="margin-top: auto;">Reserve / Enquire Now</a>
                         </div>
                     </div>
                     {% empty %}
                     <div class="dog-card premium-card" data-size="Small">
                         <div class="card-image">
-                            <img src="{% static 'core/images/cat1.jpg' %}" alt="Persian Doll Face" loading="lazy" decoding="async">
+                            <img src="{% static 'core/images/cat1.jpg' %}" alt="Persian Doll Face" class="primary-photo" loading="lazy" decoding="async">
                             <span class="status-badge available">Available</span>
                         </div>
                         <div class="card-content">
@@ -117,23 +117,7 @@
                                 <span class="detail-item"><span class="label">Price:</span><span class="value price">₹15,000 - ₹22,000</span></span>
                             </div>
                             <p class="dog-description">Fluffy, litter-trained, and affectionate Persian kitten with complete deworming.</p>
-                            <a href="{% url 'core:contact' %}" class="btn btn-primary btn-block">Enquire Now</a>
-                        </div>
-                    </div>
-                    <div class="dog-card premium-card" data-size="Small">
-                        <div class="card-image">
-                            <img src="{% static 'core/images/cat2.jpg' %}" alt="British Shorthair" loading="lazy" decoding="async">
-                            <span class="status-badge available">Available</span>
-                        </div>
-                        <div class="card-content">
-                            <h3 class="dog-name">British Shorthair</h3>
-                            <p class="dog-breed">British Shorthair Blue</p>
-                            <div class="dog-details">
-                                <span class="detail-item"><span class="label">Age:</span><span class="value">2.5 Months</span></span>
-                                <span class="detail-item"><span class="label">Price:</span><span class="value price">₹25,000 - ₹35,000</span></span>
-                            </div>
-                            <p class="dog-description">Calm temperament, dense plush coat, and vaccinated health certificate.</p>
-                            <a href="{% url 'core:contact' %}" class="btn btn-primary btn-block">Enquire Now</a>
+                            <a href="{% url 'core:book_dog' %}" class="btn btn-primary btn-block" style="margin-top: auto;">Reserve / Enquire Now</a>
                         </div>
                     </div>
                     {% endfor %}
@@ -170,6 +154,7 @@
                     <h4>Quick Navigation</h4>
                     <ul class="footer-links">
                         <li><a href="{% url 'core:index' %}">Home</a></li>
+                        <li><a href="{% url 'core:about' %}" class="nav-link">About Us</a></li>
                         <li><a href="{% url 'core:dogs' %}">Our Dogs</a></li>
                         <li><a href="{% url 'core:cats' %}">Our Cats</a></li>
                         <li><a href="{% url 'core:book_dog' %}">Book a Dog</a></li>

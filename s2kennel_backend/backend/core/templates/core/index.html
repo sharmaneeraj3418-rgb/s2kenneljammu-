@@ -69,9 +69,10 @@
                 <nav class="navbar" id="navbar">
                     <ul class="nav-menu">
                         <li><a href="{% url 'core:index' %}" class="nav-link active">Home</a></li>
-                        <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
+                        <li><a href="{% url 'core:about' %}" class="nav-link">About</a></li>
                         <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
                         <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
+                        <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
                         <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
                         <li><a href="{% url 'core:location' %}" class="nav-link">Location</a></li>
                         <li><a href="{% url 'core:contact' %}" class="nav-link">Contact</a></li>
@@ -79,7 +80,6 @@
                             <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="moreDropdownBtn">More <span class="arrow-down">▾</span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'core:health_tips' %}" class="dropdown-item">💊 Health Tips</a></li>
-                                <li><a href="{% url 'core:about' %}" class="dropdown-item">ℹ️ About Us</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -167,9 +167,15 @@
                     <div class="dog-card premium-card" data-size="{{ dog.size }}">
                         <div class="card-image">
                             {% if dog.image %}
-                            <img src="{{ dog.image.url }}" alt="{{ dog.name }}" loading="lazy" decoding="async">
+                            <img src="{{ dog.image.url }}" alt="{{ dog.name }}" class="primary-photo" loading="lazy" decoding="async">
                             {% else %}
-                            <img src="{% static 'core/images/dog1.jpg' %}" alt="{{ dog.name }}" loading="lazy" decoding="async">
+                            <img src="{% static 'core/images/dog1.jpg' %}" alt="{{ dog.name }}" class="primary-photo" loading="lazy" decoding="async">
+                            {% endif %}
+                            {% if dog.image2 %}
+                            <div class="photo-switcher-pills" title="Click to switch photo">
+                                <button type="button" class="photo-pill active" onclick="switchDogPhoto(this, '{{ dog.image.url }}')" aria-label="Photo 1">1</button>
+                                <button type="button" class="photo-pill" onclick="switchDogPhoto(this, '{{ dog.image2.url }}')" aria-label="Photo 2">2</button>
+                            </div>
                             {% endif %}
                             <span class="status-badge available">Available</span>
                         </div>

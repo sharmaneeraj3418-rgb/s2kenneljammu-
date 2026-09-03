@@ -5,33 +5,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Location - S2 Kennel Jammu">
-    <title>Location - S2 Kennel Jammu</title>
+    <title>Location & Directions - S2 Kennel Jammu | Visit Vijaypur Kennel</title>
+    <meta name="description" content="Visit S2 Kennel Jammu in Vijaypur. Interactive map, direct driving directions, visiting hours (9 AM - 7 PM), and WhatsApp live location support.">
+    <meta name="keywords" content="S2 Kennel Jammu Location, Dog Kennel Vijaypur, Pet Breeding Center Samba Jammu">
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <!-- HEADER/NAVBAR -->
     <header class="site-header" id="siteHeader">
         <div class="container">
             <div class="header-content">
                 <div class="brand">
-                    <h1 class="brand-title">S2 Kennel Jammu</h1>
-                    <p class="brand-subtitle">🐕 Premium Dog Breeders • Vijaypur</p>
+                    <a href="{% url 'core:index' %}">
+                        <h1 class="brand-title">S2 Kennel Jammu</h1>
+                    </a>
+                    <p class="brand-subtitle">🐕 Premium Pet Breeders • Vijaypur</p>
                 </div>
-                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
                     <span></span><span></span><span></span>
                 </button>
                 <nav class="navbar" id="navbar">
                     <ul class="nav-menu">
                         <li><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
+                        <li><a href="{% url 'core:about' %}" class="nav-link">About</a></li>
                         <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
                         <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
+                        <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
                         <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
-                        <li><a href="{% url 'core:health_tips' %}" class="nav-link">Health Tips</a></li>
                         <li><a href="{% url 'core:location' %}" class="nav-link active">Location</a></li>
                         <li><a href="{% url 'core:contact' %}" class="nav-link">Contact</a></li>
-                        <li><a href="{% url 'admin:index' %}" class="nav-link admin-nav-link">⚙️ Admin</a></li>
+                        <li class="nav-dropdown">
+                            <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="moreDropdownBtn">More <span class="arrow-down">▾</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'core:health_tips' %}" class="dropdown-item">💊 Health Tips</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -39,74 +51,117 @@
     </header>
 
     <main id="mainContent">
+        <!-- HERO SECTION -->
         <section class="page-hero">
             <div class="container">
-                <h1>📍 Our Location</h1>
-                <p>Visit us at our kennel in beautiful Vijaypur, Jammu & Kashmir.</p>
+                <h1>📍 Visit S2 Kennel Jammu</h1>
+                <p>Plan your visit to our spacious, hygienic breeding center located conveniently in Vijaypur along the Jammu highway.</p>
             </div>
         </section>
 
-        <section class="location-section">
+        <!-- LOCATION DETAILS & INFORMATION SECTION -->
+        <section class="location-section" style="padding: 60px 0 80px;">
             <div class="container">
-                <div class="location-content">
-                    <div class="location-info">
-                        <h2 class="section-title">Visit Information</h2>
-                        <div class="info-grid">
-                            <div class="info-box">
-                                <h3>📍 Address</h3>
-                                <p><strong>S2 Kennel Jammu</strong></p>
-                                <p>Vijaypur, Jammu & Kashmir, India</p>
-                            </div>
-                            <div class="info-box">
-                                <h3>🚗 How to Reach Us</h3>
-                                <p>Our kennel is located in scenic Vijaypur and is easily accessible by road. We offer guided visits by appointment and plenty of visitor parking.</p>
-                            </div>
-                            <div class="info-box">
-                                <h3>⏰ Visit Hours</h3>
-                                <p><strong>Monday - Sunday:</strong> 9:00 AM - 6:00 PM</p>
-                                <p>Please call ahead to schedule your visit.</p>
-                            </div>
-                            <div class="info-box">
-                                <h3>📞 Contact</h3>
-                                <p><strong>WhatsApp:</strong> <a href="https://wa.me/919796120006" target="_blank">+91 9796120006</a></p>
-                                <p><strong>Manager:</strong> Nikhil Sharma</p>
-                                <p><strong>Coordinator:</strong> Neeraj Sharma</p>
-                            </div>
-                        </div>
-
-                        <div class="button-row">
-                            <a href="{% url 'core:contact' %}" class="btn btn-primary">Book a Visit</a>
-                            <a href="https://maps.google.com/maps?q=Vijaypur+Jammu+Kashmir&output=embed" target="_blank" class="btn btn-secondary">View on Google Maps</a>
-                        </div>
+                <!-- 4-CARD STRUCTURED INFORMATION GRID -->
+                <div class="info-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-bottom: 40px;">
+                    <div class="info-box">
+                        <div style="font-size: 32px; margin-bottom: 12px;">📍</div>
+                        <h3>Exact Address</h3>
+                        <p><strong>S2 Kennel Jammu</strong></p>
+                        <p style="color: #cbd5e1; font-size: 14px; margin-top: 6px;">Main Highway Road, Vijaypur, Samba / Jammu, Jammu & Kashmir 184120</p>
+                        <p style="color: var(--primary); font-size: 12.5px; margin-top: 8px;">Landmark: Near Vijaypur Highway Junction</p>
                     </div>
 
-                    <div class="map-card">
-                        <iframe src="https://maps.google.com/maps?q=Vijaypur+Jammu+Kashmir&output=embed" allowfullscreen="" loading="lazy"></iframe>
+                    <div class="info-box">
+                        <div style="font-size: 32px; margin-bottom: 12px;">🚗</div>
+                        <h3>How to Reach Us</h3>
+                        <p style="color: #cbd5e1; font-size: 13.5px; line-height: 1.7;">
+                            • <strong>By Road:</strong> 20 mins from Jammu / Bari Brahmana on Jammu-Pathankot NH.<br>
+                            • <strong>By Train:</strong> Vijaypur (VJPJ) station is 5 mins away.<br>
+                            • <strong>By Air:</strong> Jammu Airport (IXJ) is ~25 km away.
+                        </p>
+                    </div>
+
+                    <div class="info-box">
+                        <div style="font-size: 32px; margin-bottom: 12px;">⏰</div>
+                        <h3>Visiting Hours</h3>
+                        <p><strong>Open 7 Days a Week</strong></p>
+                        <p style="color: #cbd5e1; font-size: 14px; margin-top: 6px;">Monday – Sunday: <strong>9:00 AM – 7:00 PM</strong></p>
+                        <p style="color: #94a3b8; font-size: 12.5px; margin-top: 8px;">*Walk-ins welcome, appointment recommended for puppy viewings.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <div style="font-size: 32px; margin-bottom: 12px;">📞</div>
+                        <h3>Direct Contact & Support</h3>
+                        <p><strong>Manager:</strong> Nikhil Sharma</p>
+                        <p><strong>Coordinator:</strong> Neeraj Sharma</p>
+                        <p style="color: #cbd5e1; font-size: 14px; margin-top: 6px;">WhatsApp: <a href="https://wa.me/919796120006" target="_blank" style="color: var(--primary); font-weight: 600;">+91 9796120006</a></p>
                     </div>
                 </div>
 
-                <div class="facilities-section">
-                    <h2 class="section-title">Our Facilities</h2>
+                <!-- ACTION BUTTONS ROW -->
+                <div class="button-row" style="justify-content: center; margin-bottom: 50px;">
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=Vijaypur+Jammu+and+Kashmir" target="_blank" class="btn btn-primary" style="padding: 14px 28px; font-size: 15px;">
+                        📍 Get Driving Directions on Google Maps
+                    </a>
+                    <a href="https://wa.me/919796120006?text=Hello%20S2%20Kennel,%20please%20send%20me%20your%20live%20location%20pin." target="_blank" class="btn btn-whatsapp" style="padding: 14px 28px; font-size: 15px; width: auto;">
+                        💬 WhatsApp for Live Location Pin
+                    </a>
+                    <a href="{% url 'core:book_dog' %}" class="btn btn-secondary" style="padding: 14px 28px; font-size: 15px;">
+                        🐾 Reserve / Pre-Book a Puppy
+                    </a>
+                </div>
+
+                <!-- BIG PROMINENT INTERACTIVE GOOGLE MAP EMBED -->
+                <div>
+                    <h2 class="section-title">Interactive Map & Directions</h2>
+                    <p class="section-subtitle">Zoom, pan, and navigate straight to S2 Kennel in Vijaypur</p>
+
+                    <div class="location-map-wrapper">
+                        <iframe 
+                            src="https://maps.google.com/maps?q=Vijaypur,+Jammu+and+Kashmir&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="S2 Kennel Jammu Interactive Location Map">
+                        </iframe>
+
+                        <!-- Floating Location Badge on Map -->
+                        <div class="map-floating-card">
+                            <h4>🐕 S2 Kennel Jammu</h4>
+                            <p>Vijaypur, Jammu & Kashmir<br>Open 7 Days a Week (9 AM - 7 PM)</p>
+                            <a href="https://www.google.com/maps/dir/?api=1&destination=Vijaypur+Jammu+and+Kashmir" target="_blank" class="btn-directions">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                Navigate on Google Maps
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KENNEL FACILITIES & HIGHLIGHTS -->
+                <div class="facilities-section" style="margin-top: 70px;">
+                    <h2 class="section-title">Kennel Facilities & Hygiene</h2>
+                    <p class="section-subtitle">A state-of-the-art breeding and nursery environment built for puppy well-being</p>
                     <div class="facilities-grid">
                         <div class="facility-card">
                             <span class="facility-icon">🏠</span>
-                            <h3>Comfortable Kennels</h3>
-                            <p>Modern, climate-controlled accommodations designed for canine comfort.</p>
+                            <h3>Climate-Controlled Suites</h3>
+                            <p>Spacious, clean, and temperature-moderated suites designed for optimal puppy health and seasonal comfort.</p>
                         </div>
                         <div class="facility-card">
                             <span class="facility-icon">🎾</span>
-                            <h3>Play Areas</h3>
-                            <p>Large outdoor spaces for exercise, play, and socialization.</p>
+                            <h3>Outdoor Exercise Yards</h3>
+                            <p>Lush grass play yards for daily exercise, agility training, and healthy puppy socialization.</p>
                         </div>
                         <div class="facility-card">
-                            <span class="facility-icon">🏥</span>
-                            <h3>Health Support</h3>
-                            <p>On-site veterinary monitoring and wellness care for every dog.</p>
+                            <span class="facility-icon">🩺</span>
+                            <h3>Dedicated On-Site Vet Care</h3>
+                            <p>Routine veterinarian visits, structured vaccination schedules, and certified health documentation.</p>
                         </div>
                         <div class="facility-card">
-                            <span class="facility-icon">🧘</span>
-                            <h3>Training Space</h3>
-                            <p>Dedicated areas for obedience training and behavioral development.</p>
+                            <span class="facility-icon">🥗</span>
+                            <h3>Scientific Puppy Nutrition</h3>
+                            <p>Tailored dietary plans using premium high-protein puppy formulas and essential calcium supplements.</p>
                         </div>
                     </div>
                 </div>
@@ -114,25 +169,63 @@
         </section>
     </main>
 
+    <!-- FLOATING WHATSAPP BUTTON (Fixed 60x60px Corner Floating Button) -->
+    <a href="https://wa.me/919796120006?text=Hello%20S2%20Kennel%20Jammu,%20please%20send%20me%20your%20location." target="_blank" class="whatsapp-float" id="whatsappFloatingBtn" aria-label="Chat on WhatsApp" style="position:fixed !important;bottom:28px !important;right:28px !important;width:60px !important;height:60px !important;max-width:60px !important;max-height:60px !important;min-width:60px !important;min-height:60px !important;border-radius:50% !important;background:#25d366 !important;display:flex !important;align-items:center !important;justify-content:center !important;box-shadow:0 10px 30px rgba(37,211,102,0.45) !important;z-index:999 !important;text-decoration:none !important;overflow:hidden !important;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffffff" style="width:28px !important;height:28px !important;max-width:28px !important;max-height:28px !important;min-width:28px !important;min-height:28px !important;display:block !important;pointer-events:none !important;"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm5.8 14.16c-.24.67-1.39 1.27-1.92 1.36-.51.08-1.17.12-3.37-.79-2.33-.96-3.83-3.33-3.95-3.48-.12-.16-.96-1.28-.96-2.44 0-1.17.61-1.74.83-1.98.22-.24.48-.3.64-.3.16 0 .32 0 .46.01.15.01.35-.06.55.42.21.49.71 1.74.78 1.86.06.12.1.27.02.43-.08.16-.12.26-.24.4-.12.14-.26.31-.37.42-.12.12-.25.26-.11.5.14.24.63 1.04 1.36 1.68.93.83 1.72 1.09 1.96 1.21.24.12.38.1.52-.06.14-.16.6-.7.76-.94.16-.24.32-.2.54-.12.22.08 1.39.66 1.63.78.24.12.4.18.46.28.06.1.06.58-.18 1.25z"/></svg>
+    </a>
+
+    <!-- STICKY MOBILE ACTION BAR (< 768px) -->
+    <div class="mobile-action-bar">
+        <a href="tel:+919796120006" class="mobile-action-btn call-btn">
+            <span>📞 Call Us</span>
+        </a>
+        <a href="https://wa.me/919796120006?text=Hello%20S2%20Kennel,%20please%20share%20location." target="_blank" class="mobile-action-btn wa-btn">
+            <span>💬 WhatsApp</span>
+        </a>
+    </div>
+
+    <!-- FOOTER -->
     <footer class="footer" id="siteFooter">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>S2 Kennel Jammu</h4>
-                    <p>Premium Dog Breeders</p>
+                    <h4>🐕 S2 Kennel Jammu</h4>
+                    <p>Premier ethical dog & cat breeding center located in Vijaypur, Jammu & Kashmir.</p>
+                    <p style="color: #cbd5e1; font-size: 13px; margin-top: 10px;">📍 Vijaypur, Samba / Jammu, J&K</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Management</h4>
-                    <p>Manager: Nikhil Sharma</p>
-                    <p>Coordinator: Neeraj Sharma</p>
+                    <h4>Quick Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'core:index' %}">Home</a></li>
+                        <li><a href="{% url 'core:about' %}" class="nav-link">About Us</a></li>
+                        <li><a href="{% url 'core:dogs' %}">Our Dogs</a></li>
+                        <li><a href="{% url 'core:cats' %}">Our Cats</a></li>
+                        <li><a href="{% url 'core:book_dog' %}">Book a Dog</a></li>
+                        <li><a href="{% url 'core:reviews' %}">Customer Reviews</a></li>
+                        <li><a href="{% url 'core:location' %}">Kennel Location</a></li>
+                        <li><a href="{% url 'core:contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'core:health_tips' %}">Pet Health Tips</a></li>
+                    </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Follow Us</h4>
-                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="social-link">📷 Instagram</a>
+                    <h4>Management & Staff</h4>
+                    <p>Manager: <strong>Nikhil Sharma</strong></p>
+                    <p>Coordinator: <strong>Neeraj Sharma</strong></p>
+                    <div style="margin-top: 14px;">
+                        <a href="{% url 'admin:index' %}" class="staff-admin-btn">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            Staff Admin Portal
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="social-link">📷 Instagram @jammu_dogslover</a>
+                    <a href="https://wa.me/919796120006" target="_blank" class="social-link" style="margin-top: 8px; display: inline-block;">💬 WhatsApp +91 9796120006</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. | Website created by Neeraj Sharma</p>
+                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. • Created by <strong>Neeraj Sharma</strong></p>
             </div>
         </div>
     </footer>

@@ -483,3 +483,20 @@ function initCatalogFilters() {
         });
     }
 }
+
+// Interactive Dog Photo Switcher
+function switchDogPhoto(btn, imgUrl) {
+    const cardImage = btn.closest('.card-image');
+    if (!cardImage) return;
+    const img = cardImage.querySelector('img.primary-photo') || cardImage.querySelector('img');
+    if (img) {
+        img.style.opacity = '0.4';
+        setTimeout(() => {
+            img.src = imgUrl;
+            img.style.opacity = '1';
+        }, 150);
+    }
+    const pills = cardImage.querySelectorAll('.photo-pill');
+    pills.forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+}

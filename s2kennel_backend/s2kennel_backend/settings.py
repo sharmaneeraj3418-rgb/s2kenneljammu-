@@ -125,4 +125,18 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Session & Security configuration
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 1209600  # 2 weeks
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com',
+    'https://s2kenneljammu-o49j.onrender.com',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

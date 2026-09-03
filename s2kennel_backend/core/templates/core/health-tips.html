@@ -5,33 +5,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Health Tips - S2 Kennel Jammu">
-    <title>Health Tips - S2 Kennel Jammu</title>
+    <title>Pet Health Tips & Puppy Care Guide - S2 Kennel Jammu</title>
+    <meta name="description" content="Expert veterinary health tips, puppy vaccination schedule, nutrition guide, and grooming tips by S2 Kennel Jammu in Vijaypur.">
+    <meta name="keywords" content="Puppy Health Tips Jammu, Dog Vaccination Schedule Jammu, Pet Care Guide Vijaypur">
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <!-- HEADER/NAVBAR -->
     <header class="site-header" id="siteHeader">
         <div class="container">
             <div class="header-content">
                 <div class="brand">
-                    <h1 class="brand-title">S2 Kennel Jammu</h1>
-                    <p class="brand-subtitle">🐕 Premium Dog Breeders • Vijaypur</p>
+                    <a href="{% url 'core:index' %}">
+                        <h1 class="brand-title">S2 Kennel Jammu</h1>
+                    </a>
+                    <p class="brand-subtitle">🐕 Premium Pet Breeders • Vijaypur</p>
                 </div>
-                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
                     <span></span><span></span><span></span>
                 </button>
                 <nav class="navbar" id="navbar">
                     <ul class="nav-menu">
                         <li><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
+                        <li><a href="{% url 'core:about' %}" class="nav-link">About</a></li>
                         <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
                         <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
+                        <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
                         <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
-                        <li><a href="{% url 'core:health_tips' %}" class="nav-link active">Health Tips</a></li>
                         <li><a href="{% url 'core:location' %}" class="nav-link">Location</a></li>
                         <li><a href="{% url 'core:contact' %}" class="nav-link">Contact</a></li>
-                        <li><a href="{% url 'admin:index' %}" class="nav-link admin-nav-link">⚙️ Admin</a></li>
+                        <li class="nav-dropdown">
+                            <a href="javascript:void(0);" class="nav-link dropdown-toggle active" id="moreDropdownBtn">More <span class="arrow-down">▾</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'core:health_tips' %}" class="dropdown-item active" style="color: var(--primary);">💊 Health Tips</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -41,148 +53,152 @@
     <main id="mainContent">
         <section class="page-hero">
             <div class="container">
-                <h1>Dog Health Tips</h1>
-                <p>Practical guidance for keeping your puppy healthy, happy, and well-adjusted through every stage of early development.</p>
+                <h1>Dog & Pet Health Tips</h1>
+                <p>Expert veterinarian guidelines and practical advice for keeping your puppy or kitten healthy, vaccinated, and happy.</p>
             </div>
         </section>
 
         <section class="health-tips-section">
             <div class="container">
                 <div class="health-intro">
-                    <h2 class="section-title">Essential Puppy Care Guide</h2>
-                    <p class="health-intro-text">From nutrition to training, these practical tips help ensure your dog thrives with confidence and good health.</p>
+                    <h2 class="section-title">Essential Puppy & Kitten Care Guide</h2>
+                    <p class="health-intro-text">Raising a healthy companion requires balanced nutrition, regular veterinary care, hygiene, and positive socialization. Follow these essential best practices recommended by S2 Kennel Jammu.</p>
                 </div>
 
                 <div class="health-tips-grid">
+                    <!-- TIP 1 -->
                     <article class="health-card">
                         <div class="health-card-header">
-                            <span class="health-icon">🥗</span>
-                            <h3 class="health-card-title">Proper Nutrition</h3>
+                            <span class="health-icon">💉</span>
+                            <h3 class="health-card-title">Vaccination & Deworming Schedule</h3>
                         </div>
                         <div class="health-card-body">
-                            <p>Choose high-quality, age-appropriate food and establish a consistent feeding schedule. Feed puppies 3-4 times daily until 6 months, then transition to twice daily.</p>
+                            <div class="health-subsection">
+                                <h4 style="color: var(--primary); margin-bottom: 6px;">Early Weeks (6 – 8 Weeks)</h4>
+                                <p>Administer first puppy booster (DHPPi/L) and routine deworming drops under veterinary supervision.</p>
+                            </div>
+                            <div class="health-subsection">
+                                <h4 style="color: var(--primary); margin-bottom: 6px;">Follow-up (10 – 14 Weeks)</h4>
+                                <p>Second vaccination booster, anti-rabies vaccine (at 3 months), and continuous monthly tick/flea prevention.</p>
+                            </div>
                         </div>
                     </article>
 
+                    <!-- TIP 2 -->
                     <article class="health-card">
                         <div class="health-card-header">
-                            <span class="health-icon">🩺</span>
-                            <h3 class="health-card-title">Regular Veterinary Care</h3>
+                            <span class="health-icon">🥣</span>
+                            <h3 class="health-card-title">Nutrition & Meal Guidelines</h3>
                         </div>
                         <div class="health-card-body">
-                            <p>Schedule regular checkups, vaccinations, and deworming appointments. Preventive care keeps your dog healthy and helps catch issues early.</p>
+                            <div class="health-subsection">
+                                <h4 style="color: var(--primary); margin-bottom: 6px;">High-Quality Protein</h4>
+                                <p>Feed age-appropriate starter food rich in DHA, calcium, and essential fatty acids for strong bone structure.</p>
+                            </div>
+                            <div class="health-subsection">
+                                <h4 style="color: var(--primary); margin-bottom: 6px;">Clean Water 24/7</h4>
+                                <p>Always provide fresh, filtered drinking water. Avoid table scraps, chocolate, onions, and cooked bones.</p>
+                            </div>
                         </div>
                     </article>
 
+                    <!-- TIP 3 -->
                     <article class="health-card">
                         <div class="health-card-header">
-                            <span class="health-icon">🐾</span>
-                            <h3 class="health-card-title">Early Socialization</h3>
+                            <span class="health-icon">🏃</span>
+                            <h3 class="health-card-title">Exercise & Mental Stimulation</h3>
                         </div>
                         <div class="health-card-body">
-                            <p>Introduce your puppy to people, animals, and new environments during the early weeks. Positive social experiences build a calm, confident adult dog.</p>
+                            <div class="health-subsection">
+                                <h4 style="color: var(--primary); margin-bottom: 6px;">Daily Play Sessions</h4>
+                                <p>20–30 minutes of moderate play prevents anxiety, destructive chewing, and obesity in growing puppies.</p>
+                            </div>
+                            <div class="health-subsection">
+                                <h4 style="color: var(--primary); margin-bottom: 6px;">Positive Reinforcement</h4>
+                                <p>Use gentle reward-based training for potty habits, leash walking, and obedience commands.</p>
+                            </div>
                         </div>
                     </article>
 
+                    <!-- TIP 4 -->
                     <article class="health-card">
                         <div class="health-card-header">
-                            <span class="health-icon">🎓</span>
-                            <h3 class="health-card-title">Training and Exercise</h3>
+                            <span class="health-icon">🧼</span>
+                            <h3 class="health-card-title">Grooming & Coat Hygiene</h3>
                         </div>
                         <div class="health-card-body">
-                            <p>Use positive reinforcement and short, frequent training sessions. Match exercise to your dog's age and breed, and avoid overexertion in young puppies.</p>
+                            <div class="health-subsection">
+                                <h4 style="color: var(--primary); margin-bottom: 6px;">Regular Brushing</h4>
+                                <p>Brush coat 2–3 times a week to remove loose fur and stimulate natural skin oils.</p>
+                            </div>
+                            <div class="health-subsection">
+                                <h4 style="color: var(--primary); margin-bottom: 6px;">Ear & Dental Checkups</h4>
+                                <p>Clean ears with vet-approved wipes and maintain oral hygiene with safe chew toys.</p>
+                            </div>
                         </div>
                     </article>
-
-                    <article class="health-card">
-                        <div class="health-card-header">
-                            <span class="health-icon">🛁</span>
-                            <h3 class="health-card-title">Grooming and Hygiene</h3>
-                        </div>
-                        <div class="health-card-body">
-                            <p>Maintain coat care, dental hygiene, and nail trimming. Regular grooming helps prevent infections and keeps your dog comfortable.</p>
-                        </div>
-                    </article>
-
-                    <article class="health-card">
-                        <div class="health-card-header">
-                            <span class="health-icon">💊</span>
-                            <h3 class="health-card-title">Preventive Healthcare</h3>
-                        </div>
-                        <div class="health-card-body">
-                            <p>Keep vaccinations, flea and tick prevention, and heartworm protection up to date. Prevention is far more reliable than reactive treatment.</p>
-                        </div>
-                    </article>
-
-                    <article class="health-card">
-                        <div class="health-card-header">
-                            <span class="health-icon">🦷</span>
-                            <h3 class="health-card-title">Dental Care</h3>
-                        </div>
-                        <div class="health-card-body">
-                            <p>Brush your dog’s teeth regularly and ask your vet about professional cleanings. Good dental health supports overall wellness.</p>
-                        </div>
-                    </article>
-
-                    <article class="health-card">
-                        <div class="health-card-header">
-                            <span class="health-icon">⚖️</span>
-                            <h3 class="health-card-title">Weight Management</h3>
-                        </div>
-                        <div class="health-card-body">
-                            <p>Maintain a healthy weight with balanced portions and quality food. Obesity increases the risk of joint issues, diabetes, and other conditions.</p>
-                        </div>
-                    </article>
-
-                    <article class="health-card">
-                        <div class="health-card-header">
-                            <span class="health-icon">🧠</span>
-                            <h3 class="health-card-title">Mental Stimulation</h3>
-                        </div>
-                        <div class="health-card-body">
-                            <p>Use puzzle toys, training games, and enrichment activities to keep your dog engaged. Mental exercise prevents boredom and reduces unwanted behaviors.</p>
-                        </div>
-                    </article>
-
-                    <article class="health-card">
-                        <div class="health-card-header">
-                            <span class="health-icon">🔒</span>
-                            <h3 class="health-card-title">Safe Environment</h3>
-                        </div>
-                        <div class="health-card-body">
-                            <p>Keep your home and yard free of hazards, toxic plants, and loose wires. Provide a quiet, comfortable place for your dog to rest safely.</p>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="info-box" style="margin-top: 40px;">
-                    <h3>Emergency Preparedness</h3>
-                    <p>Always keep an emergency vet contact ready and recognize early signs of poisoning, injury, or distress. Quick response can make all the difference.</p>
-                    <p style="margin-top: 15px;">For personalized health guidance, please visit our <a href="{% url 'core:contact' %}">contact page</a> or speak with your veterinarian.</p>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- FLOATING WHATSAPP BUTTON (Fixed 60x60px Corner Floating Button) -->
+    <a href="https://wa.me/919796120006?text=Hello%20S2%20Kennel%20Jammu,%20I%20have%20a%20pet%20health%20question." target="_blank" class="whatsapp-float" id="whatsappFloatingBtn" aria-label="Chat on WhatsApp" style="position:fixed !important;bottom:28px !important;right:28px !important;width:60px !important;height:60px !important;max-width:60px !important;max-height:60px !important;min-width:60px !important;min-height:60px !important;border-radius:50% !important;background:#25d366 !important;display:flex !important;align-items:center !important;justify-content:center !important;box-shadow:0 10px 30px rgba(37,211,102,0.45) !important;z-index:999 !important;text-decoration:none !important;overflow:hidden !important;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffffff" style="width:28px !important;height:28px !important;max-width:28px !important;max-height:28px !important;min-width:28px !important;min-height:28px !important;display:block !important;pointer-events:none !important;"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm5.8 14.16c-.24.67-1.39 1.27-1.92 1.36-.51.08-1.17.12-3.37-.79-2.33-.96-3.83-3.33-3.95-3.48-.12-.16-.96-1.28-.96-2.44 0-1.17.61-1.74.83-1.98.22-.24.48-.3.64-.3.16 0 .32 0 .46.01.15.01.35-.06.55.42.21.49.71 1.74.78 1.86.06.12.1.27.02.43-.08.16-.12.26-.24.4-.12.14-.26.31-.37.42-.12.12-.25.26-.11.5.14.24.63 1.04 1.36 1.68.93.83 1.72 1.09 1.96 1.21.24.12.38.1.52-.06.14-.16.6-.7.76-.94.16-.24.32-.2.54-.12.22.08 1.39.66 1.63.78.24.12.4.18.46.28.06.1.06.58-.18 1.25z"/></svg>
+    </a>
+
+    <!-- STICKY MOBILE ACTION BAR (< 768px) -->
+    <div class="mobile-action-bar">
+        <a href="tel:+919796120006" class="mobile-action-btn call-btn">
+            <span>📞 Call Us</span>
+        </a>
+        <a href="https://wa.me/919796120006?text=Hello%20S2%20Kennel,%20I%20have%20an%20enquiry." target="_blank" class="mobile-action-btn wa-btn">
+            <span>💬 WhatsApp</span>
+        </a>
+    </div>
+
+    <!-- FOOTER -->
     <footer class="footer" id="siteFooter">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>S2 Kennel Jammu</h4>
-                    <p>Premium Dog Breeders</p>
+                    <h4>🐕 S2 Kennel Jammu</h4>
+                    <p>Premier ethical dog & cat breeding center located in Vijaypur, Jammu & Kashmir.</p>
+                    <p style="color: #cbd5e1; font-size: 13px; margin-top: 10px;">📍 Vijaypur, Samba / Jammu, J&K</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Management</h4>
-                    <p>Manager: Nikhil Sharma</p>
-                    <p>Coordinator: Neeraj Sharma</p>
+                    <h4>Quick Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'core:index' %}">Home</a></li>
+                        <li><a href="{% url 'core:about' %}" class="nav-link">About Us</a></li>
+                        <li><a href="{% url 'core:dogs' %}">Our Dogs</a></li>
+                        <li><a href="{% url 'core:cats' %}">Our Cats</a></li>
+                        <li><a href="{% url 'core:book_dog' %}">Book a Dog</a></li>
+                        <li><a href="{% url 'core:reviews' %}">Customer Reviews</a></li>
+                        <li><a href="{% url 'core:location' %}">Kennel Location</a></li>
+                        <li><a href="{% url 'core:contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'core:health_tips' %}">Pet Health Tips</a></li>
+                    </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Follow Us</h4>
-                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="social-link">📷 Instagram</a>
+                    <h4>Management & Staff</h4>
+                    <p>Manager: <strong>Nikhil Sharma</strong></p>
+                    <p>Coordinator: <strong>Neeraj Sharma</strong></p>
+                    <div style="margin-top: 14px;">
+                        <a href="{% url 'admin:index' %}" class="staff-admin-btn">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            Staff Admin Portal
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="social-link">📷 Instagram @jammu_dogslover</a>
+                    <a href="https://wa.me/919796120006" target="_blank" class="social-link" style="margin-top: 8px; display: inline-block;">💬 WhatsApp +91 9796120006</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. | Website created by Neeraj Sharma</p>
+                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. • Created by <strong>Neeraj Sharma</strong></p>
             </div>
         </div>
     </footer>

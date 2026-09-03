@@ -5,10 +5,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="S2 Kennel Jammu - Premium Dog Breeders in Vijaypur, Jammu & Kashmir">
-    <title>S2 Kennel Jammu - Premium Dogs | Vijaypur</title>
+    <title>S2 Kennel Jammu - Premium Dog & Cat Breeders | Vijaypur</title>
+    <meta name="description" content="S2 Kennel Jammu is the premier certified dog & cat breeding center in Vijaypur, Jammu & Kashmir. Purebred German Shepherds, Golden Retrievers, Labradors, Rottweilers & Persian Cats.">
+    <meta name="keywords" content="Dog Kennel Jammu, Puppy Breeder Vijaypur, S2 Kennel Jammu, German Shepherd Jammu, Golden Retriever Puppy Jammu, Labrador Jammu, Persian Cat Jammu, Dog Adoption Samba">
+    <meta property="og:title" content="S2 Kennel Jammu - Premium Dogs & Cats | Vijaypur">
+    <meta property="og:description" content="Certified, healthy, and vaccinated puppies & kittens raised with 10+ years of ethical breeding experience in Vijaypur, Jammu.">
+    <meta property="og:type" content="website">
+    
+    <!-- JSON-LD LocalBusiness Structured Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "PetStore",
+      "name": "S2 Kennel Jammu",
+      "image": "https://s2kenneljammu.com/static/core/images/dog1.jpg",
+      "telephone": "+919796120006",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Main Highway Road",
+        "addressLocality": "Vijaypur",
+        "addressRegion": "Jammu & Kashmir",
+        "postalCode": "184120",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 32.5645,
+        "longitude": 75.0253
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens": "09:00",
+        "closes": "19:00"
+      },
+      "sameAs": [
+        "https://www.instagram.com/jammu_dogslover"
+      ],
+      "priceRange": "₹₹"
+    }
+    </script>
+
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -17,22 +58,30 @@
         <div class="container">
             <div class="header-content">
                 <div class="brand">
-                    <h1 class="brand-title">S2 Kennel Jammu</h1>
-                    <p class="brand-subtitle">🐕 Premium Dog Breeders • Vijaypur</p>
+                    <a href="{% url 'core:index' %}">
+                        <h1 class="brand-title">S2 Kennel Jammu</h1>
+                    </a>
+                    <p class="brand-subtitle">🐕 Premium Pet Breeders • Vijaypur</p>
                 </div>
-                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
                     <span></span><span></span><span></span>
                 </button>
                 <nav class="navbar" id="navbar">
                     <ul class="nav-menu">
                         <li><a href="{% url 'core:index' %}" class="nav-link active">Home</a></li>
+                        <li><a href="{% url 'core:about' %}" class="nav-link">About</a></li>
                         <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
                         <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
+                        <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
                         <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
-                        <li><a href="{% url 'core:health_tips' %}" class="nav-link">Health Tips</a></li>
                         <li><a href="{% url 'core:location' %}" class="nav-link">Location</a></li>
                         <li><a href="{% url 'core:contact' %}" class="nav-link">Contact</a></li>
-                        <li><a href="{% url 'admin:index' %}" class="nav-link admin-nav-link">⚙️ Admin</a></li>
+                        <li class="nav-dropdown">
+                            <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="moreDropdownBtn">More <span class="arrow-down">▾</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'core:health_tips' %}" class="dropdown-item">💊 Health Tips</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -46,150 +95,286 @@
                 <div class="hero-content">
                     <div class="hero-text">
                         <h2 class="hero-title">WELCOME TO S2 KENNEL JAMMU</h2>
-                        <p class="hero-description">S2 Kennel Jammu is renowned for premium dog breeding with ethical practices, rigorous health certifications, and unwavering commitment to quality. Every dog is bred with meticulous care and complete transparency.</p>
+                        <p class="hero-description">Renowned across Jammu & Kashmir for purebred dog and cat breeding with ethical standards, complete vaccination records, and certified pedigrees.</p>
                         <div class="hero-buttons">
-                            <a href="{% url 'core:dogs' %}" class="btn btn-primary">View Our Dogs</a>
-                            <a href="{% url 'core:contact' %}" class="btn btn-secondary">Contact Us</a>
+                            <a href="{% url 'core:dogs' %}" class="btn btn-primary">View Available Dogs</a>
+                            <a href="{% url 'core:book_dog' %}" class="btn btn-secondary">Book a Puppy</a>
                         </div>
                     </div>
                     <div class="hero-image">
-                        <img src="{% static 'core/images/dog1.jpg' %}" alt="Premium Dog" class="hero-img">
+                        <img src="{% static 'core/images/dog1.jpg' %}" alt="Premium Dog" class="hero-img" loading="eager" decoding="async">
                     </div>
                 </div>
+
+                <!-- OWNER SPOTLIGHT -->
                 <div class="owner-section">
                     <div class="owner-photo-wrapper">
-                        <img src="{% static 'core/images/owner.jpg' %}" alt="Harsh Sharma - Owner" class="owner-photo">
+                        <img src="{% static 'core/images/owner.jpg' %}" alt="Harsh Sharma" class="owner-photo" loading="lazy" decoding="async">
                     </div>
                     <div class="owner-info">
                         <h3 class="owner-name">Harsh Sharma</h3>
                         <p class="owner-title">Founder & Owner – S2 Kennel Jammu</p>
-                        <p class="owner-experience">10+ Years Experience in Premium Dog Breeding</p>
+                        <p class="owner-experience">10+ Years of Dedication to Ethical & Healthy Pet Breeding</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRUST & QUALITY GUARANTEE BADGES -->
+        <section class="trust-badges-section">
+            <div class="container">
+                <div class="trust-badges-grid">
+                    <div class="badge-card">
+                        <span class="badge-icon">🛡️</span>
+                        <div class="badge-text">
+                            <h4>100% Pure Bloodline</h4>
+                            <p>Direct champion lineage genetics with verified ancestry.</p>
+                        </div>
+                    </div>
+                    <div class="badge-card">
+                        <span class="badge-icon">💉</span>
+                        <div class="badge-text">
+                            <h4>Certified Vaccinations</h4>
+                            <p>Up-to-date puppy booster and deworming health card.</p>
+                        </div>
+                    </div>
+                    <div class="badge-card">
+                        <span class="badge-icon">🩺</span>
+                        <div class="badge-text">
+                            <h4>Vet Health Clearance</h4>
+                            <p>Comprehensive pre-adoption health screening by certified vets.</p>
+                        </div>
+                    </div>
+                    <div class="badge-card">
+                        <span class="badge-icon">🚚</span>
+                        <div class="badge-text">
+                            <h4>Safe Doorstep Delivery</h4>
+                            <p>Climate-safe transport across J&K, Punjab, and North India.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- FEATURED DOGS SECTION -->
-        <section id="featured-dogs" class="featured-section">
+        <section class="dogs-section featured-section">
             <div class="container">
-                <h2 class="section-title">Featured Dogs</h2>
+                <h2 class="section-title">Featured Dogs Available</h2>
+                <p class="section-subtitle">Healthy, vaccinated, and certified puppies ready for their forever families</p>
+
                 <div class="dogs-grid">
-                    <div class="dog-card">
-                        <div class="dog-image-wrapper">
-                            <img class="dog-image" src="{% static 'core/images/Labrador 1.jpeg' %}" alt="Labrador Retriever">
+                    {% for dog in dogs %}
+                    <div class="dog-card premium-card" data-size="{{ dog.size }}">
+                        <div class="card-image">
+                            {% if dog.image %}
+                            <img src="{{ dog.image.url }}" alt="{{ dog.name }}" class="primary-photo" loading="lazy" decoding="async">
+                            {% else %}
+                            <img src="{% static 'core/images/dog1.jpg' %}" alt="{{ dog.name }}" class="primary-photo" loading="lazy" decoding="async">
+                            {% endif %}
+                            {% if dog.image2 %}
+                            <div class="photo-switcher-pills" title="Click to switch photo">
+                                <button type="button" class="photo-pill active" onclick="switchDogPhoto(this, '{{ dog.image.url }}')" aria-label="Photo 1">1</button>
+                                <button type="button" class="photo-pill" onclick="switchDogPhoto(this, '{{ dog.image2.url }}')" aria-label="Photo 2">2</button>
+                            </div>
+                            {% endif %}
+                            <span class="status-badge available">Available</span>
                         </div>
-                        <h3>Labrador Retriever</h3>
-                        <p>Friendly, outgoing, and great with families.</p>
-                        <div class="card-actions">
-                            <a href="{% url 'core:dogs' %}" class="btn btn-primary">Learn More</a>
+                        <div class="card-content">
+                            <h3 class="dog-name">{{ dog.name }}</h3>
+                            {% if dog.breed %}<p class="dog-breed">{{ dog.breed }}</p>{% endif %}
+                            <div class="dog-details">
+                                {% if dog.age_range %}
+                                <span class="detail-item">
+                                    <span class="label">Age:</span>
+                                    <span class="value">{{ dog.age_range }}</span>
+                                </span>
+                                {% endif %}
+                                <span class="detail-item">
+                                    <span class="label">Price:</span>
+                                    <span class="value price">{{ dog.price_range }}</span>
+                                </span>
+                            </div>
+                            {% if dog.description %}<p class="dog-description">{{ dog.description|truncatewords:15 }}</p>{% endif %}
+                            <a href="{% url 'core:contact' %}" class="btn btn-primary btn-block">Enquire Now</a>
                         </div>
                     </div>
-                    <div class="dog-card">
-                        <div class="dog-image-wrapper">
-                            <img class="dog-image" src="{% static 'core/images/dog2.jpg' %}" alt="Beagle">
+                    {% empty %}
+                    <div class="dog-card premium-card" data-size="Large">
+                        <div class="card-image">
+                            <img src="{% static 'core/images/dog1.jpg' %}" alt="German Shepherd" loading="lazy" decoding="async">
+                            <span class="status-badge available">Available</span>
                         </div>
-                        <h3>Beagle</h3>
-                        <p>Curious and merry; loves exploring.</p>
-                        <div class="card-actions">
-                            <a href="{% url 'core:dogs' %}" class="btn btn-primary">Learn More</a>
-                        </div>
-                    </div>
-                    <div class="dog-card">
-                        <div class="dog-image-wrapper">
-                            <img class="dog-image" src="{% static 'core/images/Toy Pom1.jpeg' %}" alt="Pomeranian">
-                        </div>
-                        <h3>Pomeranian</h3>
-                        <p>Small, lively companion.</p>
-                        <div class="card-actions">
-                            <a href="{% url 'core:dogs' %}" class="btn btn-primary">Learn More</a>
+                        <div class="card-content">
+                            <h3 class="dog-name">German Shepherd Puppy</h3>
+                            <p class="dog-breed">Pure Lineage German Shepherd</p>
+                            <div class="dog-details">
+                                <span class="detail-item"><span class="label">Age:</span><span class="value">2 Months</span></span>
+                                <span class="detail-item"><span class="label">Price:</span><span class="value price">₹18,000 - ₹25,000</span></span>
+                            </div>
+                            <a href="{% url 'core:contact' %}" class="btn btn-primary btn-block">Enquire Now</a>
                         </div>
                     </div>
+                    <div class="dog-card premium-card" data-size="Large">
+                        <div class="card-image">
+                            <img src="{% static 'core/images/dog2.jpg' %}" alt="Golden Retriever" loading="lazy" decoding="async">
+                            <span class="status-badge available">Available</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="dog-name">Golden Retriever Puppy</h3>
+                            <p class="dog-breed">Champion Show Bloodline</p>
+                            <div class="dog-details">
+                                <span class="detail-item"><span class="label">Age:</span><span class="value">2.5 Months</span></span>
+                                <span class="detail-item"><span class="label">Price:</span><span class="value price">₹20,000 - ₹30,000</span></span>
+                            </div>
+                            <a href="{% url 'core:contact' %}" class="btn btn-primary btn-block">Enquire Now</a>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
+
                 <div class="section-cta">
-                    <a href="{% url 'core:dogs' %}" class="btn btn-primary">View All Dogs</a>
+                    <a href="{% url 'core:dogs' %}" class="btn btn-secondary">Explore All Dogs &rarr;</a>
                 </div>
             </div>
         </section>
 
-        <!-- ABOUT SECTION -->
-        <section id="about" class="honor-section">
+        <!-- UPCOMING LITTERS & PRE-BOOKING SECTION -->
+        <section class="upcoming-litters-section">
             <div class="container">
-                <h2 class="section-title">Our Honor / Owner</h2>
-                <div class="honor-content">
-                    <div class="honor-photo-wrapper">
-                        <img src="{% static 'core/images/owner.jpg' %}" alt="Harsh Sharma - Owner" class="honor-photo">
+                <h2 class="section-title">🐾 Upcoming Litters & Pre-Booking</h2>
+                <p class="section-subtitle">Reserve top-tier champion puppies in advance from our upcoming seasonal litters</p>
+
+                <div class="litters-grid">
+                    <div class="litter-card">
+                        <span class="litter-badge">Opening Soon</span>
+                        <h3 class="litter-breed">🐕 German Shepherd (Show Line)</h3>
+                        <p class="litter-dates">📅 Expected: Next Month • Vijaypur Kennel</p>
+                        <p class="litter-desc">Champion father and mother with intense black & tan pigmentation, high trainability, and calm family temperament.</p>
+                        <a href="{% url 'core:book_dog' %}" class="btn btn-primary btn-block">Pre-Book Puppy Slot</a>
                     </div>
-                    <div class="honor-info">
-                        <h3 class="honor-name">Harsh Sharma</h3>
-                        <p class="honor-title">Founder & Owner – S2 Kennel Jammu</p>
-                        <p class="honor-experience">10+ Years of Experience in Premium & Healthy Dog Breeding</p>
-                        <p class="honor-bio">With over a decade of dedication and passion, Harsh Sharma has established S2 Kennel Jammu as the premier destination for premium dog breeding. We maintain the highest ethical standards and ensure all dogs are healthy, well-socialized,
-                            and ready for their forever homes.</p>
+                    <div class="litter-card">
+                        <span class="litter-badge">Pre-Booking Open</span>
+                        <h3 class="litter-breed">🐕 Golden Retriever (English Cream)</h3>
+                        <p class="litter-dates">📅 Expected: Within 3-4 Weeks</p>
+                        <p class="litter-desc">Heavy bone structure, ultra-soft dense coat, and gentle playful temperament ideal for kids and homes.</p>
+                        <a href="{% url 'core:book_dog' %}" class="btn btn-primary btn-block">Pre-Book Puppy Slot</a>
+                    </div>
+                    <div class="litter-card">
+                        <span class="litter-badge">Limited Slots</span>
+                        <h3 class="litter-breed">🐈 Persian Doll Face Kittens</h3>
+                        <p class="litter-dates">📅 Expected: 2-3 Weeks</p>
+                        <p class="litter-desc">Pure white & bi-color Persian kittens. Litter-box trained, vaccinated, and socialization certified.</p>
+                        <a href="{% url 'core:book_dog' %}" class="btn btn-primary btn-block">Pre-Book Kitten Slot</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- QUICK LINKS SECTION -->
-        <section class="quick-links-section">
+        <!-- FREQUENTLY ASKED QUESTIONS (ACCORDION) -->
+        <section class="faq-section">
             <div class="container">
-                <h2 class="section-title">Explore More</h2>
-                <div class="links-grid">
-                    <a href="{% url 'core:dogs' %}" class="link-card">
-                        <span class="link-icon">🐕</span>
-                        <h3>Our Dogs</h3>
-                        <p>Browse our collection of premium breeds and find your perfect companion.</p>
-                    </a>
-                    <a href="{% url 'core:cats' %}" class="link-card">
-                        <span class="link-icon">🐱</span>
-                        <h3>Cats</h3>
-                        <p>Discover our feline companions with premium care and registration.</p>
-                    </a>
-                    <a href="{% url 'core:reviews' %}" class="link-card">
-                        <span class="link-icon">⭐</span>
-                        <h3>Reviews</h3>
-                        <p>Read customer feedback and check our trusted service history.</p>
-                    </a>
-                    <a href="{% url 'core:health_tips' %}" class="link-card">
-                        <span class="link-icon">💊</span>
-                        <h3>Health Tips</h3>
-                        <p>Get expert care advice for your puppy or adult dog.</p>
-                    </a>
-                    <a href="{% url 'core:location' %}" class="link-card">
-                        <span class="link-icon">📍</span>
-                        <h3>Location</h3>
-                        <p>Find our kennel in Vijaypur and plan your visit today.</p>
-                    </a>
-                    <a href="{% url 'core:contact' %}" class="link-card">
-                        <span class="link-icon">💬</span>
-                        <h3>Contact Us</h3>
-                        <p>Send a direct enquiry or request a callback from our team.</p>
-                    </a>
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Everything you need to know about puppy adoption, vaccination, and kennel visits</p>
+
+                <div class="faq-accordion">
+                    <div class="faq-item active">
+                        <button class="faq-question">
+                            <span>Are all puppies vaccinated before adoption?</span>
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, absolutely! Every puppy leaves our kennel with their first booster vaccination (DHPPi/L), regular deworming drops, and an official signed veterinary health record card.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Can I visit the kennel in Vijaypur before booking?</span>
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes! We welcome prospective pet parents to visit our kennel in Vijaypur 7 days a week (9:00 AM – 7:00 PM). You can meet the puppies, see the parents, and assess the hygienic living conditions.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>Do you provide doorstep delivery outside Vijaypur/Jammu?</span>
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, we provide safe, climate-moderated pet transport across Jammu, Samba, Kathua, Udhampur, Srinagar, Punjab, and neighboring regions with real-time tracking updates.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>How do I reserve/book a puppy in advance?</span>
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>You can use the online <a href="{% url 'core:book_dog' %}" style="color: var(--primary); font-weight: 600;">Book a Dog Form</a> on our website or message us directly on WhatsApp at <strong>+91 9796120006</strong>. Our coordinator will confirm availability.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
+
+    <!-- FLOATING WHATSAPP BUTTON (Fixed 60x60px Corner Floating Button) -->
+    <a href="https://wa.me/919796120006?text=Hello%20S2%20Kennel%20Jammu,%20I%20would%20like%20to%20enquire%20about%20puppies/kittens%20availability." target="_blank" class="whatsapp-float" id="whatsappFloatingBtn" aria-label="Chat on WhatsApp" style="position:fixed !important;bottom:28px !important;right:28px !important;width:60px !important;height:60px !important;max-width:60px !important;max-height:60px !important;min-width:60px !important;min-height:60px !important;border-radius:50% !important;background:#25d366 !important;display:flex !important;align-items:center !important;justify-content:center !important;box-shadow:0 10px 30px rgba(37,211,102,0.45) !important;z-index:999 !important;text-decoration:none !important;overflow:hidden !important;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffffff" style="width:28px !important;height:28px !important;max-width:28px !important;max-height:28px !important;min-width:28px !important;min-height:28px !important;display:block !important;pointer-events:none !important;"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm5.8 14.16c-.24.67-1.39 1.27-1.92 1.36-.51.08-1.17.12-3.37-.79-2.33-.96-3.83-3.33-3.95-3.48-.12-.16-.96-1.28-.96-2.44 0-1.17.61-1.74.83-1.98.22-.24.48-.3.64-.3.16 0 .32 0 .46.01.15.01.35-.06.55.42.21.49.71 1.74.78 1.86.06.12.1.27.02.43-.08.16-.12.26-.24.4-.12.14-.26.31-.37.42-.12.12-.25.26-.11.5.14.24.63 1.04 1.36 1.68.93.83 1.72 1.09 1.96 1.21.24.12.38.1.52-.06.14-.16.6-.7.76-.94.16-.24.32-.2.54-.12.22.08 1.39.66 1.63.78.24.12.4.18.46.28.06.1.06.58-.18 1.25z"/></svg>
+    </a>
+
+    <!-- STICKY MOBILE ACTION BAR (< 768px) -->
+    <div class="mobile-action-bar">
+        <a href="tel:+919796120006" class="mobile-action-btn call-btn">
+            <span>📞 Call Us</span>
+        </a>
+        <a href="https://wa.me/919796120006?text=Hello%20S2%20Kennel,%20I%20want%20to%20enquire%20about%20puppies." target="_blank" class="mobile-action-btn wa-btn">
+            <span>💬 WhatsApp</span>
+        </a>
+    </div>
 
     <!-- FOOTER -->
     <footer class="footer" id="siteFooter">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>S2 Kennel Jammu</h4>
-                    <p>Premium Dog Breeders</p>
+                    <h4>🐕 S2 Kennel Jammu</h4>
+                    <p>Premier ethical dog & cat breeding center located in Vijaypur, Jammu & Kashmir.</p>
+                    <p style="color: #cbd5e1; font-size: 13px; margin-top: 10px;">📍 Vijaypur, Samba / Jammu, J&K</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Management</h4>
-                    <p>Manager: Nikhil Sharma</p>
-                    <p>Coordinator: Neeraj Sharma</p>
+                    <h4>Quick Navigation</h4>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'core:index' %}">Home</a></li>
+                        <li><a href="{% url 'core:about' %}" class="nav-link">About Us</a></li>
+                        <li><a href="{% url 'core:dogs' %}">Our Dogs</a></li>
+                        <li><a href="{% url 'core:cats' %}">Our Cats</a></li>
+                        <li><a href="{% url 'core:book_dog' %}">Book a Dog</a></li>
+                        <li><a href="{% url 'core:reviews' %}">Customer Reviews</a></li>
+                        <li><a href="{% url 'core:location' %}">Kennel Location</a></li>
+                        <li><a href="{% url 'core:contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'core:health_tips' %}">Pet Health Tips</a></li>
+                    </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Follow Us</h4>
-                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="social-link">📷 Instagram</a>
+                    <h4>Management & Staff</h4>
+                    <p>Manager: <strong>Nikhil Sharma</strong></p>
+                    <p>Coordinator: <strong>Neeraj Sharma</strong></p>
+                    <div style="margin-top: 14px;">
+                        <a href="{% url 'admin:index' %}" class="staff-admin-btn">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                            Staff Admin Portal
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <a href="https://www.instagram.com/jammu_dogslover" target="_blank" class="social-link">📷 Instagram @jammu_dogslover</a>
+                    <a href="https://wa.me/919796120006" target="_blank" class="social-link" style="margin-top: 8px; display: inline-block;">💬 WhatsApp +91 9796120006</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. | Website created by Neeraj Sharma</p>
+                <p>&copy; 2026 S2 Kennel Jammu. All Rights Reserved. • Created by <strong>Neeraj Sharma</strong></p>
             </div>
         </div>
     </footer>

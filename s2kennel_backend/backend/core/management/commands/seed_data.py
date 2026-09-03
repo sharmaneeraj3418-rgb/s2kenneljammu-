@@ -93,19 +93,24 @@ REVIEWS_DATA = [
 
 
 def run_seed():
-    # 1. Superuser
+    # 1. Superuser: ONLY set password if not matching to prevent session invalidation
     try:
         User = get_user_model()
         admin_user = os.environ.get("DJANGO_SUPERUSER_USERNAME", "admin")
         admin_pass = os.environ.get("DJANGO_SUPERUSER_PASSWORD", "admin123")
         admin_email = os.environ.get("DJANGO_SUPERUSER_EMAIL", "admin@s2kennel.com")
         
-        user, _ = User.objects.get_or_create(username=admin_user, defaults={"email": admin_email})
-        user.is_staff = True
-        user.is_superuser = True
-        user.email = admin_email
-        user.set_password(admin_pass)
-        user.save()
+        user = User.objects.filter(username=admin_user).first()
+        if not user:
+            user = User.objects.create_superuser(username=admin_user, email=admin_email, password=admin_pass)
+        else:
+            if not user.is_staff or not user.is_superuser:
+                user.is_staff = True
+                user.is_superuser = True
+                user.save(update_fields=['is_staff', 'is_superuser'])
+            if not user.check_password(admin_pass):
+                user.set_password(admin_pass)
+                user.save(update_fields=['password'])
     except Exception as e:
         print(f"Superuser creation notice: {e}")
 

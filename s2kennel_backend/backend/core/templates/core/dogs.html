@@ -31,9 +31,10 @@
                 <nav class="navbar" id="navbar">
                     <ul class="nav-menu">
                         <li><a href="{% url 'core:index' %}" class="nav-link">Home</a></li>
-                        <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
+                        <li><a href="{% url 'core:about' %}" class="nav-link">About</a></li>
                         <li><a href="{% url 'core:dogs' %}" class="nav-link active">Dogs</a></li>
                         <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
+                        <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
                         <li><a href="{% url 'core:reviews' %}" class="nav-link">Reviews</a></li>
                         <li><a href="{% url 'core:location' %}" class="nav-link">Location</a></li>
                         <li><a href="{% url 'core:contact' %}" class="nav-link">Contact</a></li>
@@ -41,7 +42,6 @@
                             <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="moreDropdownBtn">More <span class="arrow-down">▾</span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'core:health_tips' %}" class="dropdown-item">💊 Health Tips</a></li>
-                                <li><a href="{% url 'core:about' %}" class="dropdown-item">ℹ️ About Us</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -79,9 +79,15 @@
                     <div class="dog-card premium-card" data-size="{{ dog.size }}">
                         <div class="card-image">
                             {% if dog.image %}
-                            <img src="{{ dog.image.url }}" alt="{{ dog.name }}" loading="lazy" decoding="async">
+                            <img src="{{ dog.image.url }}" alt="{{ dog.name }}" class="primary-photo" loading="lazy" decoding="async">
                             {% else %}
-                            <img src="{% static 'core/images/dog1.jpg' %}" alt="{{ dog.name }}" loading="lazy" decoding="async">
+                            <img src="{% static 'core/images/dog1.jpg' %}" alt="{{ dog.name }}" class="primary-photo" loading="lazy" decoding="async">
+                            {% endif %}
+                            {% if dog.image2 %}
+                            <div class="photo-switcher-pills" title="Click to switch photo">
+                                <button type="button" class="photo-pill active" onclick="switchDogPhoto(this, '{{ dog.image.url }}')" aria-label="Photo 1">1</button>
+                                <button type="button" class="photo-pill" onclick="switchDogPhoto(this, '{{ dog.image2.url }}')" aria-label="Photo 2">2</button>
+                            </div>
                             {% endif %}
                             <span class="status-badge available">Available</span>
                         </div>
@@ -107,13 +113,13 @@
                                 </span>
                             </div>
                             {% if dog.description %}<p class="dog-description">{{ dog.description }}</p>{% endif %}
-                            <a href="{% url 'core:contact' %}" class="btn btn-primary btn-block">Enquire Now</a>
+                            <a href="{% url 'core:book_dog' %}" class="btn btn-primary btn-block" style="margin-top: auto;">Reserve / Enquire Now</a>
                         </div>
                     </div>
                     {% empty %}
                     <div class="dog-card premium-card" data-size="Large">
                         <div class="card-image">
-                            <img src="{% static 'core/images/dog1.jpg' %}" alt="German Shepherd" loading="lazy" decoding="async">
+                            <img src="{% static 'core/images/dog1.jpg' %}" alt="German Shepherd" class="primary-photo" loading="lazy" decoding="async">
                             <span class="status-badge available">Available</span>
                         </div>
                         <div class="card-content">
@@ -124,39 +130,7 @@
                                 <span class="detail-item"><span class="label">Price:</span><span class="value price">₹18,000 - ₹25,000</span></span>
                             </div>
                             <p class="dog-description">Active, intelligent, and vaccinated puppy from champion pedigree.</p>
-                            <a href="{% url 'core:contact' %}" class="btn btn-primary btn-block">Enquire Now</a>
-                        </div>
-                    </div>
-                    <div class="dog-card premium-card" data-size="Large">
-                        <div class="card-image">
-                            <img src="{% static 'core/images/dog2.jpg' %}" alt="Golden Retriever" loading="lazy" decoding="async">
-                            <span class="status-badge available">Available</span>
-                        </div>
-                        <div class="card-content">
-                            <h3 class="dog-name">Golden Retriever Puppy</h3>
-                            <p class="dog-breed">Golden Retriever</p>
-                            <div class="dog-details">
-                                <span class="detail-item"><span class="label">Age:</span><span class="value">2.5 Months</span></span>
-                                <span class="detail-item"><span class="label">Price:</span><span class="value price">₹20,000 - ₹30,000</span></span>
-                            </div>
-                            <p class="dog-description">Gentle temperament, healthy coat, and dewormed with complete vaccination records.</p>
-                            <a href="{% url 'core:contact' %}" class="btn btn-primary btn-block">Enquire Now</a>
-                        </div>
-                    </div>
-                    <div class="dog-card premium-card" data-size="Large">
-                        <div class="card-image">
-                            <img src="{% static 'core/images/dog3.jpg' %}" alt="Labrador Retriever" loading="lazy" decoding="async">
-                            <span class="status-badge available">Available</span>
-                        </div>
-                        <div class="card-content">
-                            <h3 class="dog-name">Labrador Retriever</h3>
-                            <p class="dog-breed">Labrador Retriever</p>
-                            <div class="dog-details">
-                                <span class="detail-item"><span class="label">Age:</span><span class="value">2 Months</span></span>
-                                <span class="detail-item"><span class="label">Price:</span><span class="value price">₹15,000 - ₹22,000</span></span>
-                            </div>
-                            <p class="dog-description">Friendly, playful puppy ideal for families with children.</p>
-                            <a href="{% url 'core:contact' %}" class="btn btn-primary btn-block">Enquire Now</a>
+                            <a href="{% url 'core:book_dog' %}" class="btn btn-primary btn-block" style="margin-top: auto;">Reserve / Enquire Now</a>
                         </div>
                     </div>
                     {% endfor %}
@@ -193,6 +167,7 @@
                     <h4>Quick Navigation</h4>
                     <ul class="footer-links">
                         <li><a href="{% url 'core:index' %}">Home</a></li>
+                        <li><a href="{% url 'core:about' %}" class="nav-link">About Us</a></li>
                         <li><a href="{% url 'core:dogs' %}">Our Dogs</a></li>
                         <li><a href="{% url 'core:cats' %}">Our Cats</a></li>
                         <li><a href="{% url 'core:book_dog' %}">Book a Dog</a></li>

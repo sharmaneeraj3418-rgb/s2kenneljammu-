@@ -1,0 +1,147 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'core/css/admin-theme.css' %}">
+{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <!-- Interactive Dashboard Hero -->
+    <div class="admin-dashboard-hero">
+        <div class="dashboard-hero-text">
+            <h2>
+                <span>Welcome back, {{ user.first_name|default:user.username }}</span>
+                <span style="font-size: 20px;">👋</span>
+            </h2>
+            <p>Here is what's happening at <strong>S2 Kennel Jammu</strong> today. Manage pets, leads, and bookings in real-time.</p>
+        </div>
+        <div class="dashboard-quick-actions">
+            <a href="{% url 'admin:core_dog_add' %}" class="hero-action-btn primary">
+                <span>➕</span> Add New Dog
+            </a>
+            <a href="{% url 'admin:core_cat_add' %}" class="hero-action-btn secondary">
+                <span>➕</span> Add New Cat
+            </a>
+            <a href="{% url 'admin:core_bookdog_changelist' %}" class="hero-action-btn secondary">
+                <span>📅</span> View Bookings
+            </a>
+            <a href="{% url 'core:index' %}" target="_blank" class="hero-action-btn secondary">
+                <span>🌐</span> Live Site
+            </a>
+        </div>
+    </div>
+
+    <!-- Live Statistics Grid -->
+    <div class="dashboard-stats-grid">
+        <a href="{% url 'admin:core_dog_changelist' %}" class="stat-widget-card" style="text-decoration: none;">
+            <div class="stat-widget-icon">🐕</div>
+            <div class="stat-widget-content">
+                <h4>Total Dogs</h4>
+                <div class="stat-value">{{ stats.dogs_count|default:"0" }}</div>
+                <div class="stat-meta">{{ stats.available_dogs|default:"0" }} Available for Sale</div>
+            </div>
+        </a>
+
+        <a href="{% url 'admin:core_cat_changelist' %}" class="stat-widget-card" style="text-decoration: none;">
+            <div class="stat-widget-icon purple">🐱</div>
+            <div class="stat-widget-content">
+                <h4>Cats Listed</h4>
+                <div class="stat-value">{{ stats.cats_count|default:"0" }}</div>
+                <div class="stat-meta">Active Feline Breeds</div>
+            </div>
+        </a>
+
+        <a href="{% url 'admin:core_bookdog_changelist' %}" class="stat-widget-card" style="text-decoration: none;">
+            <div class="stat-widget-icon green">📅</div>
+            <div class="stat-widget-content">
+                <h4>Dog Bookings</h4>
+                <div class="stat-value">{{ stats.bookings_count|default:"0" }}</div>
+                <div class="stat-meta">Kennel Visit Requests</div>
+            </div>
+        </a>
+
+        <a href="{% url 'admin:core_enquiry_changelist' %}" class="stat-widget-card" style="text-decoration: none;">
+            <div class="stat-widget-icon blue">💬</div>
+            <div class="stat-widget-content">
+                <h4>Customer Enquiries</h4>
+                <div class="stat-value">{{ stats.enquiries_count|default:"0" }}</div>
+                <div class="stat-meta">
+                    {% if stats.pending_enquiries %}
+                        ⚠️ {{ stats.pending_enquiries }} Needs Follow-up
+                    {% else %}
+                        All Followed Up
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+
+        <a href="{% url 'admin:core_review_changelist' %}" class="stat-widget-card" style="text-decoration: none;">
+            <div class="stat-widget-icon orange">⭐</div>
+            <div class="stat-widget-content">
+                <h4>Customer Reviews</h4>
+                <div class="stat-value">{{ stats.reviews_count|default:"0" }}</div>
+                <div class="stat-meta">
+                    {% if stats.pending_reviews %}
+                        🔔 {{ stats.pending_reviews }} Pending Approval
+                    {% else %}
+                        Verified Reviews
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+
+        <a href="{% url 'admin:core_customergallery_changelist' %}" class="stat-widget-card" style="text-decoration: none;">
+            <div class="stat-widget-icon pink">📸</div>
+            <div class="stat-widget-content">
+                <h4>Gallery Uploads</h4>
+                <div class="stat-value">{{ stats.gallery_count|default:"0" }}</div>
+                <div class="stat-meta">Customer Photos & Videos</div>
+            </div>
+        </a>
+    </div>
+
+    <!-- App Modules List -->
+    {% include "admin/app_list.html" with app_list=app_list %}
+
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div id="content-related" style="margin-top: 0;">
+    <div class="module" id="recent-actions-module" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 18px; box-shadow: var(--shadow-card);">
+        <h2 style="color: var(--gold-primary); font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 14px;">
+            ⚡ {% trans 'Recent Actions' %}
+        </h2>
+        {% load log %}
+        {% get_admin_log 10 as admin_log for_user user %}
+        {% if not admin_log %}
+            <p style="color: var(--text-muted); font-size: 13px;">{% trans 'None available' %}</p>
+        {% else %}
+            <ul class="actionlist" style="list-style: none; padding: 0; margin: 0;">
+            {% for entry in admin_log %}
+                <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}" style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px;">
+                    {% if entry.is_addition %}<span style="color: #34d399;">+</span>{% endif %}
+                    {% if entry.is_change %}<span style="color: var(--gold-primary);">✎</span>{% endif %}
+                    {% if entry.is_deletion %}<span style="color: #f87171;">✕</span>{% endif %}
+                    
+                    {% if entry.is_deletion or not entry.get_admin_url %}
+                        <span style="color: var(--text-secondary);">{{ entry.object_repr }}</span>
+                    {% else %}
+                        <a href="{{ entry.get_admin_url }}" style="color: var(--gold-light); font-weight: 600;">{{ entry.object_repr }}</a>
+                    {% endif %}
+                    <br>
+                    <span class="mini quiet" style="color: var(--text-muted); font-size: 11px;">
+                        {% filter capfirst %}{{ entry.content_type }}{% endfilter %}
+                    </span>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

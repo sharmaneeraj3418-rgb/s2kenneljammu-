@@ -1161,12 +1161,9 @@ body {
     overflow: hidden;
     width: 100%;
     aspect-ratio: 4 / 3;
-    min-height: 240px;
-}
-
-.card-image + .card-image {
-    aspect-ratio: 16 / 9;
-    min-height: 160px;
+    min-height: 220px;
+    background: #0d111d;
+    border-radius: 18px 18px 0 0;
 }
 
 .card-image img {
@@ -1179,12 +1176,44 @@ body {
     transition: transform 0.4s ease;
 }
 
-.card-image + .card-image img {
-    border-radius: 0 0 18px 18px;
+.premium-card:hover .card-image img {
+    transform: scale(1.05);
 }
 
-.premium-card:hover .card-image img {
-    transform: scale(1.08);
+.photo-switcher-pills {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 4px;
+    z-index: 5;
+    background: rgba(10, 14, 26, 0.85);
+    padding: 3px 6px;
+    border-radius: 20px;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    backdrop-filter: blur(6px);
+}
+
+.photo-pill {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.photo-pill.active, .photo-pill:hover {
+    background: var(--primary, #d4af37);
+    color: #0b0f19;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
 }
 
 .status-badge {
