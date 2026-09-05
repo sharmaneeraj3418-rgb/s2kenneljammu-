@@ -1,546 +1,172 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap');
-
-/* =========================================================
-   S2 KENNEL JAMMU • LUXURY SAAS ADMIN LOGIN PORTAL
-   ========================================================= */
-
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 :root {
-    --bg-base: #06080e;
-    --bg-card: rgba(14, 18, 32, 0.88);
-    --bg-card-border: rgba(229, 184, 66, 0.24);
-    
-    --gold-primary: #d4af37;
-    --gold-bright: #f5d77f;
-    --gold-light: #fdf3c7;
-    --gold-dark: #a67c1e;
-    --gold-gradient: linear-gradient(135deg, #cba135 0%, #f6e38e 50%, #b8860b 100%);
-    --gold-glow: rgba(212, 175, 55, 0.30);
-    --gold-subtle: rgba(212, 175, 55, 0.12);
-    
-    --text-pure: #ffffff;
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    
-    --input-bg: rgba(255, 255, 255, 0.05);
-    --input-border: rgba(255, 255, 255, 0.12);
-    --input-border-hover: rgba(229, 184, 66, 0.4);
-    --input-border-focus: #e5b842;
-    --input-focus-glow: rgba(229, 184, 66, 0.22);
-    
-    --error-bg: rgba(239, 68, 68, 0.12);
-    --error-border: rgba(239, 68, 68, 0.35);
-    --error-text: #fca5a5;
-    
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --radius-xl: 22px;
+    color-scheme: dark;
+    color: #f7f4eb;
+    background: #09090f;
 }
 
-/* Isolate completely from Django default base admin styles */
-body.login {
+body {
+    background: radial-gradient(circle at top left, rgba(212, 175, 55, 0.18), transparent 28%),
+                linear-gradient(180deg, #08080c 0%, #12131d 100%);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+}
+
+.admin-branding {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.admin-brand-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #d4af37, #f0e68c);
+    color: #111;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.admin-branding h1 {
+    font-size: 22px;
     margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    font-family: 'Plus Jakarta Sans', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: var(--bg-base);
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    color: #f7f4eb;
 }
 
-/* Hide Django default headers & sidebar */
-#header, #nav-sidebar, .breadcrumbs, .toggle-nav-sidebar, div.breadcrumbs {
-    display: none !important;
-}
-
-#container {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 32px 16px;
-    background: transparent !important;
-    position: relative;
-    z-index: 2;
-}
-
-#content {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: transparent !important;
-}
-
-/* Background Effects */
-.login-backdrop {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    overflow: hidden;
-    background: 
-        radial-gradient(circle at 18% 18%, rgba(212, 175, 55, 0.12) 0%, transparent 40%),
-        radial-gradient(circle at 82% 82%, rgba(184, 134, 11, 0.10) 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(14, 22, 48, 0.65) 0%, transparent 75%),
-        linear-gradient(180deg, #05070d 0%, #090c17 50%, #060810 100%);
-}
-
-.login-grid-pattern {
-    position: absolute;
-    inset: 0;
-    background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 48px 48px;
-    opacity: 0.8;
-}
-
-/* Center Card Wrapper */
-.login-portal-wrapper {
-    position: relative;
-    z-index: 10;
-    width: 100%;
-    max-width: 460px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Back Link */
-.portal-back-btn {
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-muted);
+.admin-branding p {
+    margin: 4px 0 0;
+    color: rgba(247, 244, 235, 0.72);
     font-size: 13px;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 7px 14px;
-    border-radius: var(--radius-md);
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    margin-bottom: 20px;
-    transition: all 0.25s ease;
 }
 
-.portal-back-btn:hover {
-    color: var(--gold-bright);
-    background: var(--gold-subtle);
-    border-color: var(--bg-card-border);
-    transform: translateX(-3px);
+.admin-login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 16px;
 }
 
-/* Login Glass Card */
-.login-saas-card {
-    width: 100%;
-    background: var(--bg-card);
-    backdrop-filter: blur(28px);
-    -webkit-backdrop-filter: blur(28px);
-    border: 1px solid var(--bg-card-border);
-    border-radius: var(--radius-xl);
-    padding: 38px 34px 32px;
-    box-shadow: 
-        0 25px 65px -12px rgba(0, 0, 0, 0.8),
-        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-        0 0 35px var(--gold-glow);
-    position: relative;
-    animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+.admin-login-card {
+    width: min(520px, 100%);
+    background: rgba(16, 18, 29, 0.95);
+    border: 1px solid rgba(212, 175, 55, 0.16);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    border-radius: 28px;
+    padding: 42px 40px;
 }
 
-@keyframes cardEntrance {
-    0% { opacity: 0; transform: translateY(18px); }
-    100% { opacity: 1; transform: translateY(0); }
+.admin-login-header {
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: 18px;
+    align-items: center;
+    margin-bottom: 32px;
 }
 
-/* Header & Branding */
-.portal-brand-header {
-    text-align: center;
+.admin-login-logo {
+    width: 88px;
+    height: 88px;
+    border-radius: 26px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.92), rgba(247, 225, 136, 0.8));
+    color: #121212;
+    display: grid;
+    place-items: center;
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.admin-login-header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #f7f4eb;
+}
+
+.admin-login-header p {
+    margin: 6px 0 0;
+    color: rgba(247, 244, 235, 0.72);
+    font-size: 14px;
+}
+
+.admin-login-error {
+    background: rgba(252, 98, 98, 0.12);
+    border: 1px solid rgba(252, 98, 98, 0.24);
+    color: #ffd6d6;
+    padding: 16px 18px;
+    border-radius: 18px;
     margin-bottom: 24px;
 }
 
-.portal-brand-badge {
-    width: 62px;
-    height: 62px;
-    margin: 0 auto 14px;
-    border-radius: 50%;
-    background: var(--gold-gradient);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 
-        0 8px 24px var(--gold-glow),
-        0 0 0 4px rgba(212, 175, 55, 0.15);
-}
-
-.portal-brand-badge svg {
-    width: 32px;
-    height: 32px;
-    fill: #090c15;
-}
-
-.portal-org-name {
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--text-pure);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    font-family: 'Poppins', sans-serif;
-    margin-bottom: 3px;
-}
-
-.portal-tagline {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--gold-primary);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 4px;
-}
-
-.portal-location {
-    font-size: 12px;
-    color: var(--text-muted);
-}
-
-.portal-welcome-section {
-    text-align: center;
-    margin: 16px 0 22px;
-    padding-top: 16px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.welcome-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-}
-
-.welcome-desc {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.45;
-}
-
-/* Error Banner */
-.portal-error-alert {
-    background: var(--error-bg);
-    border: 1px solid var(--error-border);
-    border-radius: var(--radius-md);
-    padding: 12px 16px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    color: var(--error-text);
-    font-size: 13px;
-    line-height: 1.45;
-}
-
-.error-alert-icon {
-    flex-shrink: 0;
-    margin-top: 1px;
-}
-
-.error-alert-icon svg {
-    width: 18px;
-    height: 18px;
-    fill: #ef4444;
-}
-
-/* Form Groups & Inputs - Bulletproof Position & Padding */
-.portal-form-group {
-    margin-bottom: 20px;
-    position: relative;
-}
-
-.portal-field-label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: #e2e8f0;
-    margin-bottom: 7px;
-    letter-spacing: 0.01em;
-}
-
-.portal-input-container {
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-}
-
-/* Left Icon: Strictly locked to left edge with proper centering */
-.portal-input-icon {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    z-index: 5;
-    transition: color 0.25s ease;
-}
-
-.portal-input-icon svg {
-    width: 18px;
-    height: 18px;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-    display: block;
-}
-
-/* Input: Strict generous padding so text NEVER touches icons */
-.portal-input-field {
-    width: 100%;
-    height: 50px;
-    padding-left: 48px !important;
-    padding-right: 50px !important;
-    padding-top: 0;
-    padding-bottom: 0;
-    background: var(--input-bg);
-    border: 1px solid var(--input-border);
-    border-radius: var(--radius-md);
-    color: #ffffff !important;
-    font-size: 14.5px;
-    font-family: inherit;
-    font-weight: 500;
-    outline: none;
-    line-height: 50px;
-    position: relative;
-    z-index: 1;
-    transition: all 0.25s ease;
-}
-
-.portal-input-field::placeholder {
-    color: #64748b;
-    font-weight: 400;
-}
-
-.portal-input-field:hover {
-    border-color: var(--input-border-hover);
-    background: rgba(255, 255, 255, 0.07);
-}
-
-.portal-input-field:focus {
-    background: rgba(255, 255, 255, 0.09);
-    border-color: var(--input-border-focus);
-    box-shadow: 0 0 0 3.5px var(--input-focus-glow);
-}
-
-.portal-input-container:focus-within .portal-input-icon {
-    color: var(--gold-primary);
-}
-
-/* Right Eye Toggle Button: Strictly locked to right edge with proper centering */
-.portal-eye-btn {
-    position: absolute;
-    right: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 32px;
-    height: 32px;
-    background: transparent;
-    border: none;
-    border-radius: var(--radius-sm);
-    color: var(--text-muted);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    z-index: 10;
-    transition: color 0.2s ease, background-color 0.2s ease;
-    outline: none;
-}
-
-.portal-eye-btn:hover {
-    color: var(--gold-bright);
-    background: rgba(255, 255, 255, 0.06);
-}
-
-.portal-eye-btn:focus-visible {
-    box-shadow: 0 0 0 2px var(--gold-primary);
-}
-
-.portal-eye-btn svg {
-    width: 18px;
-    height: 18px;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
-    display: block;
-}
-
-/* Hide Microsoft Edge / IE duplicate password reveal & clear buttons */
-input::-ms-reveal,
-input::-ms-clear {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
-}
-
-/* Browser autofill styling override so text and background stay dark and clean */
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-    -webkit-text-fill-color: #ffffff !important;
-    -webkit-box-shadow: 0 0 0px 1000px #0f1325 inset !important;
-    box-shadow: 0 0 0px 1000px #0f1325 inset !important;
-    caret-color: #ffffff !important;
-    transition: background-color 5000s ease-in-out 0s;
-}
-
-/* Remember Me Row */
-.portal-form-options {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 22px;
-    font-size: 13px;
-}
-
-.portal-checkbox-label {
-    display: inline-flex;
-    align-items: center;
+.admin-login-field {
+    display: grid;
     gap: 8px;
-    color: var(--text-secondary);
-    cursor: pointer;
-    font-weight: 500;
+    margin-bottom: 22px;
 }
 
-.portal-checkbox-label input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    accent-color: var(--gold-primary);
-    cursor: pointer;
-}
-
-/* Submit Button */
-.portal-submit-btn {
-    width: 100%;
-    height: 50px;
-    background: var(--gold-gradient);
-    border: none;
-    border-radius: var(--radius-md);
-    color: #070911;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 8px 22px var(--gold-glow);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition: all 0.25s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.portal-submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(212, 175, 55, 0.45);
-}
-
-.portal-submit-btn:active {
-    transform: translateY(0);
-}
-
-/* Spinner */
-.btn-spinner {
-    display: none;
-    width: 18px;
-    height: 18px;
-    border: 2.5px solid rgba(7, 9, 17, 0.25);
-    border-radius: 50%;
-    border-top-color: #070911;
-    animation: spin 0.75s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-.portal-submit-btn.is-submitting {
-    pointer-events: none;
-    opacity: 0.9;
-}
-
-.portal-submit-btn.is-submitting .btn-text-default {
-    display: none;
-}
-
-.portal-submit-btn.is-submitting .btn-spinner {
-    display: inline-block;
-}
-
-.portal-submit-btn.is-submitting .btn-text-loading {
-    display: inline-block !important;
-}
-
-.btn-text-loading {
-    display: none;
-}
-
-/* Footer */
-.portal-card-footer {
-    margin-top: 24px;
-    padding-top: 18px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    text-align: center;
-}
-
-.footer-system-title {
-    font-size: 12px;
+.admin-login-field label {
+    color: rgba(247, 244, 235, 0.82);
+    font-size: 14px;
     font-weight: 600;
-    color: var(--text-secondary);
-    margin-bottom: 3px;
+    letter-spacing: 0.02em;
 }
 
-.footer-copy {
-    font-size: 11.5px;
-    color: var(--text-muted);
+.admin-login-field input {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: #f7f4eb;
+    transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
-.footer-copy strong {
-    color: var(--text-secondary);
+.admin-login-field input:focus {
+    border-color: rgba(212, 175, 55, 0.75);
+    outline: none;
+    transform: translateY(-1px);
 }
 
-@media (max-width: 520px) {
-    .login-saas-card {
-        padding: 28px 20px 22px;
-        border-radius: 18px;
+.admin-login-submit {
+    width: 100%;
+    padding: 16px 18px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    color: #121212;
+    background: linear-gradient(135deg, #d4af37, #f0e68c);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.admin-login-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 30px rgba(212, 175, 55, 0.24);
+}
+
+.admin-login-footer {
+    margin-top: 28px;
+    text-align: center;
+    color: rgba(247, 244, 235, 0.7);
+    font-size: 13px;
+}
+
+@media (max-width: 580px) {
+    .admin-login-card {
+        padding: 32px 22px;
     }
-    .portal-input-field {
-        height: 46px;
+
+    .admin-login-header {
+        grid-template-columns: auto;
+        text-align: center;
     }
-    .portal-submit-btn {
-        height: 46px;
+
+    .admin-login-logo {
+        width: 76px;
+        height: 76px;
+        margin: 0 auto;
     }
 }

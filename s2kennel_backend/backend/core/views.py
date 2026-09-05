@@ -1,18 +1,52 @@
 import json
+import os
+from pathlib import Path
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
+from django.views.static import serve
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
+from django.conf import settings
 from .models import Dog, Cat, CustomerGallery, Review, Enquiry, BookDog
 
 
 def ensure_database_seeded():
     try:
-        if not Dog.objects.exists():
-            from core.management.commands.seed_data import run_seed
+        from core.management.commands.seed_data import run_seed
+        if not Dog.objects.exists() or not Cat.objects.exists() or CustomerGallery.objects.count() < 4:
             run_seed()
     except Exception as e:
         print(f"Auto-seed exception: {e}")
+
+
+import urllib.parse
+
+
+def serve_media(request, path):
+    """
+    Guaranteed media file serving for cloud deployment (Render).
+    Checks all candidate paths to ensure 100% media delivery across environments.
+    """
+    clean_path = urllib.parse.unquote(path).lstrip("/\\")
+    candidates = [
+        Path(settings.MEDIA_ROOT),
+        Path(settings.BASE_DIR) / "media",
+        Path(settings.BASE_DIR) / "backend" / "media",
+        Path(settings.BASE_DIR).parent / "media",
+        Path(settings.BASE_DIR).parent / "s2kennel_backend" / "media",
+        Path(settings.BASE_DIR).parent / "backend" / "media",
+        Path("/opt/render/project/src/media"),
+        Path("/opt/render/project/src/s2kennel_backend/media"),
+        Path("/opt/render/project/src/s2kennel_backend/backend/media"),
+        Path(settings.BASE_DIR) / "core" / "static" / "core" / "images",
+    ]
+    for root in candidates:
+        if root.exists():
+            full_path = root / clean_path
+            if full_path.exists() and full_path.is_file():
+                return serve(request, clean_path, document_root=str(root))
+    raise Http404(f"Media file '{path}' not found.")
+
 
 
 def index(request):

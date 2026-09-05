@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 app_name = "core"
@@ -17,4 +17,5 @@ urlpatterns = [
     path("api/enquiry/", views.api_enquiry, name="api_enquiry"),
     path("api/review/", views.api_review, name="api_review"),
     path("api/book_dog/", views.api_book_dog, name="api_book_dog"),
+    re_path(r"^media/(?P<path>.*)$", views.serve_media, name="serve_media"),
 ]
