@@ -18,7 +18,21 @@ def ensure_database_seeded():
 def index(request):
     ensure_database_seeded()
     dogs = Dog.objects.filter(available=True)[:6]
-    return render(request, "core/index.html", {"dogs": dogs})
+    customer_gallery = CustomerGallery.objects.all().order_by("-created_at")[:4]
+    return render(request, "core/index.html", {"dogs": dogs, "customer_gallery": customer_gallery})
+
+
+def gallery(request):
+    ensure_database_seeded()
+    gallery_items = CustomerGallery.objects.all().order_by("-created_at")
+    gallery_videos_count = sum(1 for item in gallery_items if bool(item.video))
+    gallery_photos_count = sum(1 for item in gallery_items if bool(item.photo))
+    return render(request, "core/gallery.html", {
+        "gallery_items": gallery_items,
+        "gallery_videos_count": gallery_videos_count,
+        "gallery_photos_count": gallery_photos_count,
+    })
+
 
 
 def dogs(request):

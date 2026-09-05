@@ -11,8 +11,10 @@ if [ -f manage.py ]; then
     python manage.py collectstatic --no-input
     python manage.py migrate
     python manage.py seed_data
+    python manage.py add_customer_photos || true
 elif [ -f backend/manage.py ]; then
     python backend/manage.py collectstatic --no-input
     python backend/manage.py migrate
     python backend/manage.py seed_data
+    python backend/manage.py add_customer_photos || true
 fi

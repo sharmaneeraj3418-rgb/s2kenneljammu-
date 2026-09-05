@@ -1,4 +1,3 @@
-// S2 Kennel Jammu - Main Interactive JavaScript
 document.addEventListener('DOMContentLoaded', function() {
     initNavbar();
     initDropdowns();
@@ -8,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initModal();
     initFaqAccordion();
     initCatalogFilters();
+    initCustomerGalleryFilter();
+    initCardLightboxTriggers();
     observeElements();
 });
 
@@ -145,13 +146,12 @@ function initSuccessModal() {
     }
 }
 
-// Initialize Review Modal
+// Initialize Review Modal & Interactive Star Rating
 function initReviewModal() {
     const addReviewBtn = document.getElementById('addReviewBtn');
     const reviewModal = document.getElementById('reviewModal');
     const closeReviewModal = document.getElementById('closeReviewModal');
     const reviewForm = document.getElementById('reviewForm');
-    const starRating = document.getElementById('starRating');
 
     if (addReviewBtn && reviewModal) {
         addReviewBtn.addEventListener('click', function() {
@@ -175,20 +175,7 @@ function initReviewModal() {
         });
     }
 
-    if (starRating) {
-        const stars = starRating.querySelectorAll('.star-select');
-        stars.forEach(star => {
-            star.addEventListener('click', function() {
-                const rating = this.getAttribute('data-rating');
-                const ratingInput = document.getElementById('ratingInput');
-                if (ratingInput) ratingInput.value = rating;
-                stars.forEach(s => {
-                    const sRating = s.getAttribute('data-rating');
-                    s.classList.toggle('selected', sRating <= rating);
-                });
-            });
-        });
-    }
+    initStarRating();
 
     if (reviewForm) {
         reviewForm.addEventListener('submit', function(e) {
@@ -198,12 +185,97 @@ function initReviewModal() {
     }
 }
 
-function resetStarRating() {
-    const stars = document.querySelectorAll('.star-select');
-    stars.forEach(star => star.classList.remove('selected'));
+function initStarRating() {
+    const starRating = document.getElementById('starRating');
     const ratingInput = document.getElementById('ratingInput');
+    const ratingDesc = document.getElementById('ratingDescription');
+    if (!starRating || !ratingInput) return;
+
+    const stars = starRating.querySelectorAll('.star-select');
+    const descMap = {
+        '1': '⭐ 1 / 5 (Poor)',
+        '2': '⭐⭐ 2 / 5 (Fair)',
+        '3': '⭐⭐⭐ 3 / 5 (Good)',
+        '4': '⭐⭐⭐⭐ 4 / 5 (Very Good)',
+        '5': '⭐⭐⭐⭐⭐ 5 / 5 (Excellent)'
+    };
+
+    function renderRating(val, isPreview) {
+        const num = parseInt(val, 10) || 5;
+        stars.forEach(s => {
+            const sNum = parseInt(s.getAttribute('data-rating'), 10);
+            if (isPreview) {
+                s.classList.toggle('hover-preview', sNum <= num);
+                s.classList.toggle('selected', sNum <= num);
+            } else {
+                s.classList.remove('hover-preview');
+                s.classList.toggle('selected', sNum <= num);
+                s.setAttribute('aria-checked', sNum === num ? 'true' : 'false');
+            }
+        });
+        if (ratingDesc) {
+            ratingDesc.textContent = descMap[num.toString()] || `${num} / 5 Stars`;
+        }
+    }
+
+    stars.forEach(star => {
+        // Hover preview
+        star.addEventListener('mouseenter', function() {
+            const hoverVal = this.getAttribute('data-rating');
+            renderRating(hoverVal, true);
+        });
+
+        // Click selection
+        star.addEventListener('click', function(e) {
+            e.preventDefault();
+            const chosen = this.getAttribute('data-rating');
+            ratingInput.value = chosen;
+            renderRating(chosen, false);
+        });
+
+        // Keyboard navigation (Enter / Space)
+        star.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const chosen = this.getAttribute('data-rating');
+                ratingInput.value = chosen;
+                renderRating(chosen, false);
+            }
+        });
+    });
+
+    // Restore selected rating when mouse leaves
+    starRating.addEventListener('mouseleave', function() {
+        renderRating(ratingInput.value || '5', false);
+    });
+
+    // Touch support for mobile devices
+    starRating.addEventListener('touchstart', function(e) {
+        const touch = e.touches[0];
+        const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+        if (elem && elem.classList.contains('star-select')) {
+            const chosen = elem.getAttribute('data-rating');
+            ratingInput.value = chosen;
+            renderRating(chosen, false);
+        }
+    }, { passive: true });
+
+    renderRating(ratingInput.value || '5', false);
+}
+
+function resetStarRating() {
+    const ratingInput = document.getElementById('ratingInput');
+    const ratingDesc = document.getElementById('ratingDescription');
     if (ratingInput) ratingInput.value = '5';
-    stars.forEach(s => s.classList.add('selected'));
+    const stars = document.querySelectorAll('.star-select');
+    stars.forEach(s => {
+        s.classList.add('selected');
+        s.classList.remove('hover-preview');
+        s.setAttribute('aria-checked', s.getAttribute('data-rating') === '5' ? 'true' : 'false');
+    });
+    if (ratingDesc) {
+        ratingDesc.textContent = '⭐⭐⭐⭐⭐ 5 / 5 (Excellent)';
+    }
 }
 
 // Customer Review Submit
@@ -500,3 +572,286 @@ function switchDogPhoto(btn, imgUrl) {
     pills.forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
 }
+
+// Initialize Customer Gallery Filter (All / Videos / Photos)
+function initCustomerGalleryFilter() {
+    const filterBtns = document.querySelectorAll('.gallery-filter-bar .gallery-filter-btn, .gallery-filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item-card, .gallery-card[data-type], #customerGalleryGrid .dog-card');
+
+    if (!filterBtns.length) return;
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            const target = (this.getAttribute('data-target') || 'all').toLowerCase();
+
+            galleryItems.forEach(item => {
+                const itemType = (item.getAttribute('data-type') || '').toLowerCase();
+                if (target === 'all' || target === itemType || (target === 'videos' && itemType === 'video') || (target === 'photos' && itemType === 'photo')) {
+                    item.style.display = 'flex';
+                    item.style.animation = 'fadeIn 0.35s ease';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+}
+
+// Initialize Card Click Handlers for Full HD Lightbox (Photos & Videos)
+function initCardLightboxTriggers() {
+    // Event delegation on document to catch any .card-image click anywhere across the site
+    document.addEventListener('click', function(e) {
+        // If clicked on WhatsApp button or interactive links, let them work naturally
+        if (e.target.closest('.btn-whatsapp, .btn, .photo-switcher-pills, .photo-pill, a[href^="https://wa.me"], a[href^="tel:"], .lightbox-close')) {
+            return;
+        }
+
+        const cardImage = e.target.closest('.card-image, .gallery-card-thumb');
+        if (!cardImage) return;
+
+        // Extract media info from data attributes if present
+        let mediaUrl = cardImage.getAttribute('data-media-url');
+        let mediaType = cardImage.getAttribute('data-media-type');
+        let posterUrl = cardImage.getAttribute('data-poster') || '';
+        let title = cardImage.getAttribute('data-title') || '';
+        let breed = cardImage.getAttribute('data-breed') || '';
+        let caption = cardImage.getAttribute('data-caption') || '';
+
+        const card = cardImage.closest('.dog-card, .cat-card, .premium-card, .gallery-item-card, .gallery-card');
+
+        // Fallback for metadata
+        if (card) {
+            if (!title) {
+                const nameEl = card.querySelector('.dog-name, .cat-name, h3');
+                if (nameEl) title = nameEl.textContent.trim();
+            }
+            if (!breed) {
+                const breedEl = card.querySelector('.dog-breed, .cat-breed');
+                if (breedEl) breed = breedEl.textContent.trim().replace(/^🐾\s*/, '');
+            }
+            if (!caption) {
+                const descEl = card.querySelector('.dog-description, p');
+                const priceEl = card.querySelector('.value.price, .price');
+                const ageEl = card.querySelector('.detail-item .value');
+                if (priceEl) caption += `Price: ${priceEl.textContent.trim()}`;
+                if (ageEl && ageEl !== priceEl) caption += ` • Age: ${ageEl.textContent.trim()}`;
+                if (!caption && descEl) caption = descEl.textContent.trim().replace(/^“|”$/g, '');
+            }
+        }
+
+        if (!title) title = 'S2 Kennel Jammu';
+
+        // Check if data-media-url is provided
+        if (mediaUrl) {
+            const isVideo = mediaType === 'video' || /\.(mp4|webm|mov|ogg)($|\?)/i.test(mediaUrl);
+            openMediaLightbox(mediaUrl, title, breed, caption, isVideo, posterUrl);
+            return;
+        }
+
+        // Fallback: check child elements
+        const video = cardImage.querySelector('video');
+        const img = cardImage.querySelector('img.primary-photo') || cardImage.querySelector('img');
+
+        if (video && video.src) {
+            const isVid = true;
+            openMediaLightbox(video.src, title, breed, caption, isVid, video.poster || '');
+        } else if (img && img.src) {
+            openMediaLightbox(img.src, title, breed, caption, false, '');
+        }
+    });
+}
+
+// Media Lightbox Modal Helper: Dynamically creates modal if absent in HTML
+function createLightboxModalIfNeeded() {
+    let modal = document.getElementById('mediaLightboxModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'mediaLightboxModal';
+        modal.className = 'media-lightbox-modal';
+        modal.onclick = closeMediaLightbox;
+        modal.innerHTML = `
+            <div class="lightbox-content" onclick="event.stopPropagation()">
+                <button type="button" class="lightbox-close" onclick="closeMediaLightbox()" aria-label="Close lightbox">✕</button>
+                <div class="lightbox-media-container">
+                    <img id="lightboxImg" src="" alt="Full view" class="lightbox-img" style="display:none;">
+                    <video id="lightboxVideo" class="lightbox-video" controls playsinline webkit-playsinline preload="auto" style="display:none;"></video>
+                    <div id="lightboxVideoPlayFallback" class="lightbox-play-fallback" style="display:none;" onclick="playLightboxVideoManually()">
+                        <div class="play-fallback-circle">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffffff"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                        <span>▶ Tap to Play Video</span>
+                    </div>
+                </div>
+                <div class="lightbox-info">
+                    <div class="lightbox-meta">
+                        <h4 id="lightboxTitle" class="lightbox-title"></h4>
+                        <span id="lightboxBreed" class="lightbox-breed-badge"></span>
+                    </div>
+                    <p id="lightboxCaption" class="lightbox-caption"></p>
+                    <div class="lightbox-actions">
+                        <a id="lightboxWaBtn" href="https://wa.me/919796120006" target="_blank" class="btn btn-whatsapp" style="width:auto; padding: 10px 22px; font-size: 13px;">
+                            💬 Enquire On WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+    return modal;
+}
+
+// Manual play trigger if mobile browser policy blocks unmuted autoplay
+function playLightboxVideoManually() {
+    const modal = document.getElementById('mediaLightboxModal');
+    if (!modal) return;
+    const videoEl = modal.querySelector('#lightboxVideo') || document.getElementById('lightboxVideo');
+    const fallbackEl = modal.querySelector('#lightboxVideoPlayFallback') || document.getElementById('lightboxVideoPlayFallback');
+    if (videoEl) {
+        videoEl.muted = false;
+        videoEl.play().then(() => {
+            if (fallbackEl) fallbackEl.style.display = 'none';
+        }).catch(err => {
+            console.warn("Manual video play attempt:", err);
+        });
+    }
+}
+
+// Media Lightbox Modal for Uncropped Full-Screen High-Res Images and Inline Video Player
+function openMediaLightbox(mediaUrl, title, breed, caption, isVideo, posterUrl) {
+    if (!mediaUrl) return;
+
+    const modal = createLightboxModalIfNeeded();
+    const imgEl = modal.querySelector('#lightboxImg') || document.getElementById('lightboxImg');
+    const videoEl = modal.querySelector('#lightboxVideo') || document.getElementById('lightboxVideo');
+    const fallbackEl = modal.querySelector('#lightboxVideoPlayFallback') || document.getElementById('lightboxVideoPlayFallback');
+    const titleEl = modal.querySelector('#lightboxTitle') || document.getElementById('lightboxTitle');
+    const breedEl = modal.querySelector('#lightboxBreed') || document.getElementById('lightboxBreed');
+    const captionEl = modal.querySelector('#lightboxCaption') || document.getElementById('lightboxCaption');
+    const waBtn = modal.querySelector('#lightboxWaBtn') || document.getElementById('lightboxWaBtn');
+
+    // Auto-detect video if not explicitly specified
+    if (typeof isVideo === 'undefined' || isVideo === null) {
+        isVideo = /\.(mp4|webm|mov|ogg)($|\?)/i.test(mediaUrl);
+    }
+
+    if (fallbackEl) fallbackEl.style.display = 'none';
+
+    if (isVideo) {
+        if (imgEl) {
+            imgEl.style.display = 'none';
+            imgEl.src = '';
+        }
+        if (videoEl) {
+            videoEl.style.display = 'block';
+            videoEl.style.visibility = 'visible';
+            videoEl.style.opacity = '1';
+            videoEl.controls = true;
+            videoEl.playsInline = true;
+            videoEl.setAttribute('playsinline', 'true');
+            videoEl.setAttribute('webkit-playsinline', 'true');
+            videoEl.setAttribute('controls', 'controls');
+            videoEl.setAttribute('preload', 'auto');
+            videoEl.muted = false;
+
+            if (posterUrl) {
+                videoEl.poster = posterUrl;
+            } else {
+                videoEl.removeAttribute('poster');
+            }
+            videoEl.src = mediaUrl;
+            videoEl.load();
+
+            const playPromise = videoEl.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    if (fallbackEl) fallbackEl.style.display = 'none';
+                }).catch((err) => {
+                    console.warn("Unmuted autoplay restricted by browser policy; showing tap-to-play:", err);
+                    if (fallbackEl) {
+                        fallbackEl.style.display = 'flex';
+                    }
+                });
+            }
+        }
+    } else {
+        if (videoEl) {
+            videoEl.pause();
+            videoEl.style.display = 'none';
+            videoEl.removeAttribute('src');
+            videoEl.removeAttribute('poster');
+        }
+        if (imgEl) {
+            imgEl.style.display = 'block';
+            imgEl.src = mediaUrl;
+            imgEl.alt = title || 'S2 Kennel';
+        }
+    }
+
+    if (titleEl) titleEl.textContent = title || 'S2 Kennel Jammu';
+    if (breedEl) {
+        if (breed && breed.trim().length > 0) {
+            breedEl.textContent = '🐾 ' + breed.trim();
+            breedEl.style.display = 'inline-block';
+        } else {
+            breedEl.style.display = 'none';
+        }
+    }
+    if (captionEl) {
+        captionEl.textContent = caption || '';
+        captionEl.style.display = caption ? 'block' : 'none';
+    }
+    if (waBtn) {
+        const queryText = encodeURIComponent(`Hello S2 Kennel Jammu, I saw the ${isVideo ? 'video reel' : 'photo'} of ${title || 'your puppy'} (${breed || ''}) on your website and would like to enquire.`);
+        waBtn.href = `https://wa.me/919796120006?text=${queryText}`;
+    }
+
+    modal.classList.add('open');
+    document.body.classList.add('modal-open');
+    document.documentElement.classList.add('modal-open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeMediaLightbox(e) {
+    if (e && e.target) {
+        const isBackground = e.target.classList.contains('media-lightbox-modal');
+        const isCloseBtn = e.target.classList.contains('lightbox-close') || e.target.closest('.lightbox-close');
+        if (!isBackground && !isCloseBtn) return;
+    }
+
+    const modal = document.getElementById('mediaLightboxModal');
+    if (!modal) return;
+    
+    // Pause any playing video inside modal and unload
+    const videoEl = modal.querySelector('#lightboxVideo') || document.getElementById('lightboxVideo');
+    if (videoEl) {
+        videoEl.pause();
+        videoEl.removeAttribute('src');
+        videoEl.load();
+        videoEl.style.display = 'none';
+    }
+
+    const imgEl = modal.querySelector('#lightboxImg') || document.getElementById('lightboxImg');
+    if (imgEl) {
+        imgEl.style.display = 'none';
+        imgEl.src = '';
+    }
+
+    const fallbackEl = modal.querySelector('#lightboxVideoPlayFallback') || document.getElementById('lightboxVideoPlayFallback');
+    if (fallbackEl) fallbackEl.style.display = 'none';
+
+    modal.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    document.documentElement.classList.remove('modal-open');
+    document.body.style.overflow = '';
+}
+
+// Close Lightbox on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeMediaLightbox();
+    }
+});

@@ -8,7 +8,7 @@
     <title>Customer Reviews - S2 Kennel Jammu | Verified Testimonials</title>
     <meta name="description" content="Read verified customer reviews and ratings from pet parents who adopted healthy dogs & kittens from S2 Kennel Jammu in Vijaypur.">
     <meta name="keywords" content="S2 Kennel Jammu Reviews, Dog Breeder Reviews Jammu, Customer Feedback S2 Kennel">
-    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}?v=4.5">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -34,6 +34,7 @@
                         <li><a href="{% url 'core:about' %}" class="nav-link">About</a></li>
                         <li><a href="{% url 'core:dogs' %}" class="nav-link">Dogs</a></li>
                         <li><a href="{% url 'core:cats' %}" class="nav-link">Cats</a></li>
+                        <li><a href="{% url 'core:gallery' %}" class="nav-link">Gallery</a></li>
                         <li><a href="{% url 'core:book_dog' %}" class="nav-link">Book a Dog</a></li>
                         <li><a href="{% url 'core:reviews' %}" class="nav-link active">Reviews</a></li>
                         <li><a href="{% url 'core:location' %}" class="nav-link">Location</a></li>
@@ -133,13 +134,16 @@
                     <input type="text" id="dogBreed" name="dog_breed" placeholder="e.g. Golden Retriever, Persian Cat">
                 </div>
                 <div class="form-group">
-                    <label style="color: var(--primary); font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px;">Rating *</label>
-                    <div id="starRating" style="display: flex; gap: 8px; font-size: 28px; cursor: pointer;">
-                        <span class="star-select selected" data-rating="1" style="color: var(--primary);">★</span>
-                        <span class="star-select selected" data-rating="2" style="color: var(--primary);">★</span>
-                        <span class="star-select selected" data-rating="3" style="color: var(--primary);">★</span>
-                        <span class="star-select selected" data-rating="4" style="color: var(--primary);">★</span>
-                        <span class="star-select selected" data-rating="5" style="color: var(--primary);">★</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <label style="color: var(--primary); font-size: 13px; font-weight: 600; margin-bottom: 0;">Rating *</label>
+                        <span id="ratingDescription" style="color: #f5d77f; font-size: 13px; font-weight: 600;">⭐⭐⭐⭐⭐ 5 / 5 (Excellent)</span>
+                    </div>
+                    <div id="starRating" class="star-rating-container" role="radiogroup" aria-label="Rating selection from 1 to 5 stars">
+                        <span class="star-select selected" data-rating="1" title="1 Star - Poor" role="radio" aria-checked="false" tabindex="0">★</span>
+                        <span class="star-select selected" data-rating="2" title="2 Stars - Fair" role="radio" aria-checked="false" tabindex="0">★</span>
+                        <span class="star-select selected" data-rating="3" title="3 Stars - Good" role="radio" aria-checked="false" tabindex="0">★</span>
+                        <span class="star-select selected" data-rating="4" title="4 Stars - Very Good" role="radio" aria-checked="false" tabindex="0">★</span>
+                        <span class="star-select selected" data-rating="5" title="5 Stars - Excellent" role="radio" aria-checked="true" tabindex="0">★</span>
                     </div>
                     <input type="hidden" id="ratingInput" name="rating" value="5">
                 </div>
@@ -163,7 +167,7 @@
     </div>
 
     <!-- FLOATING WHATSAPP BUTTON (Fixed 60x60px Corner Floating Button) -->
-    <a href="https://wa.me/919796120006?text=Hello%20S2%20Kennel%20Jammu,%20I%20have%20an%20enquiry." target="_blank" class="whatsapp-float" id="whatsappFloatingBtn" aria-label="Chat on WhatsApp" style="position:fixed !important;bottom:28px !important;right:28px !important;width:60px !important;height:60px !important;max-width:60px !important;max-height:60px !important;min-width:60px !important;min-height:60px !important;border-radius:50% !important;background:#25d366 !important;display:flex !important;align-items:center !important;justify-content:center !important;box-shadow:0 10px 30px rgba(37,211,102,0.45) !important;z-index:999 !important;text-decoration:none !important;overflow:hidden !important;">
+    <a href="https://wa.me/919796120006?text=Hello%20S2%20Kennel%20Jammu,%20I%20have%20an%20enquiry." target="_blank" class="whatsapp-float" id="whatsappFloatingBtn" aria-label="Chat on WhatsApp">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffffff" style="width:28px !important;height:28px !important;max-width:28px !important;max-height:28px !important;min-width:28px !important;min-height:28px !important;display:block !important;pointer-events:none !important;"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm5.8 14.16c-.24.67-1.39 1.27-1.92 1.36-.51.08-1.17.12-3.37-.79-2.33-.96-3.83-3.33-3.95-3.48-.12-.16-.96-1.28-.96-2.44 0-1.17.61-1.74.83-1.98.22-.24.48-.3.64-.3.16 0 .32 0 .46.01.15.01.35-.06.55.42.21.49.71 1.74.78 1.86.06.12.1.27.02.43-.08.16-.12.26-.24.4-.12.14-.26.31-.37.42-.12.12-.25.26-.11.5.14.24.63 1.04 1.36 1.68.93.83 1.72 1.09 1.96 1.21.24.12.38.1.52-.06.14-.16.6-.7.76-.94.16-.24.32-.2.54-.12.22.08 1.39.66 1.63.78.24.12.4.18.46.28.06.1.06.58-.18 1.25z"/></svg>
     </a>
 
@@ -222,7 +226,7 @@
         </div>
     </footer>
 
-    <script src="{% static 'core/js/script.js' %}"></script>
+    <script src="{% static 'core/js/script.js' %}?v=4.5"></script>
 </body>
 
 </html>

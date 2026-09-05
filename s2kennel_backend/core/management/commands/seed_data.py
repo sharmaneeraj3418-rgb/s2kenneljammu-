@@ -4,7 +4,7 @@ from django.core.files import File
 from django.core.management.base import BaseCommand
 from django.conf import settings
 
-from core.models import Dog, Cat, Review
+from core.models import Dog, Cat, Review, CustomerGallery
 
 
 def get_image_path(filename):
@@ -91,26 +91,43 @@ REVIEWS_DATA = [
     dict(name="Ajay Kumar", rating=4, text="Great experience overall. Excellent health certifications and continuous support after purchase."),
 ]
 
+CUSTOMER_GALLERY_DATA = [
+    dict(customer_name="Rahul Jamwal", dog_breed="Golden Labrador", caption="Got our adorable Golden Labrador puppy from S2 Kennel Jammu! Healthy, active and super playful.", photo_filename="Golden labrador1.jpeg"),
+    dict(customer_name="Amit Sharma", dog_breed="Shihtzu", caption="Our beautiful little Shihtzu puppy enjoying her new home in Jammu. Thank you S2 Kennel team!", photo_filename="Shihtzu 1.jpeg"),
+    dict(customer_name="Sunil Dogra", dog_breed="Tibetan Mastiff", caption="Majestic Tibetan Mastiff puppy delivered in top health with all vaccinations completed.", photo_filename="Tibetian mastiff1.jpg.jpeg"),
+    dict(customer_name="Pooja Rajput", dog_breed="Chow Chow", caption="Such a fluffy and sweet Chow Chow teddy bear! Highly recommended pet breeders in J&K.", photo_filename="chow chow  1.jpeg"),
+    dict(customer_name="Vikram Choudhary", dog_breed="Rottweiler", caption="Strong, active and obedient Rottweiler pup. Best bloodline pedigree!", photo_filename="Rottweiller1.jpeg"),
+]
+
 
 def run_seed():
-    # 1. Superuser: ONLY set password if not matching to prevent session invalidation
+    # 1. Superuser: Create only if does not exist, never overwrite custom admin password
     try:
         User = get_user_model()
         admin_user = os.environ.get("DJANGO_SUPERUSER_USERNAME", "admin")
         admin_pass = os.environ.get("DJANGO_SUPERUSER_PASSWORD", "admin123")
         admin_email = os.environ.get("DJANGO_SUPERUSER_EMAIL", "admin@s2kennel.com")
+        force_reset = os.environ.get("DJANGO_SUPERUSER_FORCE_RESET", "false").lower() in ("true", "1", "yes")
         
         user = User.objects.filter(username=admin_user).first()
         if not user:
-            user = User.objects.create_superuser(username=admin_user, email=admin_email, password=admin_pass)
+            # Check if any superuser already exists
+            if not User.objects.filter(is_superuser=True).exists():
+                user = User.objects.create_superuser(username=admin_user, email=admin_email, password=admin_pass)
+                print(f"Superuser '{admin_user}' created successfully.")
+            else:
+                user = User.objects.create_superuser(username=admin_user, email=admin_email, password=admin_pass)
+                print(f"Superuser '{admin_user}' created successfully.")
         else:
+            # User already exists - preserve their existing password and do NOT overwrite!
             if not user.is_staff or not user.is_superuser:
                 user.is_staff = True
                 user.is_superuser = True
                 user.save(update_fields=['is_staff', 'is_superuser'])
-            if not user.check_password(admin_pass):
+            if force_reset:
                 user.set_password(admin_pass)
                 user.save(update_fields=['password'])
+                print(f"Superuser '{admin_user}' password force-reset via DJANGO_SUPERUSER_FORCE_RESET.")
     except Exception as e:
         print(f"Superuser creation notice: {e}")
 
@@ -141,10 +158,21 @@ def run_seed():
     if not Review.objects.exists():
         Review.objects.bulk_create([Review(**r) for r in REVIEWS_DATA])
 
+    # 5. Customer Gallery
+    if not CustomerGallery.objects.exists():
+        for item in CUSTOMER_GALLERY_DATA:
+            data = dict(item)
+            photo_file = data.pop("photo_filename", None)
+            cg = CustomerGallery(**data)
+            if photo_file:
+                attach_image(cg, photo_file, "photo")
+            cg.save()
+
 
 class Command(BaseCommand):
-    help = "Seed the database with the full original dogs, cats and reviews from the frontend."
+    help = "Seed the database with the full original dogs, cats, reviews and customer gallery from the frontend."
 
     def handle(self, *args, **options):
         run_seed()
         self.stdout.write(self.style.SUCCESS("Database seeding completed successfully!"))
+

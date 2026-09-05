@@ -128,16 +128,20 @@ class Enquiry(models.Model):
 
 
 class CustomerGallery(models.Model):
-    customer_name = models.CharField(max_length=200, blank=True)
-    dog_breed = models.CharField(max_length=200, blank=True)
-    photo = models.ImageField(upload_to="customer_gallery/photos/", blank=True, null=True)
-    video = models.FileField(upload_to="customer_gallery/videos/", blank=True, null=True)
-    caption = models.CharField(max_length=400, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    customer_name = models.CharField(max_length=200, blank=True, verbose_name="Customer / Family Name")
+    dog_breed = models.CharField(max_length=200, blank=True, verbose_name="Dog / Cat Breed")
+    photo = models.ImageField(upload_to="customer_gallery/photos/", blank=True, null=True, help_text="Upload customer photo")
+    video = models.FileField(upload_to="customer_gallery/videos/", blank=True, null=True, help_text="Upload customer video (MP4/WebM/MOV)")
+    caption = models.CharField(max_length=400, blank=True, verbose_name="Short Story / Caption")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Added On")
 
     class Meta:
         ordering = ["-created_at"]
+        verbose_name = "Customer Gallery Item"
+        verbose_name_plural = "Customer Gallery"
 
     def __str__(self):
-        name = self.customer_name or 'Anonymous'
-        return f"{name} - {self.caption[:40]}"
+        name = self.customer_name or 'Happy Customer'
+        breed = f" ({self.dog_breed})" if self.dog_breed else ""
+        return f"{name}{breed} - {self.caption[:40]}"
+
