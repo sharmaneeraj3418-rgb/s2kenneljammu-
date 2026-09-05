@@ -92,11 +92,78 @@ REVIEWS_DATA = [
 ]
 
 CUSTOMER_GALLERY_DATA = [
-    dict(customer_name="Rahul Jamwal", dog_breed="Golden Labrador", caption="Got our adorable Golden Labrador puppy from S2 Kennel Jammu! Healthy, active and super playful.", photo_filename="Golden labrador1.jpeg"),
-    dict(customer_name="Amit Sharma", dog_breed="Shihtzu", caption="Our beautiful little Shihtzu puppy enjoying her new home in Jammu. Thank you S2 Kennel team!", photo_filename="Shihtzu 1.jpeg"),
-    dict(customer_name="Sunil Dogra", dog_breed="Tibetan Mastiff", caption="Majestic Tibetan Mastiff puppy delivered in top health with all vaccinations completed.", photo_filename="Tibetian mastiff1.jpg.jpeg"),
-    dict(customer_name="Pooja Rajput", dog_breed="Chow Chow", caption="Such a fluffy and sweet Chow Chow teddy bear! Highly recommended pet breeders in J&K.", photo_filename="chow chow  1.jpeg"),
-    dict(customer_name="Vikram Choudhary", dog_breed="Rottweiler", caption="Strong, active and obedient Rottweiler pup. Best bloodline pedigree!", photo_filename="Rottweiller1.jpeg"),
+    dict(
+        customer_name="Bhumika Sharma",
+        dog_breed="Chow Chow",
+        caption="Our cute Chow Chow puppy having fun! Video reel from happy pet parents.",
+        video="customer_gallery/videos/WhatsApp_Video_2026-09-05_at_1.41.50_PM.mp4",
+        photo="",
+        priority=9
+    ),
+    dict(
+        customer_name="Manpreet Singh",
+        dog_breed="German Shepherd Puppy",
+        caption="Brought home this strong and playful GSD puppy from S2 Kennel Vijaypur!",
+        photo="customer_gallery/photos/customer_germanshepherd1.jpg",
+        video="",
+        priority=8
+    ),
+    dict(
+        customer_name="Sneha Gupta",
+        dog_breed="Shih Tzu Puppy",
+        caption="Got my adorable Shihtzu fur baby from S2 Kennel Jammu. Absolutely in love!",
+        photo="customer_gallery/photos/customer_shihtzu1.jpg",
+        video="",
+        priority=7
+    ),
+    dict(
+        customer_name="Ananya Sharma",
+        dog_breed="Persian White Kitten",
+        caption="Adopted this lovely blue-eyed kitten from S2 Kennel. Super active and healthy!",
+        photo="customer_gallery/photos/customer_persian_kitten1.jpg",
+        video="",
+        priority=6
+    ),
+    dict(
+        customer_name="Rahul Jamwal",
+        dog_breed="Golden Labrador",
+        caption="Got our adorable Golden Labrador puppy from S2 Kennel Jammu! Healthy, active and super playful.",
+        photo="customer_gallery/photos/Golden_labrador1.jpeg",
+        video="",
+        priority=5
+    ),
+    dict(
+        customer_name="Amit Sharma",
+        dog_breed="Shihtzu",
+        caption="Our beautiful little Shihtzu puppy enjoying her new home in Jammu. Thank you S2 Kennel team!",
+        photo="customer_gallery/photos/Shihtzu_1.jpeg",
+        video="",
+        priority=4
+    ),
+    dict(
+        customer_name="Sunil Dogra",
+        dog_breed="Tibetan Mastiff",
+        caption="Majestic Tibetan Mastiff puppy delivered in top health with all vaccinations completed.",
+        photo="customer_gallery/photos/Tibetian_mastiff1.jpg.jpeg",
+        video="",
+        priority=3
+    ),
+    dict(
+        customer_name="Pooja Rajput",
+        dog_breed="Chow Chow",
+        caption="Such a fluffy and sweet Chow Chow teddy bear! Highly recommended pet breeders in J&K.",
+        photo="customer_gallery/photos/chow_chow__1.jpeg",
+        video="",
+        priority=2
+    ),
+    dict(
+        customer_name="Vikram Choudhary",
+        dog_breed="Rottweiler",
+        caption="Strong, active and obedient Rottweiler pup. Best bloodline pedigree!",
+        photo="customer_gallery/photos/Rottweiller1.jpeg",
+        video="",
+        priority=1
+    ),
 ]
 
 
@@ -158,15 +225,37 @@ def run_seed():
     if not Review.objects.exists():
         Review.objects.bulk_create([Review(**r) for r in REVIEWS_DATA])
 
-    # 5. Customer Gallery
-    if not CustomerGallery.objects.exists():
-        for item in CUSTOMER_GALLERY_DATA:
-            data = dict(item)
-            photo_file = data.pop("photo_filename", None)
-            cg = CustomerGallery(**data)
-            if photo_file:
-                attach_image(cg, photo_file, "photo")
-            cg.save()
+    # 5. Customer Gallery (Seed all 9 items and set priority timestamps)
+    from django.utils import timezone
+    import datetime
+    now = timezone.now()
+
+    for item in CUSTOMER_GALLERY_DATA:
+        name = item["customer_name"]
+        breed = item["dog_breed"]
+        caption = item["caption"]
+        photo = item.get("photo", "")
+        video = item.get("video", "")
+        priority = item.get("priority", 0)
+
+        cg, created = CustomerGallery.objects.get_or_create(
+            customer_name=name,
+            dog_breed=breed,
+            defaults={
+                "caption": caption,
+                "photo": photo,
+                "video": video,
+            }
+        )
+        if not created:
+            if photo and not cg.photo:
+                cg.photo = photo
+            if video and not cg.video:
+                cg.video = video
+            if caption and not cg.caption:
+                cg.caption = caption
+        cg.created_at = now + datetime.timedelta(minutes=priority * 5)
+        cg.save()
 
 
 class Command(BaseCommand):
