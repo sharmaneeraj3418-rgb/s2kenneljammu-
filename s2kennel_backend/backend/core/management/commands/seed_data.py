@@ -199,27 +199,22 @@ def run_seed():
         print(f"Superuser creation notice: {e}")
 
     # 2. Dogs
-    if not Dog.objects.exists():
-        for i, item in enumerate(DOGS_DATA, start=1):
-            data = dict(item)
-            img1 = data.pop("img1", None)
-            img2 = data.pop("img2", None)
-            dog = Dog(order=i, **data)
-            if img1:
-                attach_image(dog, img1, "image")
-            if img2:
-                attach_image(dog, img2, "image2")
-            dog.save()
+    for i, item in enumerate(DOGS_DATA, start=1):
+        data = dict(item)
+        img1 = data.pop("img1", None)
+        img2 = data.pop("img2", None)
+        dog, created = Dog.objects.get_or_create(name=data["name"], defaults={"order": i, **data})
+        img1_rel = f"dogs/{img1.replace(' ', '_')}" if img1 else ""
+        img2_rel = f"dogs/{img2.replace(' ', '_')}" if img2 else ""
+        Dog.objects.filter(pk=dog.pk).update(image=img1_rel, image2=img2_rel)
 
     # 3. Cats
-    if not Cat.objects.exists():
-        for i, item in enumerate(CATS_DATA, start=1):
-            data = dict(item)
-            img = data.pop("img", None)
-            cat = Cat(order=i, **data)
-            if img:
-                attach_image(cat, img, "image")
-            cat.save()
+    for i, item in enumerate(CATS_DATA, start=1):
+        data = dict(item)
+        img = data.pop("img", None)
+        cat, created = Cat.objects.get_or_create(name=data["name"], defaults={"order": i, **data})
+        img_rel = f"cats/{img}" if img else ""
+        Cat.objects.filter(pk=cat.pk).update(image=img_rel)
 
     # 4. Reviews
     if not Review.objects.exists():
@@ -249,11 +244,11 @@ def run_seed():
         )
         if not created:
             update_kwargs = {}
-            if photo and not cg.photo:
+            if photo:
                 update_kwargs["photo"] = photo
-            if video and not cg.video:
+            if video:
                 update_kwargs["video"] = video
-            if caption and not cg.caption:
+            if caption:
                 update_kwargs["caption"] = caption
             if update_kwargs:
                 CustomerGallery.objects.filter(pk=cg.pk).update(**update_kwargs)

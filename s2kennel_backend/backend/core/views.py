@@ -13,20 +13,58 @@ from .models import Dog, Cat, CustomerGallery, Review, Enquiry, BookDog
 def ensure_database_seeded():
     try:
         from core.management.commands.seed_data import run_seed
+        first_dog = Dog.objects.first()
         top_cg = CustomerGallery.objects.all().order_by("-created_at").first()
-        if not Dog.objects.exists() or not Cat.objects.exists() or CustomerGallery.objects.count() < 4 or (top_cg and top_cg.customer_name != "Bhumika Sharma"):
+        needs_seed = (
+            not Dog.objects.exists()
+            or not Cat.objects.exists()
+            or CustomerGallery.objects.count() < 4
+            or (top_cg and top_cg.customer_name != "Bhumika Sharma")
+            or (first_dog and not str(first_dog.image).startswith("dogs/"))
+        )
+        if needs_seed:
             run_seed()
     except Exception as e:
         print(f"Auto-seed exception: {e}")
 
 
+import re
 import urllib.parse
+
+
+def find_candidate_file(root_dir, rel_path):
+    p = root_dir / rel_path
+    if p.exists() and p.is_file():
+        return p, rel_path
+    parent = (root_dir / rel_path).parent
+    if parent.exists() and parent.is_dir():
+        target_name = Path(rel_path).name.lower()
+        for f in parent.iterdir():
+            if f.is_file() and f.name.lower() == target_name:
+                matched_rel = str(f.relative_to(root_dir)).replace("\\", "/")
+                return f, matched_rel
+        base_match = re.match(r"^(.*?)_[a-zA-Z0-9]{5,10}(\.[a-zA-Z0-9.]+)", Path(rel_path).name)
+        if base_match:
+            clean_base = base_match.group(1).lower()
+            ext = base_match.group(2).lower()
+            for f in parent.iterdir():
+                if f.is_file():
+                    fname_lower = f.name.lower()
+                    if fname_lower == f"{clean_base}{ext}" or fname_lower.startswith(clean_base):
+                        matched_rel = str(f.relative_to(root_dir)).replace("\\", "/")
+                        return f, matched_rel
+        stem = Path(rel_path).stem.split("_")[0].lower()
+        for f in parent.iterdir():
+            if f.is_file() and f.stem.lower().startswith(stem):
+                matched_rel = str(f.relative_to(root_dir)).replace("\\", "/")
+                return f, matched_rel
+    return None, None
 
 
 def serve_media(request, path):
     """
     Guaranteed media file serving for cloud deployment (Render).
-    Checks all candidate paths to ensure 100% media delivery across environments.
+    Checks all candidate paths and performs smart alias/hash matching to ensure 100% media delivery.
     """
     clean_path = urllib.parse.unquote(path).lstrip("/\\")
     candidates = [
@@ -43,9 +81,9 @@ def serve_media(request, path):
     ]
     for root in candidates:
         if root.exists():
-            full_path = root / clean_path
-            if full_path.exists() and full_path.is_file():
-                return serve(request, clean_path, document_root=str(root))
+            matched_file, matched_rel = find_candidate_file(root, clean_path)
+            if matched_file and matched_file.is_file():
+                return serve(request, matched_rel, document_root=str(root))
     raise Http404(f"Media file '{path}' not found.")
 
 
