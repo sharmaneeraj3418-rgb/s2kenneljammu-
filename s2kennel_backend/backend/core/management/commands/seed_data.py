@@ -248,14 +248,16 @@ def run_seed():
             }
         )
         if not created:
+            update_kwargs = {}
             if photo and not cg.photo:
-                cg.photo = photo
+                update_kwargs["photo"] = photo
             if video and not cg.video:
-                cg.video = video
+                update_kwargs["video"] = video
             if caption and not cg.caption:
-                cg.caption = caption
-        cg.created_at = now + datetime.timedelta(minutes=priority * 5)
-        cg.save()
+                update_kwargs["caption"] = caption
+            if update_kwargs:
+                CustomerGallery.objects.filter(pk=cg.pk).update(**update_kwargs)
+        CustomerGallery.objects.filter(pk=cg.pk).update(created_at=now + datetime.timedelta(minutes=priority * 5))
 
 
 class Command(BaseCommand):
