@@ -566,13 +566,15 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 /* =========================================================
-   Change Lists & Result Tables
+   Change Lists & Result Tables (Responsive & Horizontal Scroll)
    ========================================================= */
 #changelist {
     background: transparent !important;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 18px !important;
+    width: 100% !important;
+    max-width: 100% !important;
 }
 
 #changelist #toolbar {
@@ -580,8 +582,15 @@ html::-webkit-scrollbar-thumb:hover {
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
     padding: 14px 18px;
-    margin-bottom: 16px;
     width: 100%;
+    box-sizing: border-box;
+}
+
+#changelist #changelist-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 #changelist #searchbar {
@@ -592,7 +601,9 @@ html::-webkit-scrollbar-thumb:hover {
     padding: 10px 14px;
     font-size: 14px;
     outline: none;
+    flex: 1 1 240px;
     transition: all 0.25s ease;
+    box-sizing: border-box;
 }
 
 #changelist #searchbar:focus {
@@ -611,12 +622,149 @@ html::-webkit-scrollbar-thumb:hover {
     transition: all 0.25s ease;
 }
 
+/* Action Bar */
+#changelist .actions {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    color: var(--text-secondary);
+    font-size: 13.5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+}
+
+#changelist .actions select {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid var(--border-subtle) !important;
+    color: #fff !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 8px 12px !important;
+    font-size: 13.5px !important;
+    outline: none !important;
+}
+
+#changelist .actions .button {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+}
+
+#changelist-form {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Horizontal Touch Scrollable Results Container */
+#changelist-form .results,
+.results,
+#changelist .results {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    border-radius: var(--radius-lg) !important;
+    border: 1px solid var(--border-gold) !important;
+    background: var(--bg-surface) !important;
+    margin-bottom: 20px !important;
+    box-shadow: var(--shadow-card) !important;
+    position: relative !important;
+}
+
+#result_list,
+.results table {
+    width: 100% !important;
+    min-width: 760px !important;
+    border-collapse: collapse !important;
+    margin: 0 !important;
+}
+
+#result_list thead th {
+    background: var(--bg-surface-elevated) !important;
+    color: var(--gold-primary) !important;
+    padding: 14px 16px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    border-bottom: 1px solid var(--border-gold) !important;
+    white-space: nowrap !important;
+}
+
+#result_list tbody tr {
+    background: transparent !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+    transition: background-color 0.2s ease;
+}
+
+#result_list tbody tr:hover {
+    background: var(--bg-surface-hover) !important;
+}
+
+#result_list td, #result_list th {
+    padding: 12px 16px !important;
+    vertical-align: middle !important;
+    color: var(--text-primary) !important;
+    font-size: 13.5px !important;
+    white-space: nowrap !important;
+}
+
+/* WhatsApp Contact Pill in Admin Tables */
+.field-phone_contact a,
+td a[href*="wa.me"] {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    background: rgba(37, 211, 102, 0.16) !important;
+    border: 1px solid rgba(37, 211, 102, 0.45) !important;
+    color: #25d366 !important;
+    padding: 3px 8px !important;
+    border-radius: 6px !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+}
+
+.field-phone_contact a:hover,
+td a[href*="wa.me"]:hover {
+    background: rgba(37, 211, 102, 0.35) !important;
+    color: #fff !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Custom Touch Scrollbar */
+.results::-webkit-scrollbar {
+    height: 8px !important;
+}
+.results::-webkit-scrollbar-track {
+    background: var(--bg-main) !important;
+    border-radius: 4px !important;
+}
+.results::-webkit-scrollbar-thumb {
+    background: rgba(212, 175, 55, 0.4) !important;
+    border-radius: 4px !important;
+}
+.results::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 175, 55, 0.8) !important;
+}
+
+/* Filter Sidebar */
 #changelist-filter {
     background: var(--bg-surface) !important;
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg);
     padding: 18px;
     box-shadow: var(--shadow-card);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #changelist-filter h2 {
@@ -645,42 +793,6 @@ html::-webkit-scrollbar-thumb:hover {
     padding-left: 8px;
 }
 
-/* Results Table */
-#result_list {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-card);
-    width: 100%;
-}
-
-#result_list thead th {
-    background: var(--bg-surface-elevated) !important;
-    color: var(--gold-primary) !important;
-    padding: 14px 16px;
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    border-bottom: 1px solid var(--border-subtle);
-}
-
-#result_list tbody tr {
-    background: transparent !important;
-    border-bottom: 1px solid var(--border-subtle);
-    transition: background-color 0.2s ease;
-}
-
-#result_list tbody tr:hover {
-    background: var(--bg-surface-hover) !important;
-}
-
-#result_list td, #result_list th {
-    padding: 12px 16px;
-    vertical-align: middle;
-}
-
 /* Buttons and Action bar */
 .button, input[type=submit], input[type=button], .submit-row input, a.button {
     background: var(--gold-gradient) !important;
@@ -692,6 +804,9 @@ html::-webkit-scrollbar-thumb:hover {
     cursor: pointer;
     box-shadow: 0 4px 12px var(--gold-glow);
     transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover {
@@ -719,6 +834,8 @@ fieldset {
     padding: 22px;
     margin-bottom: 24px;
     box-shadow: var(--shadow-card);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 fieldset h2 {
@@ -752,6 +869,9 @@ input[type="number"], input[type="tel"], textarea, select {
     font-size: 14px !important;
     outline: none !important;
     transition: all 0.25s ease;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 input[type="text"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
@@ -769,6 +889,9 @@ input[type="text"]:focus, input[type="password"]:focus, textarea:focus, select:f
     display: flex;
     gap: 12px;
     align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Messages / Alerts */
@@ -809,7 +932,9 @@ ul.messagelist li.error {
     background: var(--bg-surface);
 }
 
-/* Mobile & Tablet Responsive Scroll Fixes */
+/* =========================================================
+   Mobile & Tablet Master Responsiveness (Phones & Touchscreens)
+   ========================================================= */
 @media (max-width: 1024px) {
     #container {
         min-width: 100% !important;
@@ -824,31 +949,184 @@ ul.messagelist li.error {
 }
 
 @media (max-width: 768px) {
+    /* Header Stacking & Zero Collision */
+    #header {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 12px 14px !important;
+        gap: 10px !important;
+    }
+
+    #branding {
+        width: 100% !important;
+        justify-content: flex-start !important;
+    }
+
+    .admin-branding {
+        gap: 10px !important;
+    }
+
+    .admin-brand-badge {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 15px !important;
+        border-radius: 10px !important;
+    }
+
+    .admin-brand-info h1 {
+        font-size: 16px !important;
+    }
+
+    .admin-brand-info p {
+        font-size: 11px !important;
+    }
+
+    #user-tools {
+        width: 100% !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: 6px !important;
+        font-size: 12px !important;
+        justify-content: flex-start !important;
+        padding-top: 8px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    #user-tools strong {
+        width: 100% !important;
+        margin-bottom: 2px !important;
+        font-size: 12px !important;
+        color: var(--gold-light) !important;
+    }
+
+    #user-tools a {
+        padding: 5px 10px !important;
+        font-size: 11.5px !important;
+        border-radius: 6px !important;
+    }
+
+    #user-tools a.view-site-link {
+        background: var(--gold-gradient) !important;
+        color: #0b0f19 !important;
+        font-weight: 700 !important;
+    }
+
+    div.breadcrumbs {
+        padding: 10px 14px !important;
+        font-size: 12px !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+    }
+
     #container {
         min-width: 100% !important;
         width: 100% !important;
         overflow-x: hidden !important;
     }
+
     #main {
         flex-direction: column !important;
     }
+
     #nav-sidebar {
         position: static !important;
         width: 100% !important;
-        max-height: 280px !important;
+        max-height: 240px !important;
         height: auto !important;
         overflow-y: auto !important;
         border-right: none !important;
         border-bottom: 1px solid var(--border-subtle) !important;
     }
+
     #content {
-        padding: 14px 12px !important;
+        padding: 14px 10px !important;
     }
+
+    /* Changelist Toolbar & Actions on Mobile */
+    #changelist #toolbar {
+        padding: 10px !important;
+    }
+
+    #changelist #changelist-search {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+
+    #changelist #searchbar {
+        width: 100% !important;
+    }
+
+    #changelist #changelist-search input[type="submit"] {
+        width: 100% !important;
+    }
+
+    #changelist .actions {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+        padding: 10px !important;
+    }
+
+    #changelist .actions select {
+        width: 100% !important;
+    }
+
+    #changelist .actions .button {
+        width: 100% !important;
+    }
+
+    /* Change Form Layout on Mobile */
     .form-row {
         flex-direction: column !important;
+        padding: 10px 0 !important;
     }
+
+    .form-row label {
+        display: block !important;
+        width: 100% !important;
+        margin-bottom: 6px !important;
+    }
+
     .submit-row {
         position: static !important;
-        flex-wrap: wrap !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+        padding: 14px !important;
+    }
+
+    .submit-row input,
+    .submit-row .button {
+        width: 100% !important;
+    }
+
+    /* Dashboard Cards on Mobile */
+    .admin-dashboard-hero {
+        padding: 16px 14px !important;
+    }
+
+    .dashboard-hero-text h2 {
+        font-size: 18px !important;
+    }
+
+    .dashboard-quick-actions {
+        width: 100% !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .hero-action-btn {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 10px !important;
+        box-sizing: border-box !important;
+    }
+
+    .dashboard-stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
     }
 }
+

@@ -3,6 +3,10 @@
 
 {% block title %}{% trans "S2 Kennel Jammu Admin" %}{% endblock %}
 
+{% block responsive %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+{% endblock %}
+
 {% block extrastyle %}
 {{ block.super }}
 <link rel="stylesheet" href="{% static 'core/css/admin-theme.css' %}">
