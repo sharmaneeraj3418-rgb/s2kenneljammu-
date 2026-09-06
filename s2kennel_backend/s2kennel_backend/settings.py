@@ -174,16 +174,36 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Cloudinary Permanent Cloud Storage configuration
+import re
+import cloudinary
+
+_cloud_name = (os.environ.get('CLOUDINARY_CLOUD_NAME') or 'xgxf5hwz').strip().strip("'\"")
+_api_key = (os.environ.get('CLOUDINARY_API_KEY') or '675444738428269').strip().strip("'\"")
+_api_secret = (os.environ.get('CLOUDINARY_API_SECRET') or '').strip().strip("'\"")
+_cloudinary_url = (os.environ.get('CLOUDINARY_URL') or '').strip().strip("'\"")
+
+# Auto-parse if user pasted full CLOUDINARY_URL into CLOUDINARY_API_SECRET or CLOUDINARY_URL
+_raw_url = _cloudinary_url if _cloudinary_url.startswith('cloudinary://') else (_api_secret if _api_secret.startswith('cloudinary://') else '')
+if _raw_url:
+    _url_match = re.match(r'cloudinary://([^:]+):([^@]+)@(.+)', _raw_url)
+    if _url_match:
+        _api_key = _url_match.group(1).strip()
+        _api_secret = _url_match.group(2).strip()
+        _cloud_name = _url_match.group(3).strip()
+
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'xgxf5hwz'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '675444738428269'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', ''),
+    'CLOUD_NAME': _cloud_name,
+    'API_KEY': _api_key,
+    'API_SECRET': _api_secret,
 }
 
-CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL', '')
-
-# If CLOUDINARY_API_SECRET or CLOUDINARY_URL is configured, use Cloudinary for all uploaded media
-if CLOUDINARY_STORAGE['API_SECRET'] or CLOUDINARY_URL:
+if _api_secret or _cloudinary_url:
+    cloudinary.config(
+        cloud_name=_cloud_name,
+        api_key=_api_key,
+        api_secret=_api_secret,
+        secure=True
+    )
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Allow up to 100MB for direct high-quality video/photo uploads from smartphones
