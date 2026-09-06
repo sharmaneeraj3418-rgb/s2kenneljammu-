@@ -198,61 +198,50 @@ def run_seed():
     except Exception as e:
         print(f"Superuser creation notice: {e}")
 
-    # 2. Dogs
-    for i, item in enumerate(DOGS_DATA, start=1):
-        data = dict(item)
-        img1 = data.pop("img1", None)
-        img2 = data.pop("img2", None)
-        dog, created = Dog.objects.get_or_create(name=data["name"], defaults={"order": i, **data})
-        img1_rel = f"dogs/{img1.replace(' ', '_')}" if img1 else ""
-        img2_rel = f"dogs/{img2.replace(' ', '_')}" if img2 else ""
-        Dog.objects.filter(pk=dog.pk).update(image=img1_rel, image2=img2_rel)
+    # 2. Dogs (Seed only if Dog table is empty)
+    if not Dog.objects.exists():
+        for i, item in enumerate(DOGS_DATA, start=1):
+            data = dict(item)
+            img1 = data.pop("img1", None)
+            img2 = data.pop("img2", None)
+            img1_rel = f"dogs/{img1.replace(' ', '_')}" if img1 else ""
+            img2_rel = f"dogs/{img2.replace(' ', '_')}" if img2 else ""
+            Dog.objects.create(name=data["name"], order=i, image=img1_rel, image2=img2_rel, **data)
 
-    # 3. Cats
-    for i, item in enumerate(CATS_DATA, start=1):
-        data = dict(item)
-        img = data.pop("img", None)
-        cat, created = Cat.objects.get_or_create(name=data["name"], defaults={"order": i, **data})
-        img_rel = f"cats/{img}" if img else ""
-        Cat.objects.filter(pk=cat.pk).update(image=img_rel)
+    # 3. Cats (Seed only if Cat table is empty)
+    if not Cat.objects.exists():
+        for i, item in enumerate(CATS_DATA, start=1):
+            data = dict(item)
+            img = data.pop("img", None)
+            img_rel = f"cats/{img}" if img else ""
+            Cat.objects.create(name=data["name"], order=i, image=img_rel, **data)
 
-    # 4. Reviews
+    # 4. Reviews (Seed only if Review table is empty)
     if not Review.objects.exists():
         Review.objects.bulk_create([Review(**r) for r in REVIEWS_DATA])
 
-    # 5. Customer Gallery (Seed all 9 items and set priority timestamps)
-    from django.utils import timezone
-    import datetime
-    now = timezone.now()
+    # 5. Customer Gallery (Seed only if CustomerGallery table is empty)
+    if not CustomerGallery.objects.exists():
+        from django.utils import timezone
+        import datetime
+        now = timezone.now()
 
-    for item in CUSTOMER_GALLERY_DATA:
-        name = item["customer_name"]
-        breed = item["dog_breed"]
-        caption = item["caption"]
-        photo = item.get("photo", "")
-        video = item.get("video", "")
-        priority = item.get("priority", 0)
+        for item in CUSTOMER_GALLERY_DATA:
+            name = item["customer_name"]
+            breed = item["dog_breed"]
+            caption = item["caption"]
+            photo = item.get("photo", "")
+            video = item.get("video", "")
+            priority = item.get("priority", 0)
 
-        cg, created = CustomerGallery.objects.get_or_create(
-            customer_name=name,
-            dog_breed=breed,
-            defaults={
-                "caption": caption,
-                "photo": photo,
-                "video": video,
-            }
-        )
-        if not created:
-            update_kwargs = {}
-            if photo:
-                update_kwargs["photo"] = photo
-            if video:
-                update_kwargs["video"] = video
-            if caption:
-                update_kwargs["caption"] = caption
-            if update_kwargs:
-                CustomerGallery.objects.filter(pk=cg.pk).update(**update_kwargs)
-        CustomerGallery.objects.filter(pk=cg.pk).update(created_at=now + datetime.timedelta(minutes=priority * 5))
+            cg = CustomerGallery.objects.create(
+                customer_name=name,
+                dog_breed=breed,
+                caption=caption,
+                photo=photo,
+                video=video,
+            )
+            CustomerGallery.objects.filter(pk=cg.pk).update(created_at=now + datetime.timedelta(minutes=priority * 5))
 
 
 class Command(BaseCommand):

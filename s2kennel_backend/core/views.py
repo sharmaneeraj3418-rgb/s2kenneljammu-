@@ -12,17 +12,8 @@ from .models import Dog, Cat, CustomerGallery, Review, Enquiry, BookDog
 
 def ensure_database_seeded():
     try:
-        from core.management.commands.seed_data import run_seed
-        first_dog = Dog.objects.first()
-        top_cg = CustomerGallery.objects.all().order_by("-created_at").first()
-        needs_seed = (
-            not Dog.objects.exists()
-            or not Cat.objects.exists()
-            or CustomerGallery.objects.count() < 4
-            or (top_cg and top_cg.customer_name != "Bhumika Sharma")
-            or (first_dog and not str(first_dog.image).startswith("dogs/"))
-        )
-        if needs_seed:
+        if not Dog.objects.exists() and not Cat.objects.exists():
+            from core.management.commands.seed_data import run_seed
             run_seed()
     except Exception as e:
         print(f"Auto-seed exception: {e}")
