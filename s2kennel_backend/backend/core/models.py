@@ -127,11 +127,20 @@ class Enquiry(models.Model):
         return f"{self.name} - {self.phone} ({self.get_status_display()})"
 
 
+from cloudinary_storage.storage import VideoMediaCloudinaryStorage
+
+
 class CustomerGallery(models.Model):
     customer_name = models.CharField(max_length=200, blank=True, verbose_name="Customer / Family Name")
     dog_breed = models.CharField(max_length=200, blank=True, verbose_name="Dog / Cat Breed")
     photo = models.ImageField(upload_to="customer_gallery/photos/", blank=True, null=True, help_text="Upload customer photo")
-    video = models.FileField(upload_to="customer_gallery/videos/", blank=True, null=True, help_text="Upload customer video (MP4/WebM/MOV)")
+    video = models.FileField(
+        upload_to="customer_gallery/videos/",
+        storage=VideoMediaCloudinaryStorage(),
+        blank=True,
+        null=True,
+        help_text="Upload customer video (MP4/WebM/MOV)"
+    )
     caption = models.CharField(max_length=400, blank=True, verbose_name="Short Story / Caption")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Added On")
 

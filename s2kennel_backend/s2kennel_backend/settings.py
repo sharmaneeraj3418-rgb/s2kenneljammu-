@@ -16,6 +16,21 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load local .env file if present
+_env_files = [BASE_DIR / '.env', BASE_DIR.parent / '.env']
+for _ef in _env_files:
+    if _ef.exists():
+        try:
+            with open(_ef, 'r', encoding='utf-8') as _f:
+                for _line in _f:
+                    _line = _line.strip()
+                    if _line and not _line.startswith('#') and '=' in _line:
+                        _k, _v = _line.split('=', 1)
+                        os.environ.setdefault(_k.strip(), _v.strip().strip("'\""))
+        except Exception:
+            pass
+        break
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -38,6 +53,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'core',
 ]
 
@@ -146,12 +163,32 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [
-    BASE_DIR / 'core' / 'static',
-    BASE_DIR / 'frontend' / 'assets',
+    d for d in [
+        BASE_DIR / 'core' / 'static',
+        BASE_DIR / 'frontend' / 'assets',
+        BASE_DIR.parent / 'frontend' / 'assets',
+    ] if d.exists()
 ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Cloudinary Permanent Cloud Storage configuration
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'xgxf5hwz'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '675444738428269'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', ''),
+}
+
+CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL', '')
+
+# If CLOUDINARY_API_SECRET or CLOUDINARY_URL is configured, use Cloudinary for all uploaded media
+if CLOUDINARY_STORAGE['API_SECRET'] or CLOUDINARY_URL:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Allow up to 100MB for direct high-quality video/photo uploads from smartphones
+DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600  # 100 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 104857600  # 100 MB
 
 # Session & Security configuration
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
